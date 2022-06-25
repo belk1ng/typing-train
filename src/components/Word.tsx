@@ -1,5 +1,6 @@
 import { WordTypeWithLetterStatuses } from "./WordsList";
 import { WordStyled } from "./styles/Word.styled";
+import { LetterStatus } from "../constants";
 import { Letter } from "./Letter";
 import React from "react";
 
@@ -13,12 +14,7 @@ export const Word = ({
             .map((letter, index) => (
                 <Letter
                     letter={letter}
-                    status={
-                        letterStatuses[index] as
-                            | "unset"
-                            | "correct"
-                            | "incorrect"
-                    }
+                    status={letterStatuses[index] as LetterStatus}
                     key={`${letter}_${index}`}
                 />
             ));

@@ -1,6 +1,7 @@
 import { WordsListStyled } from "./styles/WordList.styled";
 import React, { useState, useEffect, useMemo } from "react";
 import russian10k from "../languages/russian10k.json";
+import { LetterStatus } from "../constants";
 import { Word } from "./Word";
 
 interface WordsListProps {
@@ -9,7 +10,7 @@ interface WordsListProps {
 
 export interface WordTypeWithLetterStatuses {
     displayName: string;
-    letterStatuses: "unset" | "correct" | "incorrect"[];
+    letterStatuses: LetterStatus[];
 }
 
 export const WordsList = ({ wordsCount }: WordsListProps) => {
