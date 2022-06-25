@@ -1,3 +1,4 @@
+import { WordsListStyled } from "./styles/WordList.styled.js";
 import React, { useState, useEffect, useMemo } from "react";
 import russian10k from "../languages/russian10k.json";
 import { Word, WordType } from "./Word";
@@ -32,5 +33,5 @@ export const WordsList = ({ wordsCount }: WordsListProps) => {
         ));
     }, [words]);
 
-    return <div>{wordsToType}</div>;
+    return <WordsListStyled>{wordsToType}</WordsListStyled>;
 };

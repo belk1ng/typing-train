@@ -1,3 +1,4 @@
+import { WordStyled } from "./styles/Word.styled";
 import React from "react";
 
 export interface WordProps {
@@ -7,5 +8,5 @@ export interface WordProps {
 export type WordType = string;
 
 export const Word = ({ displayName }: WordProps) => {
-    return <span>{displayName}</span>;
+    return <WordStyled>{displayName}</WordStyled>;
 };
