@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const WordStyled = styled.p`
-    font-size: 18px;
+    font-size: 32px;
     font-weight: 500;
     font-family: monospace;
 

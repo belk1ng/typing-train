@@ -1,20 +1,19 @@
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import { WordsListStyled } from "./styles/WordList.styled";
-import React, { useState, useEffect, useMemo } from "react";
 import russian10k from "../languages/russian10k.json";
 import { LetterStatus } from "../constants";
-import { Word } from "./Word";
+import {
+    TypingContext,
+    WordTypeWithLetterStatuses,
+} from "../contexts/TypingContext";
+import Word from "./Word";
 
 interface WordsListProps {
     wordsCount: number;
 }
 
-export interface WordTypeWithLetterStatuses {
-    displayName: string;
-    letterStatuses: LetterStatus[];
-}
-
 export const WordsList = ({ wordsCount }: WordsListProps) => {
-    const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
+    const { words, setWords } = useContext(TypingContext);
 
     useEffect(() => {
         console.log("Words to type: ", wordsCount);

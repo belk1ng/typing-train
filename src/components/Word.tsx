@@ -1,13 +1,10 @@
-import { WordTypeWithLetterStatuses } from "./WordsList";
+import { WordTypeWithLetterStatuses } from "../contexts/TypingContext";
 import { WordStyled } from "./styles/Word.styled";
 import { LetterStatus } from "../constants";
 import { Letter } from "./Letter";
-import React from "react";
+import React, { memo } from "react";
 
-export const Word = ({
-    displayName,
-    letterStatuses,
-}: WordTypeWithLetterStatuses) => {
+const Word = ({ displayName, letterStatuses }: WordTypeWithLetterStatuses) => {
     const wordByLetters = () => {
         return displayName
             .split("")
@@ -22,3 +19,5 @@ export const Word = ({
 
     return <WordStyled>{wordByLetters()}</WordStyled>;
 };
+
+export default memo(Word);
