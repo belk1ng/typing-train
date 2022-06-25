@@ -1,26 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import russian10k from "../languages/russian10k.json";
+import { Word, WordType } from "./Word";
 
 interface WordsListProps {
     wordsCount: number;
 }
 
 export const WordsList = ({ wordsCount }: WordsListProps) => {
-    useEffect(() => {
-        console.log("Words count: ", wordsCount);
+    const [words, setWords] = useState<WordType[]>([]);
 
-        const wordsToType = [];
+    useEffect(() => {
+        console.log("Words to type: ", wordsCount);
+
+        const wordsToType: WordType[] = [];
 
         for (let word = 0; word < wordsCount; word++) {
-            wordsToType.push(
+            const randomWord =
                 russian10k.words[
                     Math.floor(Math.random() * russian10k.words.length)
-                ]
-            );
+                ];
+
+            wordsToType.push(randomWord);
         }
 
-        console.log(wordsToType);
+        setWords(wordsToType);
     }, [wordsCount]);
 
-    return <div></div>;
+    const wordsToType = useMemo(() => {
+        return words.map((word, index) => (
+            <Word displayName={word} key={`${word}_${index}`} />
+        ));
+    }, [words]);
+
+    return <div>{wordsToType}</div>;
 };
