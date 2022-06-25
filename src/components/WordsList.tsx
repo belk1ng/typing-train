@@ -20,7 +20,7 @@ export const WordsList = ({ wordsCount }: WordsListProps) => {
         }
 
         console.log(wordsToType);
-    }, []);
+    }, [wordsCount]);
 
     return <div></div>;
 };
