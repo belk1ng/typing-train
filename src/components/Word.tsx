@@ -1,4 +1,5 @@
 import { WordStyled } from "./styles/Word.styled";
+import { Letter } from "./Letter";
 import React from "react";
 
 export interface WordProps {
@@ -8,5 +9,13 @@ export interface WordProps {
 export type WordType = string;
 
 export const Word = ({ displayName }: WordProps) => {
-    return <WordStyled>{displayName}</WordStyled>;
+    const wordByLetters = () => {
+        return displayName
+            .split("")
+            .map((letter, index) => (
+                <Letter letter={letter} key={`${letter}_${index}`} />
+            ));
+    };
+
+    return <WordStyled>{wordByLetters()}</WordStyled>;
 };
