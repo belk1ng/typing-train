@@ -25,7 +25,7 @@ export const WordsList = ({ wordsCount }: WordsListProps) => {
         }
 
         setWords(wordsToType);
-    }, [wordsCount]);
+    }, [wordsCount, setWords]);
 
     const wordsToType = useMemo(() => {
         return words.map((word, index) => (
