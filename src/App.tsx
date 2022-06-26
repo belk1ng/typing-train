@@ -17,11 +17,14 @@ function App() {
     useEffect(() => {
         const keyUpHandler = (event: KeyboardEvent) => {
             const typingWord = words[activeWord];
-            console.log(activeWord, activeLetter);
-            console.log(words[activeWord]);
 
-            if (event.keyCode >= 48 && event.keyCode <= 90) {
-                // Numbers and letters
+            if (
+                (event.keyCode >= 48 && event.keyCode <= 90) ||
+                (event.keyCode >= 106 && event.keyCode <= 111) ||
+                (event.keyCode >= 186 && event.keyCode <= 222)
+            ) {
+                // Numbers, letters and symbols handling
+
                 const activeWordLength = typingWord.displayName.length;
 
                 if (activeLetter < activeWordLength) {
@@ -58,9 +61,44 @@ function App() {
                     setActiveLetter((prev: number) => prev + 1);
                 }
             } else if (event.keyCode === 32) {
-                // Space
+                // Space handling
+
                 setActiveLetter(0);
                 setActiveWord((prev: number) => prev + 1);
+            } else if (event.keyCode === 8) {
+                // Backspace handling
+
+                if (activeLetter === 0) {
+                    const prevWord = words[activeWord - 1];
+
+                    setActiveWord((prev: number) => prev - 1);
+                    setActiveLetter(prevWord.displayName.length);
+                } else {
+                    const activeWordLetterStatusesSetted =
+                        typingWord.letterStatuses.slice(0, activeLetter - 1);
+
+                    const activeWordLetterStatusesUPD = [
+                        ...activeWordLetterStatusesSetted,
+                        ...new Array(
+                            typingWord.displayName.length -
+                                activeWordLetterStatusesSetted.length
+                        ).fill("unset"),
+                    ];
+
+                    setWords((prev: WordTypeWithLetterStatuses[]) =>
+                        prev.map((word, index) =>
+                            index === activeWord
+                                ? {
+                                      ...word,
+                                      letterStatuses:
+                                          activeWordLetterStatusesUPD,
+                                  }
+                                : word
+                        )
+                    );
+
+                    setActiveLetter((prev: number) => prev - 1);
+                }
             }
         };
 
