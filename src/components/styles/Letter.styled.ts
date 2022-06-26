@@ -1,7 +1,8 @@
+import { LetterStatus } from "../../constants";
 import styled from "styled-components";
 
 interface LetterStyledProps {
-    status: "unset" | "correct" | "incorrect";
+    status: LetterStatus;
 }
 
 export const LetterStyled = styled.span<LetterStyledProps>`
