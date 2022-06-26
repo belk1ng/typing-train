@@ -11,7 +11,7 @@ export const LetterStyled = styled.span<LetterStyledProps>`
             props.status === "unset"
                 ? "#fff"
                 : props.status === "correct"
-                ? "lightgreen"
+                ? "#ABFAA9"
                 : "lightcoral"};
     }
 `;

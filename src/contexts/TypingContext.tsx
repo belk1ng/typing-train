@@ -1,4 +1,11 @@
-import React, { useState, createContext, useMemo } from "react";
+import React, {
+    useState,
+    createContext,
+    useMemo,
+    useCallback,
+    useEffect,
+} from "react";
+import russian10k from "../languages/russian10k.json";
 import { LetterStatus } from "../constants";
 
 interface TypingContextProviderProps {
@@ -12,6 +19,7 @@ interface TypingContextProviderValue {
     setActiveLetter: Function;
     words: WordTypeWithLetterStatuses[];
     setWords: Function;
+    generateRandomWords: (wordsCount?: number) => void;
 }
 
 export interface WordTypeWithLetterStatuses {
@@ -28,6 +36,29 @@ export const TypingContextProvider = ({
     const [activeLetter, setActiveLetter] = useState<number>(0);
     const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
 
+    useEffect(() => generateRandomWords(), []);
+
+    const generateRandomWords = useCallback((wordsCount = 35) => {
+        console.log("Get words");
+        let wordsToType: WordTypeWithLetterStatuses[] = [];
+
+        for (let word = 0; word < wordsCount; word++) {
+            const randomWord =
+                russian10k.words[
+                    Math.floor(Math.random() * russian10k.words.length)
+                ];
+
+            wordsToType.push({
+                displayName: randomWord,
+                letterStatuses: new Array(randomWord.length).fill("unset"),
+            });
+        }
+
+        setWords(wordsToType);
+        setActiveLetter(0);
+        setActiveWord(0);
+    }, []);
+
     const value = useMemo(
         () => ({
             activeWord,
@@ -36,8 +67,17 @@ export const TypingContextProvider = ({
             setActiveLetter,
             words,
             setWords,
+            generateRandomWords,
         }),
-        [activeWord, activeLetter, words]
+        [
+            activeWord,
+            setActiveWord,
+            activeLetter,
+            setActiveLetter,
+            words,
+            setWords,
+            generateRandomWords,
+        ]
     );
 
     return (

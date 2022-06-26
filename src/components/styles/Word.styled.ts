@@ -9,8 +9,8 @@ export const WordStyled = styled.p<WordStyledProps>`
     font-weight: 500;
     font-family: "Courier New", Courier, monospace;
 
-    color: #f9f7f3;
     letter-spacing: 1px;
+    transition: all 0.15s ease;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;

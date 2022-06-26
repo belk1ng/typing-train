@@ -12,6 +12,7 @@ function App() {
         setActiveLetter,
         words,
         setWords,
+        generateRandomWords,
     } = useContext(TypingContext);
 
     useEffect(() => {
@@ -63,8 +64,12 @@ function App() {
             } else if (event.keyCode === 32) {
                 // Space handling
 
-                setActiveLetter(0);
-                setActiveWord((prev: number) => prev + 1);
+                if (activeWord === 34) {
+                    generateRandomWords();
+                } else {
+                    setActiveLetter(0);
+                    setActiveWord((prev: number) => prev + 1);
+                }
             } else if (event.keyCode === 8) {
                 // Backspace handling
 
@@ -99,6 +104,12 @@ function App() {
 
                     setActiveLetter((prev: number) => prev - 1);
                 }
+            } else if (event.keyCode === 9) {
+                // Tab handling
+
+                event.preventDefault();
+                event.stopPropagation();
+                generateRandomWords();
             }
         };
 
