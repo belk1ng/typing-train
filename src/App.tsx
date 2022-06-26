@@ -17,6 +17,8 @@ function App() {
     useEffect(() => {
         const keyUpHandler = (event: KeyboardEvent) => {
             const typingWord = words[activeWord];
+            console.log(activeWord, activeLetter);
+            console.log(words[activeWord]);
 
             if (event.keyCode >= 48 && event.keyCode <= 90) {
                 // Numbers and letters

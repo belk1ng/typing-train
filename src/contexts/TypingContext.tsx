@@ -1,4 +1,5 @@
 import React, { useState, createContext, useMemo } from "react";
+import { TransformerFactory } from "typescript";
 import { LetterStatus } from "../constants";
 
 interface TypingContextProviderProps {
