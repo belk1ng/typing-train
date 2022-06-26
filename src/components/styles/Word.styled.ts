@@ -27,11 +27,11 @@ export const WordStyled = styled.p<WordStyledProps>`
         &:after {
             position: absolute;
             content: "";
-            bottom: 0;
-            left: ${isActive}ch;
+            bottom: 15%;
+            left: ${20.2 * isActive}px;
 
             width: 2px;
-            height: 100%;
+            height: 65%;
 
             background-color: lightcoral;
 
