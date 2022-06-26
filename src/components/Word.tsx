@@ -1,10 +1,17 @@
 import { WordTypeWithLetterStatuses } from "../contexts/TypingContext";
+import { TypingContext } from "../contexts/TypingContext";
 import { WordStyled } from "./styles/Word.styled";
+import React, { memo, useContext } from "react";
 import { LetterStatus } from "../constants";
 import { Letter } from "./Letter";
-import React, { memo } from "react";
 
-const Word = ({ displayName, letterStatuses }: WordTypeWithLetterStatuses) => {
+interface WordProps extends WordTypeWithLetterStatuses {
+    active: boolean;
+}
+
+const Word = ({ displayName, letterStatuses, active }: WordProps) => {
+    const { activeLetter } = useContext(TypingContext);
+
     const wordByLetters = () => {
         return displayName
             .split("")
@@ -17,7 +24,11 @@ const Word = ({ displayName, letterStatuses }: WordTypeWithLetterStatuses) => {
             ));
     };
 
-    return <WordStyled>{wordByLetters()}</WordStyled>;
+    return (
+        <WordStyled isActive={active ? activeLetter : false}>
+            {wordByLetters()}
+        </WordStyled>
+    );
 };
 
 export default memo(Word);

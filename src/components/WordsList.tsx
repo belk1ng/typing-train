@@ -12,7 +12,8 @@ interface WordsListProps {
 }
 
 export const WordsList = ({ wordsCount }: WordsListProps) => {
-    const { words, setWords } = useContext(TypingContext);
+    const { words, setWords, activeWord, activeLetter } =
+        useContext(TypingContext);
 
     useEffect(() => {
         console.log("Words to type: ", wordsCount);
@@ -37,12 +38,13 @@ export const WordsList = ({ wordsCount }: WordsListProps) => {
     const wordsToType = useMemo(() => {
         return words.map((word, index) => (
             <Word
+                active={index === activeWord}
                 displayName={word.displayName}
                 letterStatuses={word.letterStatuses}
                 key={`${word.displayName}_${index}`}
             />
         ));
-    }, [words]);
+    }, [words, activeWord, activeLetter]);
 
     return <WordsListStyled>{wordsToType}</WordsListStyled>;
 };
