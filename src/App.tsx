@@ -68,7 +68,7 @@ function App() {
                 if (activeWord === 34) {
                     generateRandomWords();
                 } else {
-                    if (activeLetter !== typingWord.displayName.length - 1) {
+                    if (activeLetter !== typingWord.displayName.length) {
                         setWords((prev: WordTypeWithLetterStatuses[]) =>
                             prev.map(({ displayName, letterStatuses }, index) =>
                                 index === activeWord
@@ -91,6 +91,12 @@ function App() {
                 }
             } else if (event.keyCode === 8) {
                 // Backspace handling
+
+                // TODO: backspace press when a first word and
+                // a it's first letter are active
+
+                // TODO: Ignore skipped letters and move after the last
+                // letter with status
 
                 if (activeLetter === 0) {
                     const prevWord = words[activeWord - 1];
@@ -125,9 +131,8 @@ function App() {
                 }
             } else if (event.keyCode === 9) {
                 // Tab handling
+                // TODO: Tab preventing
 
-                event.preventDefault();
-                event.stopPropagation();
                 generateRandomWords();
             }
         };
