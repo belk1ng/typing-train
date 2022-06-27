@@ -65,6 +65,8 @@ function App() {
             } else if (event.keyCode === 32) {
                 // Space handling
 
+                if (activeLetter === 0) return;
+
                 if (activeWord === 34) {
                     generateRandomWords();
                 } else {
@@ -92,10 +94,9 @@ function App() {
             } else if (event.keyCode === 8) {
                 // Backspace handling
 
-                // TODO: backspace press when a first word and
-                // a it's first letter are active
-
                 if (activeLetter === 0) {
+                    if (activeWord === 0) return;
+
                     const prevWord = words[activeWord - 1];
                     const firstSkipedLetterIndex =
                         prevWord.letterStatuses.indexOf("skiped");
