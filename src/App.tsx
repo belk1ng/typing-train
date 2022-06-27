@@ -68,6 +68,24 @@ function App() {
                 if (activeWord === 34) {
                     generateRandomWords();
                 } else {
+                    if (activeLetter !== typingWord.displayName.length - 1) {
+                        setWords((prev: WordTypeWithLetterStatuses[]) =>
+                            prev.map(({ displayName, letterStatuses }, index) =>
+                                index === activeWord
+                                    ? {
+                                          displayName: displayName,
+                                          letterStatuses: letterStatuses.map(
+                                              (status) =>
+                                                  status === "unset"
+                                                      ? "skiped"
+                                                      : status
+                                          ),
+                                      }
+                                    : { displayName, letterStatuses }
+                            )
+                        );
+                    }
+
                     setActiveLetter(0);
                     setActiveWord((prev: number) => prev + 1);
                 }

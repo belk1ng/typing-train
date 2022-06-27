@@ -6,12 +6,33 @@ interface LetterStyledProps {
 }
 
 export const LetterStyled = styled.span<LetterStyledProps>`
-    && {
-        color: ${(props) =>
-            props.status === "unset"
-                ? "#fff"
-                : props.status === "correct"
-                ? "#ABFAA9"
-                : "lightcoral"};
-    }
+    position: relative;
+
+    color: ${(props) => {
+        switch (props.status) {
+            case "unset":
+            case "skiped":
+                return "#fff";
+            case "correct":
+                return "#ABFAA9";
+            case "incorrect":
+                return "lightcoral";
+        }
+    }};
+
+    ${({ status }) =>
+        status === "skiped" &&
+        `
+        &:after {
+            position: absolute;
+            content: "";
+            bottom: -1px;
+            left: 0;
+    
+            height: 2px;
+            width: 100%;
+
+            background-color: lightcoral;
+        }
+    `}
 `;

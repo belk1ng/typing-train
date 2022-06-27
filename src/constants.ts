@@ -1,1 +1,1 @@
-export type LetterStatus = "unset" | "correct" | "incorrect";
+export type LetterStatus = "unset" | "correct" | "incorrect" | "skiped";
