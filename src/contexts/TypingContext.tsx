@@ -39,7 +39,6 @@ export const TypingContextProvider = ({
     useEffect(() => generateRandomWords(), []);
 
     const generateRandomWords = useCallback((wordsCount = 35) => {
-        console.log("Get words");
         let wordsToType: WordTypeWithLetterStatuses[] = [];
 
         for (let word = 0; word < wordsCount; word++) {

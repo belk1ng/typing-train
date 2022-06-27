@@ -1,3 +1,4 @@
+import { AppContainerStyled } from "./components/styles/AppContainer.styled";
 import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
@@ -126,9 +127,9 @@ function App() {
     ]);
 
     return (
-        <div className="App">
+        <AppContainerStyled>
             <WordsList wordsCount={35} />
-        </div>
+        </AppContainerStyled>
     );
 }
 

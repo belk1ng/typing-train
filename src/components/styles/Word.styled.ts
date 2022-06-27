@@ -34,6 +34,7 @@ export const WordStyled = styled.p<WordStyledProps>`
             height: 65%;
 
             background-color: lightcoral;
+            border-radius: 10px;
 
             transition: all .15s;
         }
