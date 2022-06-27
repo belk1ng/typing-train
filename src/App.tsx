@@ -95,14 +95,49 @@ function App() {
                 // TODO: backspace press when a first word and
                 // a it's first letter are active
 
-                // TODO: Ignore skipped letters and move after the last
-                // letter with status
-
                 if (activeLetter === 0) {
                     const prevWord = words[activeWord - 1];
+                    const firstSkipedLetterIndex =
+                        prevWord.letterStatuses.indexOf("skiped");
+
+                    if (firstSkipedLetterIndex !== -1) {
+                        setActiveLetter(
+                            prevWord.letterStatuses.indexOf("skiped")
+                        );
+
+                        const prevWordLetterStatuses = prevWord.letterStatuses;
+
+                        const alreadyHasStatus = [
+                            ...prevWordLetterStatuses.slice(
+                                0,
+                                firstSkipedLetterIndex
+                            ),
+                        ];
+
+                        const prevWordLetterStatusesUPD = [
+                            ...alreadyHasStatus,
+                            ...new Array(
+                                prevWord.displayName.length -
+                                    alreadyHasStatus.length
+                            ).fill("unset"),
+                        ];
+
+                        setWords((prev: WordTypeWithLetterStatuses[]) => {
+                            return prev.map((word, index) =>
+                                activeWord - 1 === index
+                                    ? {
+                                          ...word,
+                                          letterStatuses:
+                                              prevWordLetterStatusesUPD,
+                                      }
+                                    : word
+                            );
+                        });
+                    } else {
+                        setActiveLetter(prevWord.displayName.length);
+                    }
 
                     setActiveWord((prev: number) => prev - 1);
-                    setActiveLetter(prevWord.displayName.length);
                 } else {
                     const activeWordLetterStatusesSetted =
                         typingWord.letterStatuses.slice(0, activeLetter - 1);
