@@ -12,7 +12,7 @@ export const LetterStyled = styled.span<LetterStyledProps>`
         switch (props.status) {
             case "unset":
             case "skiped":
-                return "#fff";
+                return "#596172";
             case "correct":
                 return "#ABFAA9";
             case "incorrect":
