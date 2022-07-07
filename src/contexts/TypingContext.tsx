@@ -19,6 +19,8 @@ interface TypingContextProviderValue {
     setActiveLetter: Function;
     words: WordTypeWithLetterStatuses[];
     setWords: Function;
+    wordsCount: number;
+    setWordsCount: Function;
     generateRandomWords: (wordsCount?: number) => void;
 }
 
@@ -35,10 +37,11 @@ export const TypingContextProvider = ({
     const [activeWord, setActiveWord] = useState<number>(0);
     const [activeLetter, setActiveLetter] = useState<number>(0);
     const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
+    const [wordsCount, setWordsCount] = useState<number>(35);
 
-    useEffect(() => generateRandomWords(), []);
+    useEffect(() => generateRandomWords(wordsCount), [wordsCount]);
 
-    const generateRandomWords = useCallback((wordsCount = 35) => {
+    const generateRandomWords = useCallback((wordsCount: number = 35) => {
         let wordsToType: WordTypeWithLetterStatuses[] = [];
 
         for (let word = 0; word < wordsCount; word++) {
@@ -66,6 +69,8 @@ export const TypingContextProvider = ({
             setActiveLetter,
             words,
             setWords,
+            wordsCount,
+            setWordsCount,
             generateRandomWords,
         }),
         [
@@ -75,6 +80,8 @@ export const TypingContextProvider = ({
             setActiveLetter,
             words,
             setWords,
+            wordsCount,
+            setWordsCount,
             generateRandomWords,
         ]
     );

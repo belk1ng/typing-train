@@ -2,6 +2,7 @@ import { AppContainerStyled } from "./components/styles/AppContainer.styled";
 import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
+import { WordsCount } from "./components/WordsCount";
 import { WordsList } from "./components/WordsList";
 import "./App.css";
 
@@ -187,6 +188,7 @@ function App() {
 
     return (
         <AppContainerStyled>
+            <WordsCount />
             <WordsList />
         </AppContainerStyled>
     );

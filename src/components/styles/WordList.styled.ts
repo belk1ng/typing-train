@@ -7,7 +7,6 @@ export const WordsListStyled = styled.div`
     position: relative;
 
     margin: 0 auto;
-    padding: 0 15px;
     overflow: hidden;
 
     display: flex;

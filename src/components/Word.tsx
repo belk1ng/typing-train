@@ -1,5 +1,5 @@
 import { WordTypeWithLetterStatuses } from "../contexts/TypingContext";
-import React, { memo, useContext, forwardRef, useEffect } from "react";
+import React, { memo, useContext, forwardRef } from "react";
 import { TypingContext } from "../contexts/TypingContext";
 import { WordStyled } from "./styles/Word.styled";
 import { LetterStatus } from "../constants";
@@ -9,12 +9,12 @@ interface WordProps extends WordTypeWithLetterStatuses {
     active: boolean;
 }
 
-const Word = memo(
+const Word =
     forwardRef<HTMLParagraphElement, WordProps>(
+        // TODO: Fix rerender all words except the active one
+
         ({ displayName, letterStatuses, active }: WordProps, ref) => {
             const { activeLetter } = useContext(TypingContext);
-
-            // useEffect(() => console.log("Rerendered: ", displayName));
 
             const wordByLetters = () => {
                 return displayName
@@ -34,7 +34,6 @@ const Word = memo(
                 </WordStyled>
             );
         }
-    )
-);
+    );
 
 export default Word;
