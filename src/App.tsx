@@ -187,7 +187,7 @@ function App() {
 
     return (
         <AppContainerStyled>
-            <WordsList wordsCount={35} />
+            <WordsList />
         </AppContainerStyled>
     );
 }
