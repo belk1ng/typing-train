@@ -14,8 +14,11 @@ function App() {
         setActiveLetter,
         words,
         setWords,
+        wordsCount,
         generateRandomWords,
     } = useContext(TypingContext);
+
+    // TODO: Refactoring component App
 
     useEffect(() => {
         const keyUpHandler = (event: KeyboardEvent) => {
@@ -68,7 +71,9 @@ function App() {
 
                 if (activeLetter === 0) return;
 
-                if (activeWord === 34) {
+                if (activeWord === wordsCount - 1) {
+                    setActiveWord(0);
+                    setActiveLetter(0);
                     generateRandomWords();
                 } else {
                     if (activeLetter !== typingWord.displayName.length) {
@@ -170,6 +175,8 @@ function App() {
                 // Tab handling
                 // TODO: Tab preventing
 
+                setActiveWord(0);
+                setActiveLetter(0);
                 generateRandomWords();
             }
         };

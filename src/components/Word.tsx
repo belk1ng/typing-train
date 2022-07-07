@@ -1,19 +1,35 @@
 import { WordTypeWithLetterStatuses } from "../contexts/TypingContext";
-import React, { memo, useContext, forwardRef } from "react";
-import { TypingContext } from "../contexts/TypingContext";
+import React, { forwardRef, memo, useContext } from "react";
 import { WordStyled } from "./styles/Word.styled";
 import { LetterStatus } from "../constants";
+import { TypingContext } from "../contexts/TypingContext";
 import { Letter } from "./Letter";
 
-interface WordProps extends WordTypeWithLetterStatuses {
-    active: boolean;
-}
+export const InactiveWord = memo(({ displayName, letterStatuses }: WordTypeWithLetterStatuses) => {
+    // TODO: Refactoring Word components (mb make HOC one)
+    const wordByLetters = () => {
+        return displayName
+            .split("")
+            .map((letter, index) => (
+                <Letter
+                    letter={letter}
+                    status={letterStatuses[index] as LetterStatus}
+                    key={`${letter}_${index}`}
+                />
+            ));
+    };
 
-const Word =
-    forwardRef<HTMLParagraphElement, WordProps>(
-        // TODO: Fix rerender all words except the active one
+    return (
+        <WordStyled isActive={false}>
+            {wordByLetters()}
+        </WordStyled>
+    );
+})
 
-        ({ displayName, letterStatuses, active }: WordProps, ref) => {
+export const ActiveWord =
+    forwardRef<HTMLParagraphElement, WordTypeWithLetterStatuses>(
+        ({ displayName, letterStatuses }, ref) => {
+
             const { activeLetter } = useContext(TypingContext);
 
             const wordByLetters = () => {
@@ -29,11 +45,10 @@ const Word =
             };
 
             return (
-                <WordStyled ref={ref} isActive={active ? activeLetter : false}>
+                <WordStyled ref={ref} isActive={activeLetter}>
                     {wordByLetters()}
                 </WordStyled>
             );
         }
     );
 
-export default Word;

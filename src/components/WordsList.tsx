@@ -1,7 +1,7 @@
 import { useState, useMemo, useContext, useRef, useEffect } from "react";
 import { WordsListStyled } from "./styles/WordList.styled";
 import { TypingContext } from "../contexts/TypingContext";
-import Word from "./Word";
+import { ActiveWord, InactiveWord } from "./Word";
 
 export const WordsList = () => {
     const { words, activeWord } = useContext(TypingContext);
@@ -37,16 +37,14 @@ export const WordsList = () => {
     const wordsToType = useMemo(() => {
         return words.map((word, index) =>
             index === activeWord ? (
-                <Word
+                <ActiveWord
                     ref={activeWordRef}
-                    active={true}
                     displayName={word.displayName}
                     letterStatuses={word.letterStatuses}
                     key={`${word.displayName}_${index}`}
                 />
             ) : (
-                <Word
-                    active={false}
+                <InactiveWord
                     displayName={word.displayName}
                     letterStatuses={word.letterStatuses}
                     key={`${word.displayName}_${index}`}
