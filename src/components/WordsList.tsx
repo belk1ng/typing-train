@@ -27,10 +27,9 @@ export const WordsList = () => {
 
     useEffect(() => {
         if (wordsContainerRef.current) {
-            wordsContainerRef.current.scrollTo({
-                top: scrollTop,
-                behavior: "smooth",
-            });
+            wordsContainerRef.current.scrollTo(
+                {top: scrollTop, behavior: "smooth"}
+            )
         }
     }, [scrollTop]);
 
