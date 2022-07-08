@@ -45,13 +45,15 @@ export const TypingContextProvider = ({
   useEffect(() => generateRandomWords(wordsCount), [wordsCount]);
 
   useEffect(() => {
-      console.log("Changed wordsArray")
     setWords(
       wordsArray.map((word) => ({
         displayName: word,
         letterStatuses: new Array(word.length).fill("unset"),
       }))
     );
+
+    setActiveWord(0);
+    setActiveLetter(0);
   }, [wordsArray]);
 
   const generateRandomWords = useCallback(
