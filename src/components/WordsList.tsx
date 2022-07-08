@@ -4,7 +4,7 @@ import { TypingContext } from "../contexts/TypingContext";
 import { ActiveWord, InactiveWord } from "./Word";
 
 export const WordsList = () => {
-    const { words, activeWord } = useContext(TypingContext);
+    const { words, activeWord, activeLetter } = useContext(TypingContext);
 
     const activeWordRef = useRef<HTMLParagraphElement>(null);
     const prevWordOffsetTopValue = useRef<number>(0);
@@ -23,13 +23,14 @@ export const WordsList = () => {
             prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
             setScrollTop(scrollTopValue + 50);
         }
-    }, [activeWordRef.current]);
+    }, [activeWordRef.current, activeLetter]);
 
     useEffect(() => {
         if (wordsContainerRef.current) {
-            wordsContainerRef.current.scrollTo(
-                {top: scrollTop, behavior: "smooth"}
-            )
+            wordsContainerRef.current.scrollTo({
+                top: scrollTop,
+                behavior: "smooth",
+            });
         }
     }, [scrollTop]);
 
