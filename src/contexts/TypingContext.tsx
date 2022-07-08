@@ -17,6 +17,8 @@ interface TypingContextProviderValue {
   setActiveWord: Function;
   activeLetter: number;
   setActiveLetter: Function;
+  wordsArray: string[];
+  setWordsArray: Function;
   words: WordTypeWithLetterStatuses[];
   setWords: Function;
   wordsCount: number;
@@ -36,26 +38,34 @@ export const TypingContextProvider = ({
 }: TypingContextProviderProps) => {
   const [activeWord, setActiveWord] = useState<number>(0);
   const [activeLetter, setActiveLetter] = useState<number>(0);
+  const [wordsArray, setWordsArray] = useState<string[]>([]);
   const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
   const [wordsCount, setWordsCount] = useState<number>(35);
 
   useEffect(() => generateRandomWords(wordsCount), [wordsCount]);
 
+  useEffect(() => {
+      console.log("Changed wordsArray")
+    setWords(
+      wordsArray.map((word) => ({
+        displayName: word,
+        letterStatuses: new Array(word.length).fill("unset"),
+      }))
+    );
+  }, [wordsArray]);
+
   const generateRandomWords = useCallback(
     (wordsCount: number = 35) => {
-      let wordsToType: WordTypeWithLetterStatuses[] = [];
+      let wordsToType: string[] = [];
 
       for (let word = 0; word < wordsCount; word++) {
         const randomWord =
           russian10k.words[Math.floor(Math.random() * russian10k.words.length)];
 
-        wordsToType.push({
-          displayName: randomWord,
-          letterStatuses: new Array(randomWord.length).fill("unset"),
-        });
+        wordsToType.push(randomWord);
       }
 
-      setWords(wordsToType);
+      setWordsArray(wordsToType);
     },
     [wordsCount]
   );
@@ -68,6 +78,8 @@ export const TypingContextProvider = ({
       setActiveLetter,
       words,
       setWords,
+      wordsArray,
+      setWordsArray,
       wordsCount,
       setWordsCount,
       generateRandomWords,
@@ -79,6 +91,7 @@ export const TypingContextProvider = ({
       setActiveLetter,
       words,
       setWords,
+      wordsArray,
       wordsCount,
       setWordsCount,
     ]
