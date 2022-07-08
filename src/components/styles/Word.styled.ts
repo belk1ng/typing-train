@@ -1,29 +1,29 @@
 import styled from "styled-components";
 
 interface WordStyledProps {
-    isActive: boolean | number;
+  isActive: boolean | number;
 }
 
 export const WordStyled = styled.p<WordStyledProps>`
-    font-size: 32px;
-    font-weight: 500;
-    font-family: "Courier New", Courier, monospace;
+  font-size: 32px;
+  font-weight: 500;
+  font-family: "Courier New", Courier, monospace;
 
-    letter-spacing: 1px;
-    transition: all 0.15s ease;
+  letter-spacing: 1px;
+  transition: all 0.15s ease;
 
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
-    position: relative;
+  position: relative;
 
-    ${({ isActive }) =>
-        typeof isActive === "number" &&
-        `
+  ${({ isActive }) =>
+    typeof isActive === "number" &&
+    `
         &:after {
             position: absolute;
             content: "";

@@ -2,27 +2,27 @@ import { LetterStatus } from "../../constants";
 import styled from "styled-components";
 
 interface LetterStyledProps {
-    status: LetterStatus;
+  status: LetterStatus;
 }
 
 export const LetterStyled = styled.span<LetterStyledProps>`
-    position: relative;
+  position: relative;
 
-    color: ${(props) => {
-        switch (props.status) {
-            case "unset":
-            case "skiped":
-                return "#596172";
-            case "correct":
-                return "#ABFAA9";
-            case "incorrect":
-                return "lightcoral";
-        }
-    }};
+  color: ${(props) => {
+    switch (props.status) {
+      case "unset":
+      case "skiped":
+        return "#596172";
+      case "correct":
+        return "#ABFAA9";
+      case "incorrect":
+        return "lightcoral";
+    }
+  }};
 
-    ${({ status }) =>
-        status === "skiped" &&
-        `
+  ${({ status }) =>
+    status === "skiped" &&
+    `
         &:after {
             position: absolute;
             content: "";
