@@ -6,7 +6,6 @@ import React, {
     useEffect,
 } from "react";
 import russian10k from "../languages/russian10k.json";
-import { Letter } from "../components/Letter";
 import { LetterStatus } from "../constants";
 
 interface TypingContextProviderProps {
@@ -23,10 +22,6 @@ interface TypingContextProviderValue {
     wordsCount: number;
     setWordsCount: Function;
     generateRandomWords: (wordsCount?: number) => void;
-    renderWordByLetters: (
-        fullWord: string,
-        letterStatuses: LetterStatus[]
-    ) => JSX.Element[];
 }
 
 export interface WordTypeWithLetterStatuses {
@@ -64,21 +59,6 @@ export const TypingContextProvider = ({
         setWords(wordsToType);
     }, [wordsCount]);
 
-    const renderWordByLetters = (
-        fullWord: string,
-        letterStatuses: LetterStatus[]
-    ): JSX.Element[] => {
-        return fullWord
-            .split("")
-            .map((letter, index) => (
-                <Letter
-                    letter={letter}
-                    status={letterStatuses[index] as LetterStatus}
-                    key={`${letter}_${index}`}
-                />
-            ));
-    };
-
     const value = useMemo(
         () => ({
             activeWord,
@@ -90,7 +70,6 @@ export const TypingContextProvider = ({
             wordsCount,
             setWordsCount,
             generateRandomWords,
-            renderWordByLetters,
         }),
         [
             activeWord,
