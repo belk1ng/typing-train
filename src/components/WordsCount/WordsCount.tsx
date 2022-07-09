@@ -1,5 +1,5 @@
-import { WordsCountStyled, WordCountValue } from "./styles/WordsCount.styled";
-import { TypingContext } from "../contexts/TypingContext";
+import { WordsCountStyled, WordCountValue } from "../styles/WordsCount.styled";
+import { TypingContext } from "../../contexts/TypingContext";
 import React, { useContext } from "react";
 
 export const WordsCount = () => {

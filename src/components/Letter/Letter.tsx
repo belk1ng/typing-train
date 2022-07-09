@@ -1,5 +1,5 @@
-import { LetterStyled } from "./styles/Letter.styled";
-import { LetterStatus } from "../constants";
+import { LetterStyled } from "../styles/Letter.styled"; 
+import { LetterStatus } from "../../constants";
 import React, { memo } from "react";
 
 interface LetterProps {

@@ -1,0 +1,50 @@
+@keyframes cursor-pulse {
+  0% {
+    opacity: 1px;
+  }
+
+  33% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1px;
+  }
+}
+
+.word {
+  font-size: 32px;
+  font-weight: 500;
+  font-family: "Courier New", Courier, monospace;
+
+  letter-spacing: 1px;
+  transition: all 0.15s ease;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  position: relative;
+
+  .word__cursor,
+  .word__cursor--animated {
+    position: absolute;
+    content: "";
+    bottom: 15%;
+
+    width: 2px;
+    height: 65%;
+
+    background-color: lightcoral;
+    border-radius: 10px;
+
+    transition: all 0.15s;
+  }
+
+  .word__cursor--animated {
+    animation: cursor-pulse 1s ease infinite;
+  }
+}

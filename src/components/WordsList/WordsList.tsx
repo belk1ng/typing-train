@@ -1,7 +1,7 @@
 import { useState, useMemo, useContext, useRef, useEffect } from "react";
-import { WordsListStyled } from "./styles/WordList.styled";
-import { TypingContext } from "../contexts/TypingContext";
-import { ActiveWord, InactiveWord } from "./Word";
+import { TypingContext } from "../../contexts/TypingContext";
+import { WordsListStyled } from "../styles/WordList.styled";
+import { ActiveWord, InactiveWord } from "../Word/Word";
 
 export const WordsList = () => {
   const { words, wordsArray, activeWord, activeLetter } =

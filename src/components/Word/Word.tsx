@@ -1,9 +1,11 @@
-import { WordTypeWithLetterStatuses } from "../contexts/TypingContext";
 import React, { forwardRef, memo, useContext } from "react";
-import { TypingContext } from "../contexts/TypingContext";
-import { WordStyled } from "./styles/Word.styled";
-import { Letter } from "./Letter";
-import { LetterStatus } from "../constants";
+import { LetterStatus } from "../../constants";
+import { Letter } from "../Letter/Letter";
+import {
+  WordTypeWithLetterStatuses,
+  TypingContext,
+} from "../../contexts/TypingContext";
+import s from "./styles.module.scss";
 
 const renderWordByLetters = (
   fullWord: string,
@@ -23,9 +25,9 @@ const renderWordByLetters = (
 export const InactiveWord = memo(
   ({ displayName, letterStatuses }: WordTypeWithLetterStatuses) => {
     return (
-      <WordStyled isActive={false}>
+      <div className={s.word}>
         {renderWordByLetters(displayName, letterStatuses)}
-      </WordStyled>
+      </div>
     );
   }
 );
@@ -37,8 +39,12 @@ export const ActiveWord = forwardRef<
   const { activeLetter } = useContext(TypingContext);
 
   return (
-    <WordStyled ref={ref} isActive={activeLetter}>
+    <div className={s.word} ref={ref}>
+      <div
+          className={activeLetter !== 0 ? s.word__cursor : s["word__cursor--animated"]}
+        style={{ left: 20.2 * activeLetter }}
+      ></div>
       {renderWordByLetters(displayName, letterStatuses)}
-    </WordStyled>
+    </div>
   );
 });
