@@ -1,6 +1,6 @@
 import { useState, useMemo, useContext, useRef, useEffect } from "react";
 import { TypingContext } from "../../contexts/TypingContext";
-import { WordsListStyled } from "../styles/WordList.styled";
+import s from "./styles.module.scss";
 import { ActiveWord, InactiveWord } from "../Word/Word";
 
 export const WordsList = () => {
@@ -28,6 +28,7 @@ export const WordsList = () => {
 
     const verticalGap = 5;
 
+    // TODO: Rewrite condtional
     if (
       activeWordRef.current &&
       wordsContainerRef.current &&
@@ -76,6 +77,6 @@ export const WordsList = () => {
   }, [words, activeWord]);
 
   return (
-    <WordsListStyled ref={wordsContainerRef}>{wordsToType}</WordsListStyled>
+    <div className={s["words-list"]}ref={wordsContainerRef}>{wordsToType}</div>
   );
 };

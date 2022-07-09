@@ -1,0 +1,32 @@
+.words-count {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  gap: 8px;
+
+  h6 {
+    color: #596172;
+    margin: 0;
+  }
+
+  .words-count__value,
+  .words-count__value--active{
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: color 0.4s ease;
+
+    &:hover {
+      color: lightcoral;
+    }
+  }
+
+  .words-count__value {
+    color: #596172;
+  }
+
+  .words-count__value--active {
+      color: lightcoral;
+  }
+}

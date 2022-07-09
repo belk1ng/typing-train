@@ -31,6 +31,8 @@
 
   .word__cursor,
   .word__cursor--animated {
+    // TODO: Cursor size based on word's font-size
+
     position: absolute;
     content: "";
     bottom: 15%;

@@ -1,5 +1,5 @@
-import { LetterStyled } from "../styles/Letter.styled"; 
 import { LetterStatus } from "../../constants";
+import s from "./styles.module.scss";
 import React, { memo } from "react";
 
 interface LetterProps {
@@ -8,7 +8,7 @@ interface LetterProps {
 }
 
 const LetterComponent = ({ letter, status }: LetterProps) => {
-  return <LetterStyled status={status}>{letter}</LetterStyled>;
+  return <span className={s[`letter--${status}`]}>{letter}</span>;
 };
 
 export const Letter = memo(LetterComponent);
