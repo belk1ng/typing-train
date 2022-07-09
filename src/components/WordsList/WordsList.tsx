@@ -33,8 +33,12 @@ export const WordsList = () => {
       activeWordRef.current.offsetTop !== prevWordOffsetTopValue.current
     ) {
       const scrollTopValue = wordsContainerRef.current.scrollTop;
+
+      const verticalGap = 5;
+      const scrollValue = activeWordRef.current.clientHeight + verticalGap;
+
       prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
-      setScrollTop(scrollTopValue + 53);
+      setScrollTop(scrollTopValue + scrollValue);
     }
   }, [activeWordRef, activeLetter]);
 

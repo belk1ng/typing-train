@@ -44,7 +44,7 @@ export const ActiveWord = forwardRef<
         className={
           activeLetter !== 0 ? s.word__cursor : s["word__cursor--animated"]
         }
-        style={{ left: 20.2 * activeLetter }}
+          style={{ left: `calc(${activeLetter}ch + ${activeLetter}px)` }}
       ></div>
       {renderWordByLetters(displayName, letterStatuses)}
     </div>
