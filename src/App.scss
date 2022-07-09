@@ -73,9 +73,18 @@ body {
 }
 
 // Styles
+#root {
+  width: 100vw;
+}
+
 .wrapper {
   height: 100vh;
-  padding: 0 15px;
+
+  margin: 0 auto;
+  max-width: 900px;
+  min-width: 425px;
+
+  padding: 0 25px;
 
   display: flex;
   align-items: center;

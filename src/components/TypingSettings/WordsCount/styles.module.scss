@@ -5,13 +5,16 @@
   gap: 8px;
 
   h6 {
+    font-weight: 400;
     color: #596172;
     margin: 0;
+
+    font-size: 15px;
   }
 
   .words-count__value,
-  .words-count__value--active{
-    font-size: 14px;
+  .words-count__value--active {
+    font-size: 15px;
 
     cursor: pointer;
 
@@ -27,6 +30,6 @@
   }
 
   .words-count__value--active {
-      color: lightcoral;
+    color: lightcoral;
   }
 }

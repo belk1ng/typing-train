@@ -1,4 +1,4 @@
-import { TypingContext } from "../../contexts/TypingContext";
+import { TypingContext } from "../../../contexts/TypingContext";
 import React, { useContext } from "react";
 import s from "./styles.module.scss";
 

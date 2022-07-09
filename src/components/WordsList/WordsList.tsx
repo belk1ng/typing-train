@@ -33,7 +33,7 @@ export const WordsList = () => {
       activeWordRef.current &&
       wordsContainerRef.current &&
       activeWordRef.current.offsetTop >=
-        activeWordRef.current.clientHeight * 2 + verticalGap * 2 &&
+        activeWordRef.current.clientHeight * 3 + verticalGap * 3 &&
       activeWordRef.current.offsetTop !== prevWordOffsetTopValue.current
     ) {
       const scrollTopValue = wordsContainerRef.current.scrollTop;

@@ -1,5 +1,5 @@
+import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
 import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
-import { WordsCount } from "./components/WordsCount/WordsCount";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
@@ -181,7 +181,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      <WordsCount />
+      <TypingSettings />
       <WordsList />
     </div>
   );
