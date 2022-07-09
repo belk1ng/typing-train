@@ -11,9 +11,21 @@ export const WordsList = () => {
   const prevWordOffsetTopValue = useRef<number>(0);
   const wordsContainerRef = useRef<HTMLDivElement>(null);
 
-  const [scrollTop, setScrollTop] = useState<number>(1);
+  const [scrollTop, setScrollTop] = useState<number>(0);
+
+  type TSide = "top" | "bottom" | "left" | "right";
+
+  const scrollTo = (elem: HTMLElement, side: TSide, pixels: number): void => {
+    elem.scrollTo({
+      [side]: pixels,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
+    // TODO: Scroll back when user returns to the prev word
+    // which is higher
+
     if (
       activeWordRef.current &&
       wordsContainerRef.current &&
@@ -22,25 +34,19 @@ export const WordsList = () => {
     ) {
       const scrollTopValue = wordsContainerRef.current.scrollTop;
       prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
-      setScrollTop(scrollTopValue + 50);
+      setScrollTop(scrollTopValue + 53);
     }
-  }, [activeWordRef.current, activeLetter]);
+  }, [activeWordRef, activeLetter]);
 
   useEffect(() => {
     if (wordsContainerRef.current) {
-      wordsContainerRef.current.scrollTo({
-        top: scrollTop,
-        behavior: "smooth",
-      });
+      scrollTo(wordsContainerRef.current, "top", scrollTop);
     }
   }, [scrollTop]);
 
   useEffect(() => {
     if (wordsContainerRef.current) {
-      wordsContainerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      scrollTo(wordsContainerRef.current, "top", 0);
     }
   }, [wordsArray]);
 

@@ -41,7 +41,9 @@ export const ActiveWord = forwardRef<
   return (
     <div className={s.word} ref={ref}>
       <div
-          className={activeLetter !== 0 ? s.word__cursor : s["word__cursor--animated"]}
+        className={
+          activeLetter !== 0 ? s.word__cursor : s["word__cursor--animated"]
+        }
         style={{ left: 20.2 * activeLetter }}
       ></div>
       {renderWordByLetters(displayName, letterStatuses)}
