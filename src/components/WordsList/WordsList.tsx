@@ -26,15 +26,17 @@ export const WordsList = () => {
     // TODO: Scroll back when user returns to the prev word
     // which is higher
 
+    const verticalGap = 5;
+
     if (
       activeWordRef.current &&
       wordsContainerRef.current &&
-      activeWordRef.current.offsetTop >= 100 &&
+      activeWordRef.current.offsetTop >=
+        activeWordRef.current.clientHeight * 2 + verticalGap * 2 &&
       activeWordRef.current.offsetTop !== prevWordOffsetTopValue.current
     ) {
       const scrollTopValue = wordsContainerRef.current.scrollTop;
 
-      const verticalGap = 5;
       const scrollValue = activeWordRef.current.clientHeight + verticalGap;
 
       prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
