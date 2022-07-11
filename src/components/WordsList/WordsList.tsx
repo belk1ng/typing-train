@@ -23,25 +23,35 @@ export const WordsList = () => {
   };
 
   useEffect(() => {
-    // TODO: Scroll back when user returns to the prev word
-    // which is higher
-
     const verticalGap = 5;
 
-    // TODO: Rewrite condtional
-    if (
-      activeWordRef.current &&
-      wordsContainerRef.current &&
-      activeWordRef.current.offsetTop >=
-        activeWordRef.current.clientHeight * 3 + verticalGap * 3 &&
-      activeWordRef.current.offsetTop !== prevWordOffsetTopValue.current
-    ) {
+    if (wordsContainerRef.current && activeWordRef.current) {
       const scrollTopValue = wordsContainerRef.current.scrollTop;
-
       const scrollValue = activeWordRef.current.clientHeight + verticalGap;
 
-      prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
-      setScrollTop(scrollTopValue + scrollValue);
+      if (
+        activeWordRef.current.offsetTop < prevWordOffsetTopValue.current &&
+        !(
+          activeWordRef.current.offsetTop +
+            activeWordRef.current.clientHeight * 2 +
+            verticalGap ===
+          wordsContainerRef.current.scrollHeight
+        )
+      ) {
+        // Scrollback only if the active word not inside the last two rows
+
+        setScrollTop(scrollTopValue - scrollValue);
+        prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
+      } else if (
+        // Show next rows
+
+        activeWordRef.current.offsetTop >=
+          activeWordRef.current.clientHeight * 2 + verticalGap * 2 &&
+        activeWordRef.current.offsetTop !== prevWordOffsetTopValue.current
+      ) {
+        prevWordOffsetTopValue.current = activeWordRef.current.offsetTop;
+        setScrollTop(scrollTopValue + scrollValue);
+      }
     }
   }, [activeWordRef, activeLetter]);
 
@@ -53,6 +63,8 @@ export const WordsList = () => {
 
   useEffect(() => {
     if (wordsContainerRef.current) {
+      prevWordOffsetTopValue.current = 0;
+      setScrollTop(0);
       scrollTo(wordsContainerRef.current, "top", 0);
     }
   }, [wordsArray]);
@@ -77,6 +89,8 @@ export const WordsList = () => {
   }, [words, activeWord]);
 
   return (
-    <div className={s["words-list"]}ref={wordsContainerRef}>{wordsToType}</div>
+    <div className={s["words-list"]} ref={wordsContainerRef}>
+      {wordsToType}
+    </div>
   );
 };

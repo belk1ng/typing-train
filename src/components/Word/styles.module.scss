@@ -1,3 +1,6 @@
+// Fonts importing
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=PT+Mono&family=Roboto+Mono&display=swap");
+
 @keyframes cursor-pulse {
   0% {
     opacity: 1px;
@@ -14,8 +17,10 @@
 
 .word {
   font-size: 32px;
-  font-weight: 500;
-  font-family: "Courier New", Courier, monospace;
+  font-weight: 400;
+  // font-family: 'IBM Plex Mono', monospace;
+  font-family: "PT Mono", monospace;
+  // font-family: 'Roboto Mono', monospace;
 
   letter-spacing: 1px;
   transition: all 0.15s ease;
