@@ -157,9 +157,8 @@ function App() {
 
           setActiveLetter((prev: number) => prev - 1);
         }
-      } else if (event.keyCode === 9) {
-        // Tab handling
-        // TODO: Tab preventing
+      } else if (event.keyCode === 13) {
+        // Enter handling
 
         setActiveWord(0);
         setActiveLetter(0);
