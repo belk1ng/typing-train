@@ -1,3 +1,4 @@
+import { SettingsContextProvider } from "./contexts/SettingsContext";
 import { TypingContextProvider } from "./contexts/TypingContext";
 import ReactDOM from "react-dom/client";
 import React from "react";
@@ -9,8 +10,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <TypingContextProvider>
-      <App />
-    </TypingContextProvider>
+    <SettingsContextProvider>
+      <TypingContextProvider>
+        <App />
+      </TypingContextProvider>
+    </SettingsContextProvider>
   </React.StrictMode>
 );

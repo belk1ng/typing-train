@@ -1,11 +1,14 @@
 import { useState, useMemo, useContext, useRef, useEffect } from "react";
+import { SettingsContext } from "../../contexts/SettingsContext";
 import { TypingContext } from "../../contexts/TypingContext";
-import s from "./styles.module.scss";
 import { ActiveWord, InactiveWord } from "../Word/Word";
+import s from "./styles.module.scss";
 
 export const WordsList = () => {
   const { words, wordsArray, activeWord, activeLetter } =
     useContext(TypingContext);
+
+  const { fontSize } = useContext(SettingsContext);
 
   const activeWordRef = useRef<HTMLParagraphElement>(null);
   const prevWordOffsetTopValue = useRef<number>(0);
@@ -89,7 +92,11 @@ export const WordsList = () => {
   }, [words, activeWord]);
 
   return (
-    <div className={s["words-list"]} ref={wordsContainerRef}>
+    <div
+      className={s["words-list"]}
+      ref={wordsContainerRef}
+      style={{ fontSize: fontSize }}
+    >
       {wordsToType}
     </div>
   );

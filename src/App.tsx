@@ -1,5 +1,6 @@
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
 import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
+import { SettingsContextProvider } from "./contexts/SettingsContext";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
