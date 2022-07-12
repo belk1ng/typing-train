@@ -27,7 +27,8 @@ function App() {
       if (
         (event.keyCode >= 48 && event.keyCode <= 90) ||
         (event.keyCode >= 106 && event.keyCode <= 111) ||
-        (event.keyCode >= 186 && event.keyCode <= 222)
+        (event.keyCode >= 186 && event.keyCode <= 222) ||
+        event.keyCode === 173
       ) {
         // Numbers, letters and symbols handling
 
