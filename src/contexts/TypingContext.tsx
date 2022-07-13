@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import russian10k from "../languages/russian10k.json";
+import engilsh25k from "../languages/english25k.json";
 import { LetterStatus } from "../constants";
 
 interface TypingContextProviderProps {
@@ -62,7 +63,7 @@ export const TypingContextProvider = ({
 
       for (let word = 0; word < wordsCount; word++) {
         const randomWord =
-          russian10k.words[Math.floor(Math.random() * russian10k.words.length)];
+          engilsh25k.words[Math.floor(Math.random() * engilsh25k.words.length)];
 
         wordsToType.push(randomWord);
       }
