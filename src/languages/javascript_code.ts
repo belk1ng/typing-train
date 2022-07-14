@@ -1,8 +1,7 @@
-{
-  "name": "code_javascript_1k",
-  "leftToRight": true,
-  "noLazyMode": true,
-  "words": [
+import { Language } from "../constants";
+
+export const javascriptCode: Language = {
+  words: [
     "var",
     "if",
     "function",

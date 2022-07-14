@@ -1,3 +1,4 @@
+import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
 import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
 import { WordsList } from "./components/WordsList/WordsList";
@@ -15,6 +16,7 @@ function App() {
     setWords,
     wordsCount,
     generateRandomWords,
+    blockingTypingEvent,
   } = useContext(TypingContext);
 
   // TODO: Refactoring component App
@@ -23,147 +25,149 @@ function App() {
     const keyUpHandler = (event: KeyboardEvent) => {
       const typingWord = words[activeWord];
 
-      if (
-        (event.keyCode >= 48 && event.keyCode <= 90) ||
-        (event.keyCode >= 106 && event.keyCode <= 111) ||
-        (event.keyCode >= 186 && event.keyCode <= 222) ||
-        event.keyCode === 173
-      ) {
-        // Numbers, letters and symbols handling
+      if (!blockingTypingEvent) {
+        if (
+          (event.keyCode >= 48 && event.keyCode <= 90) ||
+          (event.keyCode >= 106 && event.keyCode <= 111) ||
+          (event.keyCode >= 186 && event.keyCode <= 222) ||
+          event.keyCode === 173
+        ) {
+          // Numbers, letters and symbols handling
 
-        const activeWordLength = typingWord.displayName.length;
+          const activeWordLength = typingWord.displayName.length;
 
-        if (activeLetter < activeWordLength) {
-          const letterStatusCompute =
-            event.key === typingWord.displayName[activeLetter];
+          if (activeLetter < activeWordLength) {
+            const letterStatusCompute =
+              event.key === typingWord.displayName[activeLetter];
 
-          const activeWordLetterStatuses = typingWord.letterStatuses;
-
-          const alreadyHasStatus = [
-            ...activeWordLetterStatuses.slice(0, activeLetter),
-          ];
-
-          const activeWordLetterStatusesUPD = [
-            ...alreadyHasStatus,
-            letterStatusCompute ? "correct" : "incorrect",
-            ...new Array(
-              typingWord.displayName.length - alreadyHasStatus.length
-            ).fill("unset"),
-          ];
-
-          setWords((prev: WordTypeWithLetterStatuses[]) =>
-            prev.map((word, index) =>
-              index === activeWord
-                ? {
-                    ...word,
-                    letterStatuses: activeWordLetterStatusesUPD,
-                  }
-                : word
-            )
-          );
-
-          setActiveLetter((prev: number) => prev + 1);
-        }
-      } else if (event.keyCode === 32) {
-        // Space handling
-
-        if (activeLetter === 0) return;
-
-        if (activeWord === wordsCount - 1) {
-          setActiveWord(0);
-          setActiveLetter(0);
-          generateRandomWords();
-        } else {
-          if (activeLetter !== typingWord.displayName.length) {
-            setWords((prev: WordTypeWithLetterStatuses[]) =>
-              prev.map(({ displayName, letterStatuses }, index) =>
-                index === activeWord
-                  ? {
-                      displayName: displayName,
-                      letterStatuses: letterStatuses.map((status) =>
-                        status === "unset" ? "skiped" : status
-                      ),
-                    }
-                  : { displayName, letterStatuses }
-              )
-            );
-          }
-
-          setActiveLetter(0);
-          setActiveWord((prev: number) => prev + 1);
-        }
-      } else if (event.keyCode === 8) {
-        // Backspace handling
-
-        if (activeLetter === 0) {
-          if (activeWord === 0) return;
-
-          const prevWord = words[activeWord - 1];
-          const firstSkipedLetterIndex =
-            prevWord.letterStatuses.indexOf("skiped");
-
-          if (firstSkipedLetterIndex !== -1) {
-            setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
-
-            const prevWordLetterStatuses = prevWord.letterStatuses;
+            const activeWordLetterStatuses = typingWord.letterStatuses;
 
             const alreadyHasStatus = [
-              ...prevWordLetterStatuses.slice(0, firstSkipedLetterIndex),
+              ...activeWordLetterStatuses.slice(0, activeLetter),
             ];
 
-            const prevWordLetterStatusesUPD = [
+            const activeWordLetterStatusesUPD = [
               ...alreadyHasStatus,
+              letterStatusCompute ? "correct" : "incorrect",
               ...new Array(
-                prevWord.displayName.length - alreadyHasStatus.length
+                typingWord.displayName.length - alreadyHasStatus.length
               ).fill("unset"),
             ];
 
-            setWords((prev: WordTypeWithLetterStatuses[]) => {
-              return prev.map((word, index) =>
-                activeWord - 1 === index
+            setWords((prev: WordTypeWithLetterStatuses[]) =>
+              prev.map((word, index) =>
+                index === activeWord
                   ? {
                       ...word,
-                      letterStatuses: prevWordLetterStatusesUPD,
+                      letterStatuses: activeWordLetterStatusesUPD,
                     }
                   : word
-              );
-            });
-          } else {
-            setActiveLetter(prevWord.displayName.length);
+              )
+            );
+
+            setActiveLetter((prev: number) => prev + 1);
           }
+        } else if (event.keyCode === 32) {
+          // Space handling
 
-          setActiveWord((prev: number) => prev - 1);
-        } else {
-          const activeWordLetterStatusesSetted =
-            typingWord.letterStatuses.slice(0, activeLetter - 1);
+          if (activeLetter === 0) return;
 
-          const activeWordLetterStatusesUPD = [
-            ...activeWordLetterStatusesSetted,
-            ...new Array(
-              typingWord.displayName.length -
-                activeWordLetterStatusesSetted.length
-            ).fill("unset"),
-          ];
+          if (activeWord === wordsCount - 1) {
+            setActiveWord(0);
+            setActiveLetter(0);
+            generateRandomWords();
+          } else {
+            if (activeLetter !== typingWord.displayName.length) {
+              setWords((prev: WordTypeWithLetterStatuses[]) =>
+                prev.map(({ displayName, letterStatuses }, index) =>
+                  index === activeWord
+                    ? {
+                        displayName: displayName,
+                        letterStatuses: letterStatuses.map((status) =>
+                          status === "unset" ? "skiped" : status
+                        ),
+                      }
+                    : { displayName, letterStatuses }
+                )
+              );
+            }
 
-          setWords((prev: WordTypeWithLetterStatuses[]) =>
-            prev.map((word, index) =>
-              index === activeWord
-                ? {
-                    ...word,
-                    letterStatuses: activeWordLetterStatusesUPD,
-                  }
-                : word
-            )
-          );
+            setActiveLetter(0);
+            setActiveWord((prev: number) => prev + 1);
+          }
+        } else if (event.keyCode === 8) {
+          // Backspace handling
 
-          setActiveLetter((prev: number) => prev - 1);
+          if (activeLetter === 0) {
+            if (activeWord === 0) return;
+
+            const prevWord = words[activeWord - 1];
+            const firstSkipedLetterIndex =
+              prevWord.letterStatuses.indexOf("skiped");
+
+            if (firstSkipedLetterIndex !== -1) {
+              setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
+
+              const prevWordLetterStatuses = prevWord.letterStatuses;
+
+              const alreadyHasStatus = [
+                ...prevWordLetterStatuses.slice(0, firstSkipedLetterIndex),
+              ];
+
+              const prevWordLetterStatusesUPD = [
+                ...alreadyHasStatus,
+                ...new Array(
+                  prevWord.displayName.length - alreadyHasStatus.length
+                ).fill("unset"),
+              ];
+
+              setWords((prev: WordTypeWithLetterStatuses[]) => {
+                return prev.map((word, index) =>
+                  activeWord - 1 === index
+                    ? {
+                        ...word,
+                        letterStatuses: prevWordLetterStatusesUPD,
+                      }
+                    : word
+                );
+              });
+            } else {
+              setActiveLetter(prevWord.displayName.length);
+            }
+
+            setActiveWord((prev: number) => prev - 1);
+          } else {
+            const activeWordLetterStatusesSetted =
+              typingWord.letterStatuses.slice(0, activeLetter - 1);
+
+            const activeWordLetterStatusesUPD = [
+              ...activeWordLetterStatusesSetted,
+              ...new Array(
+                typingWord.displayName.length -
+                  activeWordLetterStatusesSetted.length
+              ).fill("unset"),
+            ];
+
+            setWords((prev: WordTypeWithLetterStatuses[]) =>
+              prev.map((word, index) =>
+                index === activeWord
+                  ? {
+                      ...word,
+                      letterStatuses: activeWordLetterStatusesUPD,
+                    }
+                  : word
+              )
+            );
+
+            setActiveLetter((prev: number) => prev - 1);
+          }
+        } else if (event.keyCode === 13) {
+          // Enter handling
+
+          setActiveWord(0);
+          setActiveLetter(0);
+          generateRandomWords();
         }
-      } else if (event.keyCode === 13) {
-        // Enter handling
-
-        setActiveWord(0);
-        setActiveLetter(0);
-        generateRandomWords();
       }
     };
 
@@ -177,11 +181,13 @@ function App() {
     setWords,
     setActiveWord,
     setActiveLetter,
+    blockingTypingEvent,
   ]);
 
   return (
     <div className="wrapper">
       <TypingSettings />
+      <LanguageSelector />
       <WordsList />
     </div>
   );

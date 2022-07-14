@@ -1,0 +1,39 @@
+.language-selector,
+.language-selector--hide {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #596172;
+
+  transition: color 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+
+  svg {
+    width: 25px;
+    height: 25px;
+
+    fill: #596172;
+    transition: fill 0.3s ease;
+  }
+
+  &:hover {
+    color: #f6f0e9;
+
+    svg {
+      fill: #f6f0e9;
+    }
+  }
+}
+
+.language-selector--hide {
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}

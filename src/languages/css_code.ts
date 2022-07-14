@@ -1,8 +1,7 @@
-{
-  "name": "code_css",
-  "leftToRight": true,
-  "noLazyMode": true,
-  "words": [
+import { Language } from "../constants"
+
+export const cssCode: Language = {
+  words: [
     "background-color",
     "color",
     "center",

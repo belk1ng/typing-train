@@ -1,9 +1,7 @@
-{
-    "name": "russian_10k",
-    "leftToRight": true,
-    "noLazyMode": true,
-    "bcp47": "ru-RU",
-    "words": [
+import { Language } from "../constants"
+
+export const russian10k: Language = {
+    words: [
         "может",
         "найти",
         "москва",

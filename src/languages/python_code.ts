@@ -1,8 +1,7 @@
-{
-  "name": "code_python",
-  "leftToRight": true,
-  "noLazyMode": true,
-  "words": [
+import { Language } from "../constants";
+
+export const pythonCode: Language = {
+  words: [
     "__str__",
     "__repr__",
     "__del__",
