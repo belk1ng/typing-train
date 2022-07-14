@@ -4,6 +4,12 @@
   align-items: center;
   gap: 8px;
 
+  * {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+
   h6 {
     font-weight: 400;
     color: #596172;

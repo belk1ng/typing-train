@@ -33,15 +33,15 @@ interface TypingContextProviderValue {
   setWords: Function;
   wordsCount: number;
   setWordsCount: Function;
-  language: string,
-  setLanguage: Function,
+  language: string;
+  setLanguage: Function;
   blockingTypingEvent: boolean;
   setBlockingTypingEvent: Function;
   generateRandomWords: (wordsCount?: number) => void;
 }
 
 interface TLanguagesStore {
-  [langName: string]: Language
+  [langName: string]: Language;
 }
 
 export const languages: TLanguagesStore = {
@@ -87,7 +87,10 @@ export const TypingContextProvider = ({
 
       for (let word = 0; word < wordsCount; word++) {
         const choosenLanguageWords = languages[language].words;
-        const randomWord = choosenLanguageWords[Math.floor(Math.random() * choosenLanguageWords.length)];
+        const randomWord =
+          choosenLanguageWords[
+            Math.floor(Math.random() * choosenLanguageWords.length)
+          ];
 
         wordsToType.push(randomWord);
       }

@@ -1,4 +1,4 @@
-import { Language } from "../constants"
+import { Language } from "../constants";
 
 export const cssCode: Language = {
   words: [
@@ -34,6 +34,6 @@ export const cssCode: Language = {
     "background-size",
     "background-origin",
     "transform",
-    "@media"
-  ]
-}
+    "@media",
+  ],
+};

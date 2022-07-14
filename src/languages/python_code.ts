@@ -174,6 +174,6 @@ export const pythonCode: Language = {
     "with",
     "yield",
     "zfill",
-    "zip"
-  ]
-}
+    "zip",
+  ],
+};

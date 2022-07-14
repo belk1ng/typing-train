@@ -1002,6 +1002,6 @@ export const javascriptCode: Language = {
     "since",
     "timings",
     "closingBraces",
-    "getOwnPropertySymbols"
-  ]
-}
+    "getOwnPropertySymbols",
+  ],
+};

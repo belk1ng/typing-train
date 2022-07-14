@@ -1,5 +1,5 @@
-import { TypingContext, languages } from "../../../contexts/TypingContext";
 import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
+import { TypingContext, languages } from "../../../contexts/TypingContext";
 import s from "./styles.module.scss";
 
 interface Props {
@@ -51,14 +51,22 @@ export const LanguageSelectorModal = ({
   }, [modalCollapsed]);
 
   const languagesListItems = useMemo(() => {
-    return Object.entries(languages).filter(([langName, _]) => langName.includes(searchQuery)).map(([langName, _]) => (
-        <li className={s["selector__language"]} onClick={() => {
-          setLanguage(langName);
-          setModalCollapsed(true);
-          setBlockingTypingEvent(false);
-        }}>{langName}</li>
-      ))
-  }, [searchQuery])
+    return Object.entries(languages)
+      .filter(([langName, _]) => langName.includes(searchQuery))
+      .map(([langName, _]) => (
+        <li
+          className={s["selector__language"]}
+          onClick={() => {
+            setLanguage(langName);
+            setModalCollapsed(true);
+            setBlockingTypingEvent(false);
+            setSearchQuery("");
+          }}
+        >
+          {langName}
+        </li>
+      ));
+  }, [searchQuery]);
 
   return (
     <div
@@ -77,9 +85,9 @@ export const LanguageSelectorModal = ({
             placeholder={"Type to search"}
             className={s["selector__input"]}
           />
-            <ul className={s["selector__languages-list"]}>
-              {languagesListItems}
-            </ul>
+          <ul className={s["selector__languages-list"]}>
+            {languagesListItems}
+          </ul>
         </div>
       </div>
     </div>

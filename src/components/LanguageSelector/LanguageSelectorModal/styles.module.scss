@@ -14,7 +14,6 @@
 
   .selector {
     width: 700px;
-    max-height: 650px;
 
     background: #242933;
 
@@ -51,19 +50,29 @@
       margin: 0;
       padding: 0 0 8px 0;
 
+      max-height: 600px;
+      overflow: scroll;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
       .selector__language {
         font-size: 18px;
         list-style-type: none;
         padding: 4px 25px;
-        color: #596172;       
+        color: #596172;
 
-        transition: background .3s ease, color .3s ease;
+        transition: background 0.3s ease, color 0.3s ease;
 
         &:hover {
           cursor: pointer;
+
           background: #f6f0e9;
           color: #242933;
-          transition: background .3s ease;
+
+          transition: background 0.3s ease, color 0.3s ease;
         }
       }
     }
