@@ -65,7 +65,14 @@ export const TypingContextProvider = ({
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
 
-  const [language, setLanguage] = useState<string>("russian_10k");
+  type LanguageState =
+    | "english_25k"
+    | "russian_10k"
+    | "javascript_code"
+    | "css_code"
+    | "python_code";
+
+  const [language, setLanguage] = useState<LanguageState>("russian_10k");
 
   useEffect(() => generateRandomWords(wordsCount), [wordsCount, language]);
 

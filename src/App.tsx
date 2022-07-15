@@ -19,7 +19,7 @@ function App() {
     blockingTypingEvent,
   } = useContext(TypingContext);
 
-  // TODO: Refactoring component App
+  // TODO: Refactoring component Appap
 
   useEffect(() => {
     const keyUpHandler = (event: KeyboardEvent) => {
@@ -75,7 +75,7 @@ function App() {
           if (activeWord === wordsCount - 1) {
             setActiveWord(0);
             setActiveLetter(0);
-            generateRandomWords();
+            generateRandomWords(wordsCount);
           } else {
             if (activeLetter !== typingWord.displayName.length) {
               setWords((prev: WordTypeWithLetterStatuses[]) =>
