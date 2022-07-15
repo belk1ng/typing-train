@@ -9,8 +9,11 @@ type Quote = {
   source: string;
   length: number;
   id: number;
+  approvedBy?: string;
 };
 
 export type Quotes = {
   quotes: Quote[];
 };
+
+export type TypingMode = "words" | "quotes";

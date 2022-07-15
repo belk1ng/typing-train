@@ -11,7 +11,7 @@ export const LanguageSelectorModal = ({
   modalCollapsed,
   setModalCollapsed,
 }: Props) => {
-  const { blockingTypingEvent, setBlockingTypingEvent, setLanguage } =
+  const { blockingTypingEvent, setBlockingTypingEvent, setWordsModeLanguage } =
     useContext(TypingContext);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -57,7 +57,7 @@ export const LanguageSelectorModal = ({
         <li
           className={s["selector__language"]}
           onClick={() => {
-            setLanguage(langName);
+            setWordsModeLanguage(langName);
             setModalCollapsed(true);
             setBlockingTypingEvent(false);
             setSearchQuery("");

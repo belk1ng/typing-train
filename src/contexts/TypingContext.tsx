@@ -11,7 +11,11 @@ import { english25k } from "../languages/english25k";
 import { cssCode } from "../languages/css_code";
 import { javascriptCode } from "../languages/javascript_code";
 import { pythonCode } from "../languages/python_code";
-import { Language, LetterStatus } from "../constants";
+
+import { russianQuotes } from "../languages/russian_quotes";
+import { englishQuotes } from "../languages/english_quotes";
+
+import { Language, LetterStatus, Quotes, TypingMode } from "../constants";
 
 interface TypingContextProviderProps {
   children: JSX.Element;
@@ -25,21 +29,35 @@ export interface WordTypeWithLetterStatuses {
 interface TypingContextProviderValue {
   activeWord: number;
   setActiveWord: Function;
+
   activeLetter: number;
   setActiveLetter: Function;
+
   wordsArray: string[];
   setWordsArray: Function;
+
   words: WordTypeWithLetterStatuses[];
   setWords: Function;
+
   wordsCount: number;
   setWordsCount: Function;
-  language: string;
-  setLanguage: Function;
+
+  wordsModeLanguage: string;
+  setWordsModeLanguage: Function;
+
+  quotesModeLanguage: string;
+  setQuotesModeLanguage: Function;
+
+  typingMode: TypingMode;
+  setTypingMode: Function;
+
   blockingTypingEvent: boolean;
   setBlockingTypingEvent: Function;
+
   generateRandomWords: (wordsCount?: number) => void;
 }
 
+// Typing "Words" languages
 interface TLanguagesStore {
   [langName: string]: Language;
 }
@@ -51,6 +69,25 @@ export const languages: TLanguagesStore = {
   css_code: cssCode,
   python_code: pythonCode,
 };
+
+type WordsModeLanguages =
+  | "english_25k"
+  | "russian_10k"
+  | "javascript_code"
+  | "css_code"
+  | "python_code";
+
+// Typing "Quotes" languages
+interface QuotesLanguagesStore {
+  [langName: string]: Quotes;
+}
+
+export const quotesLanguages: QuotesLanguagesStore = {
+  russian_quotes: russianQuotes,
+  english_quotes: englishQuotes,
+};
+
+type QuotesModeLanguages = "russian_quotes" | "english_quotes";
 
 export const TypingContext = createContext({} as TypingContextProviderValue);
 
@@ -65,9 +102,20 @@ export const TypingContextProvider = ({
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
 
-  const [language, setLanguage] = useState<string>("russian_10k");
+  const [typingMode, setTypingMode] = useState<TypingMode>("words");
 
-  useEffect(() => generateRandomWords(wordsCount), [wordsCount, language]);
+  // Words mode language
+  const [wordsModeLanguage, setWordsModeLanguage] =
+    useState<WordsModeLanguages>("russian_10k");
+
+  // Quotes mode language
+  const [quotesModeLanguage, setQuotesModeLanguage] =
+    useState<QuotesModeLanguages>("russian_quotes");
+
+  useEffect(
+    () => generateRandomWords(wordsCount),
+    [wordsCount, wordsModeLanguage]
+  );
 
   useEffect(() => {
     setWords(
@@ -86,7 +134,7 @@ export const TypingContextProvider = ({
       let wordsToType: string[] = [];
 
       for (let word = 0; word < wordsCount; word++) {
-        const choosenLanguageWords = languages[language].words;
+        const choosenLanguageWords = languages[wordsModeLanguage].words;
         const randomWord =
           choosenLanguageWords[
             Math.floor(Math.random() * choosenLanguageWords.length)
@@ -97,7 +145,7 @@ export const TypingContextProvider = ({
 
       setWordsArray(wordsToType);
     },
-    [wordsCount, language]
+    [wordsCount, wordsModeLanguage]
   );
 
   const value = useMemo(
@@ -112,23 +160,26 @@ export const TypingContextProvider = ({
       setWordsArray,
       wordsCount,
       setWordsCount,
-      language,
-      setLanguage,
+      wordsModeLanguage,
+      setWordsModeLanguage,
+      quotesModeLanguage,
+      setQuotesModeLanguage,
+      typingMode,
+      setTypingMode,
       blockingTypingEvent,
       setBlockingTypingEvent,
       generateRandomWords,
     }),
     [
       activeWord,
-      setActiveWord,
       activeLetter,
-      setActiveLetter,
       words,
       setWords,
       wordsArray,
       wordsCount,
-      setWordsCount,
-      language,
+      wordsModeLanguage,
+      quotesModeLanguage,
+      typingMode,
       blockingTypingEvent,
     ]
   );

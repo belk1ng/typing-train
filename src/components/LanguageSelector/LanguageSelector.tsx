@@ -7,8 +7,12 @@ import s from "./styles.module.scss";
 export const LanguageSelector = () => {
   const [modalCollapsed, setModalCollapsed] = useState<boolean>(true);
 
-  const { activeLetter, activeWord, setBlockingTypingEvent, language } =
-    useContext(TypingContext);
+  const {
+    activeLetter,
+    activeWord,
+    setBlockingTypingEvent,
+    wordsModeLanguage,
+  } = useContext(TypingContext);
 
   return (
     <>
@@ -24,7 +28,7 @@ export const LanguageSelector = () => {
         }
       >
         <Globe />
-        {language}
+        {wordsModeLanguage}
       </div>
       <LanguageSelectorModal
         modalCollapsed={modalCollapsed}
