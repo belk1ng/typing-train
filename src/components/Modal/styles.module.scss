@@ -1,0 +1,26 @@
+.modal,
+.modal--hide {
+  position: absolute;
+  content: "";
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.75);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.modal--hide {
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.2s ease, z-index 0s 0.2s;
+}

@@ -1,5 +1,13 @@
-import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 import { TypingContext, languages } from "../../../contexts/TypingContext";
+import { Modal } from "../../Modal/Modal";
 import s from "./styles.module.scss";
 
 interface Props {
@@ -16,33 +24,20 @@ export const LanguageSelectorModal = ({
 
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const modalWindowRef = useRef<HTMLDivElement>(null);
   const selectorRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
+  const handleOutsideClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>): void => {
       const el = selectorRef.current;
 
       if (el && !el.contains(event.target as Node) && !modalCollapsed) {
         setModalCollapsed(true);
         setBlockingTypingEvent(false);
       }
-    };
-
-    if (modalWindowRef.current) {
-      modalWindowRef.current.addEventListener("click", handleOutsideClick);
-    }
-
-    return () => {
-      if (modalWindowRef.current) {
-        return modalWindowRef.current.addEventListener(
-          "click",
-          handleOutsideClick
-        );
-      }
-    };
-  }, [selectorRef, modalCollapsed]);
+    },
+    [modalCollapsed]
+  );
 
   useEffect(() => {
     if (inputRef.current) {
@@ -50,6 +45,7 @@ export const LanguageSelectorModal = ({
     }
   }, [modalCollapsed]);
 
+  // TODO: Statement rendering languages based on choosen typing mode
   const languagesListItems = useMemo(() => {
     return Object.entries(languages)
       .filter(([langName, _]) => langName.includes(searchQuery))
@@ -69,10 +65,7 @@ export const LanguageSelectorModal = ({
   }, [searchQuery]);
 
   return (
-    <div
-      className={modalCollapsed ? s["modal--hide"] : s["modal"]}
-      ref={modalWindowRef}
-    >
+    <Modal isCollapsed={modalCollapsed} onClick={handleOutsideClick}>
       <div className={s["selector"]} ref={selectorRef}>
         <div className={s["selector__search"]}>
           <input
@@ -90,6 +83,6 @@ export const LanguageSelectorModal = ({
           </ul>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };

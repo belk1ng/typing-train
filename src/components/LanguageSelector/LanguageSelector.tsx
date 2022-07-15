@@ -30,6 +30,7 @@ export const LanguageSelector = () => {
         <Globe />
         {wordsModeLanguage}
       </div>
+      {/* TODO: Statement rendering modal for any types of Typing mode */}
       <LanguageSelectorModal
         modalCollapsed={modalCollapsed}
         setModalCollapsed={setModalCollapsed}

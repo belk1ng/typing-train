@@ -1,91 +1,65 @@
-.modal,
-.modal--hide {
-  position: absolute;
-  content: "";
+.selector {
+  width: 700px;
 
-  width: 100vw;
-  height: 100vh;
+  background: #242933;
 
-  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 0.5em;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .selector {
-    width: 700px;
-
-    background: #242933;
-
+  .selector__input {
     border-radius: 0.5em;
 
-    .selector__input {
-      border-radius: 0.5em;
+    width: 100%;
+    height: 50px;
+    padding: 10px 25px;
 
-      width: 100%;
-      height: 50px;
-      padding: 10px 25px;
+    background-color: transparent;
+    border: 0;
 
-      background-color: transparent;
-      border: 0;
+    color: #fff;
+    font-size: 18px;
+    caret-color: lightcoral;
 
-      color: #fff;
+    &::placeholder {
+      color: #596172;
       font-size: 18px;
-      caret-color: lightcoral;
-
-      &::placeholder {
-        color: #596172;
-        font-size: 18px;
-        font-weight: 500;
-      }
-
-      &:focus,
-      &:focus-visible {
-        border: 0;
-        outline: none;
-      }
+      font-weight: 500;
     }
 
-    .selector__languages-list {
-      margin: 0;
-      padding: 0 0 8px 0;
+    &:focus,
+    &:focus-visible {
+      border: 0;
+      outline: none;
+    }
+  }
 
-      max-height: 600px;
-      overflow: scroll;
-      scrollbar-width: none;
+  .selector__languages-list {
+    margin: 0;
+    padding: 0 0 8px 0;
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    max-height: 600px;
+    overflow: scroll;
+    scrollbar-width: none;
 
-      .selector__language {
-        font-size: 18px;
-        list-style-type: none;
-        padding: 4px 25px;
-        color: #596172;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .selector__language {
+      font-size: 18px;
+      list-style-type: none;
+      padding: 4px 25px;
+      color: #596172;
+
+      transition: background 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        cursor: pointer;
+
+        background: #f6f0e9;
+        color: #242933;
 
         transition: background 0.3s ease, color 0.3s ease;
-
-        &:hover {
-          cursor: pointer;
-
-          background: #f6f0e9;
-          color: #242933;
-
-          transition: background 0.3s ease, color 0.3s ease;
-        }
       }
     }
   }
-}
-
-.modal {
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.2s ease;
-}
-
-.modal--hide {
-  z-index: -1;
-  opacity: 0;
 }
