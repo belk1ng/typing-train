@@ -1,13 +1,16 @@
-import { WordsCount } from "./WordsCount/WordsCount";
-import { TypingMode } from "./TypingMode/TypingMode";
+import { TypingContext } from "../../contexts/TypingContext";
+import React, { useContext } from "react";
+import { WordsCount } from "./WordsCount";
+import { TypingMode } from "./TypingMode";
 import s from "./styles.module.scss";
-import React from "react";
 
 export const TypingSettings = () => {
+  const { typingMode } = useContext(TypingContext);
+
   return (
     <div className={s["typing-settings"]}>
       <TypingMode />
-      <WordsCount />
+      {typingMode === "words" && <WordsCount />}
     </div>
   );
 };

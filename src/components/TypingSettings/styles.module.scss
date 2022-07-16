@@ -2,8 +2,36 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
 
   width: 100%;
   margin-bottom: 20px;
+
+  .typing-settings__params {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    font-size: 12px;
+
+    .typing-settings__param-value {
+      color: #596172;
+      cursor: pointer;
+
+      transition: color 0.3s ease;
+
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+
+      &:hover {
+        color: lightcoral;
+        transition: color 0.3s ease;
+      }
+    }
+    .typing-settings__param-value--active {
+      color: lightcoral;
+      transition: color 0.3s ease;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { TypingContext } from "../../../contexts/TypingContext";
+import { TypingContext } from "../../contexts/TypingContext";
 import React, { useContext } from "react";
 import s from "./styles.module.scss";
 
@@ -13,8 +13,8 @@ export const WordsCount = () => {
         key={index}
         className={
           wordsCount === count
-            ? s["words-count__value--active"]
-            : s["words-count__value"]
+            ? s["typing-settings__param-value--active"]
+            : s["typing-settings__param-value"]
         }
         onClick={() => setWordsCount(count)}
       >
@@ -24,8 +24,7 @@ export const WordsCount = () => {
   };
 
   return (
-    <div className={s["words-count"]}>
-      <h6>Words number: </h6>
+    <div className={s["typing-settings__params"]}>
       {renderWordsCountStates()}
     </div>
   );
