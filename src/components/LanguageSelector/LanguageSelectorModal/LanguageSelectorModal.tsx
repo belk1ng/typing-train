@@ -6,7 +6,11 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { TypingContext, languages } from "../../../contexts/TypingContext";
+import {
+  TypingContext,
+  wordsLanguages,
+  quotesLanguages,
+} from "../../../contexts/TypingContext";
 import { Modal } from "../../Modal/Modal";
 import s from "./styles.module.scss";
 
@@ -19,8 +23,13 @@ export const LanguageSelectorModal = ({
   modalCollapsed,
   setModalCollapsed,
 }: Props) => {
-  const { blockingTypingEvent, setBlockingTypingEvent, setWordsModeLanguage } =
-    useContext(TypingContext);
+  const {
+    blockingTypingEvent,
+    setBlockingTypingEvent,
+    setWordsModeLanguage,
+    setQuotesModeLanguage,
+    typingMode,
+  } = useContext(TypingContext);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -45,15 +54,20 @@ export const LanguageSelectorModal = ({
     }
   }, [modalCollapsed]);
 
-  // TODO: Statement rendering languages based on choosen typing mode
   const languagesListItems = useMemo(() => {
-    return Object.entries(languages)
+    return Object.entries(
+      typingMode === "words" ? wordsLanguages : quotesLanguages
+    )
       .filter(([langName, _]) => langName.includes(searchQuery))
       .map(([langName, _]) => (
         <li
+          key={`lang_${langName}`}
           className={s["selector__language"]}
           onClick={() => {
-            setWordsModeLanguage(langName);
+            typingMode === "words"
+              ? setWordsModeLanguage(langName)
+              : setQuotesModeLanguage(langName);
+
             setModalCollapsed(true);
             setBlockingTypingEvent(false);
             setSearchQuery("");
@@ -62,7 +76,7 @@ export const LanguageSelectorModal = ({
           {langName}
         </li>
       ));
-  }, [searchQuery]);
+  }, [searchQuery, typingMode]);
 
   return (
     <Modal isCollapsed={modalCollapsed} onClick={handleOutsideClick}>

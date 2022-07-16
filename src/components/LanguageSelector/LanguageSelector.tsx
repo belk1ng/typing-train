@@ -12,6 +12,8 @@ export const LanguageSelector = () => {
     activeWord,
     setBlockingTypingEvent,
     wordsModeLanguage,
+    quotesModeLanguage,
+    typingMode,
   } = useContext(TypingContext);
 
   return (
@@ -28,7 +30,7 @@ export const LanguageSelector = () => {
         }
       >
         <Globe />
-        {wordsModeLanguage}
+        {typingMode === "words" ? wordsModeLanguage : quotesModeLanguage}
       </div>
       {/* TODO: Statement rendering modal for any types of Typing mode */}
       <LanguageSelectorModal

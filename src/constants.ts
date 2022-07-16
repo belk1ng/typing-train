@@ -4,7 +4,7 @@ export type Language = {
   words: string[];
 };
 
-type Quote = {
+export type Quote = {
   text: string;
   source: string;
   length: number;

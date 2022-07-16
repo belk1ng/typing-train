@@ -8,6 +8,7 @@ import "./App.scss";
 
 function App() {
   const {
+    wordsArray,
     activeWord,
     setActiveWord,
     activeLetter,
@@ -15,7 +16,9 @@ function App() {
     words,
     setWords,
     wordsCount,
+    typingMode,
     generateRandomWords,
+    getRandomQuote,
     blockingTypingEvent,
   } = useContext(TypingContext);
 
@@ -72,10 +75,15 @@ function App() {
 
           if (activeLetter === 0) return;
 
-          if (activeWord === wordsCount - 1) {
+          if (
+            (activeWord === wordsCount - 1 && typingMode === "words") ||
+            (typingMode === "quotes" && activeWord === wordsArray.length - 1)
+          ) {
             setActiveWord(0);
             setActiveLetter(0);
-            generateRandomWords(wordsCount);
+            typingMode === "words"
+              ? generateRandomWords(wordsCount)
+              : getRandomQuote();
           } else {
             if (activeLetter !== typingWord.displayName.length) {
               setWords((prev: WordTypeWithLetterStatuses[]) =>
@@ -166,7 +174,9 @@ function App() {
 
           setActiveWord(0);
           setActiveLetter(0);
-          generateRandomWords();
+          typingMode === "words"
+            ? generateRandomWords(wordsCount)
+            : getRandomQuote();
         }
       }
     };
@@ -182,6 +192,7 @@ function App() {
     setActiveWord,
     setActiveLetter,
     blockingTypingEvent,
+    typingMode,
   ]);
 
   return (

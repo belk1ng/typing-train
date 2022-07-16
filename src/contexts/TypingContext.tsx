@@ -15,7 +15,13 @@ import { pythonCode } from "../languages/python_code";
 import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
 
-import { Language, LetterStatus, Quotes, TypingMode } from "../constants";
+import {
+  Language,
+  LetterStatus,
+  Quotes,
+  Quote,
+  TypingMode,
+} from "../constants";
 
 interface TypingContextProviderProps {
   children: JSX.Element;
@@ -55,6 +61,7 @@ interface TypingContextProviderValue {
   setBlockingTypingEvent: Function;
 
   generateRandomWords: (wordsCount?: number) => void;
+  getRandomQuote: () => void;
 }
 
 // Typing "Words" languages
@@ -62,7 +69,7 @@ interface TLanguagesStore {
   [langName: string]: Language;
 }
 
-export const languages: TLanguagesStore = {
+export const wordsLanguages: TLanguagesStore = {
   english_25k: english25k,
   russian_10k: russian10k,
   javascript_code: javascriptCode,
@@ -117,6 +124,16 @@ export const TypingContextProvider = ({
     [wordsCount, wordsModeLanguage]
   );
 
+  useEffect(() => getRandomQuote(), [quotesModeLanguage]);
+
+  useEffect(() => {
+    if (typingMode === "words") {
+      generateRandomWords(wordsCount);
+    } else {
+      getRandomQuote();
+    }
+  }, [typingMode]);
+
   useEffect(() => {
     setWords(
       wordsArray.map((word) => ({
@@ -134,7 +151,7 @@ export const TypingContextProvider = ({
       let wordsToType: string[] = [];
 
       for (let word = 0; word < wordsCount; word++) {
-        const choosenLanguageWords = languages[wordsModeLanguage].words;
+        const choosenLanguageWords = wordsLanguages[wordsModeLanguage].words;
         const randomWord =
           choosenLanguageWords[
             Math.floor(Math.random() * choosenLanguageWords.length)
@@ -147,6 +164,14 @@ export const TypingContextProvider = ({
     },
     [wordsCount, wordsModeLanguage]
   );
+
+  const getRandomQuote = useCallback(() => {
+    const choosenQuotesLanguage: Quotes = quotesLanguages[quotesModeLanguage];
+    const quotes: Quote[] = choosenQuotesLanguage.quotes;
+    setWordsArray(
+      quotes[Math.floor(Math.random() * quotes.length)].text.split(" ")
+    );
+  }, [quotesModeLanguage]);
 
   const value = useMemo(
     () => ({
@@ -169,6 +194,7 @@ export const TypingContextProvider = ({
       blockingTypingEvent,
       setBlockingTypingEvent,
       generateRandomWords,
+      getRandomQuote,
     }),
     [
       activeWord,
