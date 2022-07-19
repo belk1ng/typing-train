@@ -9,9 +9,10 @@ import s from "./styles.module.scss";
 
 const renderWordByLetters = (
   fullWord: string,
-  letterStatuses: LetterStatus[]
+  letterStatuses: LetterStatus[],
+  overflow: string | undefined
 ): JSX.Element[] => {
-  return fullWord
+  const currentWordLetters = fullWord
     .split("")
     .map((letter, index) => (
       <Letter
@@ -20,13 +21,30 @@ const renderWordByLetters = (
         key={`${letter}_${index}`}
       />
     ));
+
+  if (overflow) {
+    return [
+      ...currentWordLetters,
+      ...overflow
+        .split("")
+        .map((letter, index) => (
+          <Letter
+            letter={letter}
+            status="incorrect"
+            key={`${letter}_${index}`}
+          />
+        )),
+    ];
+  } else {
+    return currentWordLetters;
+  }
 };
 
 export const InactiveWord = memo(
-  ({ displayName, letterStatuses }: WordTypeWithLetterStatuses) => {
+  ({ displayName, letterStatuses, overflow }: WordTypeWithLetterStatuses) => {
     return (
       <div className={s.word}>
-        {renderWordByLetters(displayName, letterStatuses)}
+        {renderWordByLetters(displayName, letterStatuses, overflow)}
       </div>
     );
   }
@@ -35,7 +53,7 @@ export const InactiveWord = memo(
 export const ActiveWord = forwardRef<
   HTMLParagraphElement,
   WordTypeWithLetterStatuses
->(({ displayName, letterStatuses }, ref) => {
+>(({ displayName, letterStatuses, overflow }, ref) => {
   const { activeLetter } = useContext(TypingContext);
 
   return (
@@ -46,7 +64,7 @@ export const ActiveWord = forwardRef<
         }
         style={{ left: `calc(${activeLetter}ch + ${activeLetter}px)` }}
       ></div>
-      {renderWordByLetters(displayName, letterStatuses)}
+      {renderWordByLetters(displayName, letterStatuses, overflow)}
     </div>
   );
 });

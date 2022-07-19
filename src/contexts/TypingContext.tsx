@@ -30,6 +30,7 @@ interface TypingContextProviderProps {
 export interface WordTypeWithLetterStatuses {
   displayName: string;
   letterStatuses: LetterStatus[];
+  overflow?: string;
 }
 
 interface TypingContextProviderValue {

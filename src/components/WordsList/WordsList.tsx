@@ -79,12 +79,14 @@ export const WordsList = () => {
           ref={activeWordRef}
           displayName={word.displayName}
           letterStatuses={word.letterStatuses}
+          overflow={word.overflow}
           key={`${word.displayName}_${index}`}
         />
       ) : (
         <InactiveWord
           displayName={word.displayName}
           letterStatuses={word.letterStatuses}
+          overflow={word.overflow}
           key={`${word.displayName}_${index}`}
         />
       )

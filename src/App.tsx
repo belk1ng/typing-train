@@ -53,7 +53,7 @@ function App() {
               ...alreadyHasStatus,
               letterStatusCompute ? "correct" : "incorrect",
               ...new Array(
-                typingWord.displayName.length - alreadyHasStatus.length
+                typingWord.displayName.length - alreadyHasStatus.length - 1
               ).fill("unset"),
             ];
 
@@ -63,6 +63,21 @@ function App() {
                   ? {
                       ...word,
                       letterStatuses: activeWordLetterStatusesUPD,
+                    }
+                  : word
+              )
+            );
+
+            setActiveLetter((prev: number) => prev + 1);
+          } else {
+            setWords((prev: WordTypeWithLetterStatuses[]) =>
+              prev.map((word, index) =>
+                index === activeWord
+                  ? {
+                      ...word,
+                      overflow: word.overflow
+                        ? word.overflow + event.key
+                        : event.key,
                     }
                   : word
               )
