@@ -1,4 +1,5 @@
 import { TypingContext } from "../../contexts/TypingContext";
+import { QuotesDifficulty } from "./QuotesDifficulty";
 import React, { useContext } from "react";
 import { WordsCount } from "./WordsCount";
 import { TypingMode } from "./TypingMode";
@@ -11,6 +12,7 @@ export const TypingSettings = () => {
     <div className={s["typing-settings"]}>
       <TypingMode />
       {typingMode === "words" && <WordsCount />}
+      {typingMode === "quotes" && <QuotesDifficulty />}
     </div>
   );
 };

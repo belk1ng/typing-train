@@ -1,4 +1,5 @@
-.letter--skiped {
+.letter--skiped,
+.letter--overflow {
   position: relative;
 
   &:after {
@@ -23,6 +24,7 @@
   color: #abfaa9;
 }
 
-.letter--incorrect {
+.letter--incorrect,
+.letter--overflow {
   color: lightcoral;
 }

@@ -30,7 +30,7 @@ const renderWordByLetters = (
         .map((letter, index) => (
           <Letter
             letter={letter}
-            status="incorrect"
+            status="overflow"
             key={`${letter}_${index}`}
           />
         )),

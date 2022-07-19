@@ -1,4 +1,9 @@
-export type LetterStatus = "unset" | "correct" | "incorrect" | "skiped";
+export type LetterStatus =
+  | "unset"
+  | "correct"
+  | "incorrect"
+  | "skiped"
+  | "overflow";
 
 export type Language = {
   words: string[];

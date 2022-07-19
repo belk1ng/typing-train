@@ -33,6 +33,8 @@ export interface WordTypeWithLetterStatuses {
   overflow?: string;
 }
 
+export type QuoteDifficulty = "easy" | "middle" | "hard" | "random";
+
 interface TypingContextProviderValue {
   activeWord: number;
   setActiveWord: Function;
@@ -54,6 +56,9 @@ interface TypingContextProviderValue {
 
   quotesModeLanguage: string;
   setQuotesModeLanguage: Function;
+
+  quotesDifficulty: QuoteDifficulty;
+  setQuotesDifficulty: Function;
 
   typingMode: TypingMode;
   setTypingMode: Function;
@@ -106,7 +111,6 @@ export const TypingContextProvider = ({
   const [activeLetter, setActiveLetter] = useState<number>(0);
   const [wordsArray, setWordsArray] = useState<string[]>([]);
   const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
-  const [wordsCount, setWordsCount] = useState<number>(35);
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
 
@@ -115,17 +119,20 @@ export const TypingContextProvider = ({
   // Words mode language
   const [wordsModeLanguage, setWordsModeLanguage] =
     useState<WordsModeLanguages>("russian_10k");
+  const [wordsCount, setWordsCount] = useState<number>(35);
 
   // Quotes mode language
   const [quotesModeLanguage, setQuotesModeLanguage] =
     useState<QuotesModeLanguages>("russian_quotes");
+  const [quotesDifficulty, setQuotesDifficulty] =
+    useState<QuoteDifficulty>("easy");
 
   useEffect(
     () => generateRandomWords(wordsCount),
     [wordsCount, wordsModeLanguage]
   );
 
-  useEffect(() => getRandomQuote(), [quotesModeLanguage]);
+  useEffect(() => getRandomQuote(), [quotesModeLanguage, quotesDifficulty]);
 
   useEffect(() => {
     if (typingMode === "words") {
@@ -168,11 +175,33 @@ export const TypingContextProvider = ({
 
   const getRandomQuote = useCallback(() => {
     const choosenQuotesLanguage: Quotes = quotesLanguages[quotesModeLanguage];
-    const quotes: Quote[] = choosenQuotesLanguage.quotes;
+
+    const allLanguageQuotes: Quote[] = choosenQuotesLanguage.quotes;
+
+    const filteredQuotesByDifficulty =
+      filterQuotesByDifficultyLevel(allLanguageQuotes);
+
     setWordsArray(
-      quotes[Math.floor(Math.random() * quotes.length)].text.split(" ")
+      filteredQuotesByDifficulty[
+        Math.floor(Math.random() * filteredQuotesByDifficulty.length)
+      ].text.split(" ")
     );
-  }, [quotesModeLanguage]);
+  }, [quotesModeLanguage, quotesDifficulty]);
+
+  const filterQuotesByDifficultyLevel = (quotesArray: Quote[]) => {
+    switch (quotesDifficulty) {
+      case "easy":
+        return quotesArray.filter((quote: Quote) => quote.length < 150);
+      case "middle":
+        return quotesArray.filter(
+          (quote: Quote) => quote.length > 150 && quote.length < 650
+        );
+      case "hard":
+        return quotesArray.filter((quote: Quote) => quote.length > 650);
+      default:
+        return quotesArray;
+    }
+  };
 
   const value = useMemo(
     () => ({
@@ -190,6 +219,8 @@ export const TypingContextProvider = ({
       setWordsModeLanguage,
       quotesModeLanguage,
       setQuotesModeLanguage,
+      quotesDifficulty,
+      setQuotesDifficulty,
       typingMode,
       setTypingMode,
       blockingTypingEvent,
@@ -206,6 +237,7 @@ export const TypingContextProvider = ({
       wordsCount,
       wordsModeLanguage,
       quotesModeLanguage,
+      quotesDifficulty,
       typingMode,
       blockingTypingEvent,
     ]

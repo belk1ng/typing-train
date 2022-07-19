@@ -41,7 +41,9 @@ function App() {
 
           if (activeLetter < activeWordLength) {
             const letterStatusCompute =
-              event.key === typingWord.displayName[activeLetter];
+              event.key === typingWord.displayName[activeLetter]
+                ? "correct"
+                : "incorrect";
 
             const activeWordLetterStatuses = typingWord.letterStatuses;
 
@@ -51,7 +53,7 @@ function App() {
 
             const activeWordLetterStatusesUPD = [
               ...alreadyHasStatus,
-              letterStatusCompute ? "correct" : "incorrect",
+              letterStatusCompute,
               ...new Array(
                 typingWord.displayName.length - alreadyHasStatus.length - 1
               ).fill("unset"),
