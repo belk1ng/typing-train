@@ -130,9 +130,11 @@ function App() {
             const firstSkipedLetterIndex =
               prevWord.letterStatuses.indexOf("skiped");
 
-            const hasPrevWordOverflowLetters = prevWord.overflow;
-
-            if (firstSkipedLetterIndex !== -1) {
+            if (prevWord.overflow) {
+              setActiveLetter(
+                prevWord.displayName.length + prevWord.overflow?.length
+              );
+            } else if (firstSkipedLetterIndex !== -1) {
               setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
 
               const prevWordLetterStatuses = prevWord.letterStatuses;
