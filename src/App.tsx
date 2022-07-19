@@ -102,10 +102,11 @@ function App() {
           } else {
             if (activeLetter !== typingWord.displayName.length) {
               setWords((prev: WordTypeWithLetterStatuses[]) =>
-                prev.map(({ displayName, letterStatuses }, index) =>
+                prev.map(({ displayName, letterStatuses, overflow }, index) =>
                   index === activeWord
                     ? {
-                        displayName: displayName,
+                        displayName,
+                        overflow,
                         letterStatuses: letterStatuses.map((status) =>
                           status === "unset" ? "skiped" : status
                         ),
@@ -125,8 +126,11 @@ function App() {
             if (activeWord === 0) return;
 
             const prevWord = words[activeWord - 1];
+
             const firstSkipedLetterIndex =
               prevWord.letterStatuses.indexOf("skiped");
+
+            const hasPrevWordOverflowLetters = prevWord.overflow;
 
             if (firstSkipedLetterIndex !== -1) {
               setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
@@ -160,27 +164,42 @@ function App() {
 
             setActiveWord((prev: number) => prev - 1);
           } else {
-            const activeWordLetterStatusesSetted =
-              typingWord.letterStatuses.slice(0, activeLetter - 1);
+            if (typingWord.overflow) {
+              setWords((prev: WordTypeWithLetterStatuses[]) =>
+                prev.map((word, index) =>
+                  index === activeWord
+                    ? {
+                        ...word,
+                        overflow:
+                          word.overflow &&
+                          word.overflow.slice(0, word.overflow.length - 1),
+                      }
+                    : word
+                )
+              );
+            } else {
+              const activeWordLetterStatusesSetted =
+                typingWord.letterStatuses.slice(0, activeLetter - 1);
 
-            const activeWordLetterStatusesUPD = [
-              ...activeWordLetterStatusesSetted,
-              ...new Array(
-                typingWord.displayName.length -
-                  activeWordLetterStatusesSetted.length
-              ).fill("unset"),
-            ];
+              const activeWordLetterStatusesUPD = [
+                ...activeWordLetterStatusesSetted,
+                ...new Array(
+                  typingWord.displayName.length -
+                    activeWordLetterStatusesSetted.length
+                ).fill("unset"),
+              ];
 
-            setWords((prev: WordTypeWithLetterStatuses[]) =>
-              prev.map((word, index) =>
-                index === activeWord
-                  ? {
-                      ...word,
-                      letterStatuses: activeWordLetterStatusesUPD,
-                    }
-                  : word
-              )
-            );
+              setWords((prev: WordTypeWithLetterStatuses[]) =>
+                prev.map((word, index) =>
+                  index === activeWord
+                    ? {
+                        ...word,
+                        letterStatuses: activeWordLetterStatusesUPD,
+                      }
+                    : word
+                )
+              );
+            }
 
             setActiveLetter((prev: number) => prev - 1);
           }
