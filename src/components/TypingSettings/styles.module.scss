@@ -20,18 +20,23 @@
 
       transition: color 0.3s ease;
 
-      user-select: none;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-
       &:hover {
         color: lightcoral;
         transition: color 0.3s ease;
       }
     }
+
     .typing-settings__param-value--active {
       color: lightcoral;
+      cursor: default;
       transition: color 0.3s ease;
+    }
+
+    .typing-settings__param-value,
+    .typing-settings__param-value--active {
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
     }
   }
 }
