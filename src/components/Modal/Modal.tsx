@@ -7,6 +7,17 @@ interface ModalProps {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
+export const handleOutsideClick = (
+  event: React.MouseEvent<HTMLElement>,
+  modalCollapsed: boolean,
+  el: HTMLElement | null,
+  callback: () => void
+): void => {
+  if (el && !el.contains(event.target as Node) && !modalCollapsed) {
+    callback();
+  }
+};
+
 export const Modal = ({ children, isCollapsed, onClick }: ModalProps) => {
   return (
     <div

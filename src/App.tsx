@@ -1,6 +1,7 @@
 import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
 import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
+import { AppSettings } from "./components/AppSettings/AppSettings";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
@@ -22,7 +23,7 @@ function App() {
     blockingTypingEvent,
   } = useContext(TypingContext);
 
-  // TODO: Refactoring component Appap
+  // TODO: Refactoring component App
 
   useEffect(() => {
     const keyUpHandler = (event: KeyboardEvent) => {
@@ -235,6 +236,7 @@ function App() {
 
   return (
     <div className="wrapper">
+      <AppSettings />
       <TypingSettings />
       <LanguageSelector />
       <WordsList />

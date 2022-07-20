@@ -1,18 +1,11 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
+import { Modal, handleOutsideClick } from "../../Modal/Modal";
+import s from "./styles.module.scss";
 import {
   TypingContext,
   wordsLanguages,
   quotesLanguages,
 } from "../../../contexts/TypingContext";
-import { Modal } from "../../Modal/Modal";
-import s from "./styles.module.scss";
 
 interface Props {
   modalCollapsed: boolean;
@@ -36,23 +29,16 @@ export const LanguageSelectorModal = ({
   const selectorRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleOutsideClick = useCallback(
-    (event: React.MouseEvent<HTMLElement>): void => {
-      const el = selectorRef.current;
-
-      if (el && !el.contains(event.target as Node) && !modalCollapsed) {
-        setModalCollapsed(true);
-        setBlockingTypingEvent(false);
-      }
-    },
-    [modalCollapsed]
-  );
-
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, [modalCollapsed]);
+
+  const outsideClickCallback = () => {
+    setModalCollapsed(true);
+    setBlockingTypingEvent(false);
+  };
 
   const languagesListItems = useMemo(() => {
     return Object.entries(
@@ -79,7 +65,17 @@ export const LanguageSelectorModal = ({
   }, [searchQuery, typingMode]);
 
   return (
-    <Modal isCollapsed={modalCollapsed} onClick={handleOutsideClick}>
+    <Modal
+      isCollapsed={modalCollapsed}
+      onClick={(event) =>
+        handleOutsideClick(
+          event,
+          modalCollapsed,
+          selectorRef.current,
+          outsideClickCallback
+        )
+      }
+    >
       <div className={s["selector"]} ref={selectorRef}>
         <div className={s["selector__search"]}>
           <input
