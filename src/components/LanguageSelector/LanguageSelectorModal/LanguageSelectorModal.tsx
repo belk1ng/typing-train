@@ -35,7 +35,7 @@ export const LanguageSelectorModal = ({
     }
   }, [modalCollapsed]);
 
-  const outsideClickCallback = () => {
+  const outsideClickCallback = (): void => {
     setModalCollapsed(true);
     setBlockingTypingEvent(false);
   };
