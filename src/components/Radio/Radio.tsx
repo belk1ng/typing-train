@@ -20,7 +20,6 @@ export const Radio = ({
 
   return (
     <div className={s["custom-radio"]}>
-      <label className={s["custom-radio__label"]} htmlFor={id}></label>
       <input
         type="radio"
         name={name}
@@ -29,6 +28,7 @@ export const Radio = ({
         defaultChecked={defaultChecked}
         onChange={onChange}
       />
+      <label className={s["custom-radio__label"]} htmlFor={id}></label>
       <span className={s["custom-radio__title"]}>{title}</span>
     </div>
   );
