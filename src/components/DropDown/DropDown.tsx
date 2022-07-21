@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Radio } from "../Radio/Radio";
 import s from "./styles.module.scss";
 
 interface Props {
@@ -26,8 +27,8 @@ export const DropDown = ({
     if (values) {
       return values.map((item) => (
         <li className={s["dropdown__item"]} key={item}>
-          <input
-            type="radio"
+          {/* TODO: fix +event.target.value (its value might be boolean) */}
+          <Radio
             name={name}
             value={item}
             defaultChecked={item === value ? true : false}
@@ -46,7 +47,11 @@ export const DropDown = ({
   return (
     <div className={s["dropdown"]}>
       <div
-        className={s["dropdown__header"]}
+        className={
+          isListCollapsed
+            ? s["dropdown__header"]
+            : `${s["dropdown__header"]} ${s["dropdown__header--open"]}`
+        }
         onClick={() => setListCollapsed((prev: boolean) => !prev)}
       >
         <div className={s["dropdown__title-container"]}>
