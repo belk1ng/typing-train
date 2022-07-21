@@ -9,13 +9,7 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Radio = ({
-  name,
-  value,
-  title,
-  defaultChecked,
-  onChange,
-}: Props) => {
+export const Radio = ({ name, value, defaultChecked, onChange }: Props) => {
   const id = useId();
 
   return (
@@ -29,7 +23,6 @@ export const Radio = ({
         onChange={onChange}
       />
       <label className={s["custom-radio__label"]} htmlFor={id}></label>
-      <span className={s["custom-radio__title"]}>{title}</span>
     </div>
   );
 };
