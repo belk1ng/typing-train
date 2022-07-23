@@ -224,9 +224,9 @@ function App() {
         } else if (
           event.keyCode === 27 &&
           activeWord === 0 &&
-          activeLetter === 0
+          activeLetter === 0 &&
+          isSettingsModalCollapsed
         ) {
-          console.log("Escape pressed");
           setBlockingTypingEvent(true);
           setSettingsModalCollapsed(false);
         }
