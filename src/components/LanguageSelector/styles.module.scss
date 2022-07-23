@@ -32,6 +32,10 @@
   }
 }
 
+.language-selector {
+  z-index: 2;
+}
+
 .language-selector--hide {
   opacity: 0;
   z-index: -1;
