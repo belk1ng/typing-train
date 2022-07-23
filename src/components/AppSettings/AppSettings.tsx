@@ -1,16 +1,19 @@
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { SettingsGear } from "../../assets/icons/SettingsGear";
 import { TypingContext } from "../../contexts/TypingContext";
-import React, { useState, useContext, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Modal, handleOutsideClick } from "../Modal/Modal";
 import { DropDown } from "../DropDown/DropDown";
 import s from "./styles.module.scss";
 
-export const AppSettings = () => {
+interface Props {
+  isModalCollapsed: boolean;
+  setModalCollapsed: (value: boolean) => void;
+}
+
+export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
   const { setBlockingTypingEvent } = useContext(TypingContext);
   const { fontSize, setFontSize } = useContext(SettingsContext);
-
-  const [isModalCollapsed, setModalCollapsed] = useState<boolean>(true);
 
   const modalContentRef = useRef<HTMLDivElement>(null);
 

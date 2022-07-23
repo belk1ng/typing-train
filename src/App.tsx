@@ -4,7 +4,7 @@ import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
 import { AppSettings } from "./components/AppSettings/AppSettings";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Header } from "./components/Header/Header";
 import "./assets/styles/App.scss";
 
@@ -22,7 +22,11 @@ function App() {
     generateRandomWords,
     getRandomQuote,
     blockingTypingEvent,
+    setBlockingTypingEvent,
   } = useContext(TypingContext);
+
+  const [isSettingsModalCollapsed, setSettingsModalCollapsed] =
+    useState<boolean>(true);
 
   // TODO: Refactoring component App
 
@@ -217,6 +221,14 @@ function App() {
           typingMode === "words"
             ? generateRandomWords(wordsCount)
             : getRandomQuote();
+        } else if (
+          event.keyCode === 27 &&
+          activeWord === 0 &&
+          activeLetter === 0
+        ) {
+          console.log("Escape pressed");
+          setBlockingTypingEvent(true);
+          setSettingsModalCollapsed(false);
         }
       }
     };
@@ -238,7 +250,10 @@ function App() {
   return (
     <div className="wrapper">
       <Header>
-        <AppSettings />
+        <AppSettings
+          isModalCollapsed={isSettingsModalCollapsed}
+          setModalCollapsed={setSettingsModalCollapsed}
+        />
         <TypingSettings />
       </Header>
       <main>
