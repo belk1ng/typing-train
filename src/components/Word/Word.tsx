@@ -1,5 +1,5 @@
 import React, { forwardRef, memo, useContext } from "react";
-import { LetterStatus } from "../../constants";
+import { LetterStatus } from "../../types";
 import { Letter } from "../Letter/Letter";
 import {
   WordTypeWithLetterStatuses,

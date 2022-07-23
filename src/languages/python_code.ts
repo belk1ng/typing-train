@@ -1,4 +1,4 @@
-import { Language } from "../constants";
+import { Language } from "../types";
 
 export const pythonCode: Language = {
   words: [

@@ -1,4 +1,4 @@
-import s from "../components/AppSettings/styles.module.scss";
+import s from "../../components/AppSettings/styles.module.scss";
 import React from "react";
 
 interface Props {

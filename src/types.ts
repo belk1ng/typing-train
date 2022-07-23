@@ -1,3 +1,7 @@
+// Global Types
+
+export type TypingMode = "words" | "quotes";
+
 export type LetterStatus =
   | "unset"
   | "correct"
@@ -5,20 +9,18 @@ export type LetterStatus =
   | "skiped"
   | "overflow";
 
-export type Language = {
+export interface Language {
   words: string[];
-};
+}
 
-export type Quote = {
+export interface Quote {
   text: string;
   source: string;
   length: number;
   id: number;
   approvedBy?: string;
-};
+}
 
-export type Quotes = {
+export interface Quotes {
   quotes: Quote[];
-};
-
-export type TypingMode = "words" | "quotes";
+}

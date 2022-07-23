@@ -1,4 +1,4 @@
-import { Language } from "../constants";
+import { Language } from "../types";
 
 export const russian10k: Language = {
   words: [

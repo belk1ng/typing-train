@@ -1,4 +1,4 @@
-import { Quotes } from "../constants";
+import { Quotes } from "../types";
 
 export const englishQuotes: Quotes = {
   quotes: [

@@ -1,8 +1,8 @@
 import { SettingsContext } from "../../contexts/SettingsContext";
+import { SettingsGear } from "../../assets/icons/SettingsGear";
 import { TypingContext } from "../../contexts/TypingContext";
 import React, { useState, useContext, useRef } from "react";
 import { Modal, handleOutsideClick } from "../Modal/Modal";
-import { SettingsGear } from "../../icons/SettingsGear";
 import { DropDown } from "../DropDown/DropDown";
 import s from "./styles.module.scss";
 

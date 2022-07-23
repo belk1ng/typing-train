@@ -1,8 +1,9 @@
 import { SettingsContextProvider } from "./contexts/SettingsContext";
 import { TypingContextProvider } from "./contexts/TypingContext";
 import ReactDOM from "react-dom/client";
+import "./assets/styles/index.scss";
+import "./assets/styles/reset.scss";
 import React from "react";
-import "./index.css";
 import App from "./App";
 
 const root = ReactDOM.createRoot(

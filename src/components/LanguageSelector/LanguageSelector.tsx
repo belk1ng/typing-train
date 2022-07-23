@@ -1,7 +1,7 @@
 import { LanguageSelectorModal } from "./LanguageSelectorModal/LanguageSelectorModal";
 import { TypingContext } from "../../contexts/TypingContext";
 import React, { useState, useContext } from "react";
-import { Globe } from "../../icons/Globe";
+import { Globe } from "../../assets/icons/Globe";
 import s from "./styles.module.scss";
 
 export const LanguageSelector = () => {

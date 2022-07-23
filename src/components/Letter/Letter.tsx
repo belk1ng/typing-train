@@ -1,13 +1,13 @@
-import { LetterStatus } from "../../constants";
+import { LetterStatus } from "../../types";
 import s from "./styles.module.scss";
 import React, { memo } from "react";
 
-interface LetterProps {
+interface Props {
   letter: string;
   status: LetterStatus;
 }
 
-const LetterComponent = ({ letter, status }: LetterProps) => {
+const LetterComponent = ({ letter, status }: Props) => {
   return <span className={s[`letter--${status}`]}>{letter}</span>;
 };
 

@@ -15,13 +15,7 @@ import { pythonCode } from "../languages/python_code";
 import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
 
-import {
-  Language,
-  LetterStatus,
-  Quotes,
-  Quote,
-  TypingMode,
-} from "../constants";
+import { Language, LetterStatus, Quotes, Quote, TypingMode } from "../types";
 
 interface TypingContextProviderProps {
   children: JSX.Element;

@@ -5,7 +5,7 @@ import { AppSettings } from "./components/AppSettings/AppSettings";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
-import "./App.scss";
+import "./assets/styles/App.scss";
 
 function App() {
   const {

@@ -1,7 +1,7 @@
 import s from "./styles.module.scss";
 import React from "react";
 
-interface ModalProps {
+interface Props {
   children: React.ReactNode;
   isCollapsed: boolean;
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
@@ -18,7 +18,7 @@ export const handleOutsideClick = (
   }
 };
 
-export const Modal = ({ children, isCollapsed, onClick }: ModalProps) => {
+export const Modal = ({ children, isCollapsed, onClick }: Props) => {
   return (
     <div
       onClick={(e) => onClick(e)}
