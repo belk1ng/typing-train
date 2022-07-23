@@ -1,21 +1,19 @@
 import React, { createContext, useState, useMemo } from "react";
 
-interface SettingsProviderProps {
+interface Props {
   children: JSX.Element;
 }
 
-interface ISettingsContext {
+interface SettingsContext {
   fontSize: number;
   setFontSize: Function;
 }
 
-export const SettingsContext = createContext<ISettingsContext>(
-  {} as ISettingsContext
+export const SettingsContext = createContext<SettingsContext>(
+  {} as SettingsContext
 );
 
-export const SettingsContextProvider = ({
-  children,
-}: SettingsProviderProps) => {
+export const SettingsContextProvider = ({ children }: Props) => {
   const [fontSize, setFontSize] = useState<number>(32);
 
   const value = useMemo(

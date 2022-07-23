@@ -17,7 +17,7 @@ import { englishQuotes } from "../languages/english_quotes";
 
 import { Language, LetterStatus, Quotes, Quote, TypingMode } from "../types";
 
-interface TypingContextProviderProps {
+interface Props {
   children: JSX.Element;
 }
 
@@ -65,11 +65,11 @@ interface TypingContextProviderValue {
 }
 
 // Typing "Words" languages
-interface TLanguagesStore {
+interface WordsLanguagesStore {
   [langName: string]: Language;
 }
 
-export const wordsLanguages: TLanguagesStore = {
+export const wordsLanguages: WordsLanguagesStore = {
   english_25k: english25k,
   russian_10k: russian10k,
   javascript_code: javascriptCode,
@@ -98,9 +98,7 @@ type QuotesModeLanguages = "russian_quotes" | "english_quotes";
 
 export const TypingContext = createContext({} as TypingContextProviderValue);
 
-export const TypingContextProvider = ({
-  children,
-}: TypingContextProviderProps) => {
+export const TypingContextProvider = ({ children }: Props) => {
   const [activeWord, setActiveWord] = useState<number>(0);
   const [activeLetter, setActiveLetter] = useState<number>(0);
   const [wordsArray, setWordsArray] = useState<string[]>([]);
