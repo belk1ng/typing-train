@@ -5,6 +5,7 @@ import { AppSettings } from "./components/AppSettings/AppSettings";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
 import React, { useEffect, useContext } from "react";
+import { Header } from "./components/Header/Header";
 import "./assets/styles/App.scss";
 
 function App() {
@@ -236,10 +237,14 @@ function App() {
 
   return (
     <div className="wrapper">
-      <AppSettings />
-      <TypingSettings />
-      <LanguageSelector />
-      <WordsList />
+      <Header>
+        <AppSettings />
+        <TypingSettings />
+      </Header>
+      <main>
+        <LanguageSelector />
+        <WordsList />
+      </main>
     </div>
   );
 }
