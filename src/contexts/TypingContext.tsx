@@ -17,10 +17,6 @@ import { englishQuotes } from "../languages/english_quotes";
 
 import { Language, LetterStatus, Quotes, Quote, TypingMode } from "../types";
 
-interface Props {
-  children: JSX.Element;
-}
-
 export interface WordTypeWithLetterStatuses {
   displayName: string;
   letterStatuses: LetterStatus[];
@@ -31,34 +27,38 @@ export type QuoteDifficulty = "easy" | "middle" | "hard" | "random";
 
 interface TypingContextProviderValue {
   activeWord: number;
-  setActiveWord: Function;
+  setActiveWord: (activeWord: number | ((prev: number) => number)) => void;
 
   activeLetter: number;
-  setActiveLetter: Function;
+  setActiveLetter: (activeLetter: number | ((prev: number) => number)) => void;
 
   wordsArray: string[];
-  setWordsArray: Function;
+  setWordsArray: (wordsArray: string[]) => void;
 
   words: WordTypeWithLetterStatuses[];
-  setWords: Function;
+  setWords: (
+    wordsWithLetterStatuses:
+      | WordTypeWithLetterStatuses[]
+      | ((prev: WordTypeWithLetterStatuses[]) => WordTypeWithLetterStatuses[])
+  ) => void;
 
   wordsCount: number;
-  setWordsCount: Function;
+  setWordsCount: (count: number) => void;
 
-  wordsModeLanguage: string;
-  setWordsModeLanguage: Function;
+  wordsModeLanguage: WordsModeLanguages;
+  setWordsModeLanguage: (language: WordsModeLanguages) => void;
 
   quotesModeLanguage: string;
-  setQuotesModeLanguage: Function;
+  setQuotesModeLanguage: (language: QuotesModeLanguages) => void;
 
   quotesDifficulty: QuoteDifficulty;
-  setQuotesDifficulty: Function;
+  setQuotesDifficulty: (difficulty: QuoteDifficulty) => void;
 
   typingMode: TypingMode;
-  setTypingMode: Function;
+  setTypingMode: (mode: TypingMode) => void;
 
   blockingTypingEvent: boolean;
-  setBlockingTypingEvent: Function;
+  setBlockingTypingEvent: (shouldBlock: boolean) => void;
 
   generateRandomWords: (wordsCount?: number) => void;
   getRandomQuote: () => void;
@@ -77,7 +77,7 @@ export const wordsLanguages: WordsLanguagesStore = {
   python_code: pythonCode,
 };
 
-type WordsModeLanguages =
+export type WordsModeLanguages =
   | "english_25k"
   | "russian_10k"
   | "javascript_code"
@@ -94,7 +94,11 @@ export const quotesLanguages: QuotesLanguagesStore = {
   english_quotes: englishQuotes,
 };
 
-type QuotesModeLanguages = "russian_quotes" | "english_quotes";
+export type QuotesModeLanguages = "russian_quotes" | "english_quotes";
+
+interface Props {
+  children: JSX.Element;
+}
 
 export const TypingContext = createContext({} as TypingContextProviderValue);
 
@@ -147,8 +151,8 @@ export const TypingContextProvider = ({ children }: Props) => {
   }, [wordsArray]);
 
   const generateRandomWords = useCallback(
-    (wordsCount: number = 35) => {
-      let wordsToType: string[] = [];
+    (wordsCount = 35) => {
+      const wordsToType: string[] = [];
 
       for (let word = 0; word < wordsCount; word++) {
         const choosenLanguageWords = wordsLanguages[wordsModeLanguage].words;

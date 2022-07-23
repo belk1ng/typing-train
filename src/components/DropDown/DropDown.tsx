@@ -9,7 +9,7 @@ interface Props {
   postfix?: string;
   icon?: React.ReactElement;
   name: string;
-  settingSetter: Function;
+  settingSetter: <T>(value: T) => void;
 }
 
 export const DropDown = ({

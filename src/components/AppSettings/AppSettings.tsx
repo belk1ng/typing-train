@@ -48,7 +48,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
             title="Font-size"
             name="font-size"
             postfix="px"
-            settingSetter={setFontSize}
+            settingSetter={(value) => setFontSize(value)}
           />
         </div>
       </Modal>

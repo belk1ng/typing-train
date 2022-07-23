@@ -5,11 +5,13 @@ import {
   TypingContext,
   wordsLanguages,
   quotesLanguages,
+  WordsModeLanguages,
+  QuotesModeLanguages,
 } from "../../../contexts/TypingContext";
 
 interface Props {
   modalCollapsed: boolean;
-  setModalCollapsed: Function;
+  setModalCollapsed: (isCollapsed: boolean) => void;
 }
 
 export const LanguageSelectorModal = ({
@@ -51,8 +53,8 @@ export const LanguageSelectorModal = ({
           className={s["selector__language"]}
           onClick={() => {
             typingMode === "words"
-              ? setWordsModeLanguage(langName)
-              : setQuotesModeLanguage(langName);
+              ? setWordsModeLanguage(langName as WordsModeLanguages)
+              : setQuotesModeLanguage(langName as QuotesModeLanguages);
 
             setModalCollapsed(true);
             setBlockingTypingEvent(false);
