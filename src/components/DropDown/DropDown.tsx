@@ -1,3 +1,4 @@
+import { DropDownArrow } from "../../assets/icons/DropDownArrow";
 import React, { useState, useMemo } from "react";
 import { Radio } from "../Radio/Radio";
 import s from "./styles.module.scss";
@@ -33,7 +34,13 @@ export const DropDown = ({
             defaultChecked={item === value ? true : false}
             onChange={() => settingSetter(item)}
           />
-          <span className={s["dropdown__item-text"]}>
+          <span
+            className={
+              item === value
+                ? s["dropdown__item-text--choosen"]
+                : s["dropdown__item-text"]
+            }
+          >
             {postfix ? item + postfix : value}
           </span>
         </li>
@@ -55,6 +62,7 @@ export const DropDown = ({
           {icon && icon}
           <p className={s["dropdown__title"]}>{title}</p>
         </div>
+        <DropDownArrow isCollapsed={isListCollapsed} />
       </div>
       <ul
         className={

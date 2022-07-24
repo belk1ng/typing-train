@@ -17,7 +17,6 @@
     &:hover {
       cursor: pointer;
 
-      background: lightcoral;
       color: #f6f0e9;
       transition: background 0.3s ease, color 0.3s ease;
     }
@@ -30,7 +29,6 @@
   }
 
   .dropdown__header--open {
-    background: lightcoral;
     color: #f6f0e9;
 
     transition: background 0.3s ease, color 0.3s ease;
@@ -41,7 +39,7 @@
     max-height: 100vh;
 
     .dropdown__item {
-      color: #f6f0e9;
+      color: #596172;
 
       opacity: 1;
       transition: opacity 0.25s ease-in 0.5s;
@@ -52,6 +50,10 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+      }
+
+      .dropdown__item-text--choosen {
+        color: #f6f0e9;
       }
     }
   }
@@ -77,5 +79,21 @@
       align-items: center;
       gap: 15px;
     }
+  }
+
+  .dropdown__arrow,
+  .dropdown__arrow--hide {
+    width: 25px;
+    height: 25px;
+
+    transition: transform 0.35s;
+  }
+
+  .dropdown__arrow {
+    transform: unset;
+  }
+
+  .dropdown__arrow--hide {
+    transform: rotate(180deg);
   }
 }
