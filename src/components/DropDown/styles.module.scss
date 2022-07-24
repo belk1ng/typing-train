@@ -69,8 +69,10 @@
 
   .dropdown__list,
   .dropdown__list--hidden {
-    transition: max-height 0.7s ease;
+    transition: max-height 0.7s ease-in-out;
     overflow: hidden;
+
+    border-bottom: 1px solid #596172;
 
     .dropdown__item {
       padding: 15px 25px;
