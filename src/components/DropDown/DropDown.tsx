@@ -27,14 +27,11 @@ export const DropDown = ({
     if (values) {
       return values.map((item) => (
         <li className={s["dropdown__item"]} key={item}>
-          {/* TODO: fix +event.target.value (its value might be boolean) */}
           <Radio
             name={name}
             value={item}
             defaultChecked={item === value ? true : false}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>): void =>
-              settingSetter(+event.target.value)
-            }
+            onChange={() => settingSetter(item)}
           />
           <span className={s["dropdown__item-text"]}>
             {postfix ? item + postfix : value}

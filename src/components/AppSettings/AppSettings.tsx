@@ -41,6 +41,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
           )
         }
       >
+        {/* TODO: Refactoring settingsSetter and its type */}
         <div ref={modalContentRef} className={s["settings__wrapper"]}>
           <DropDown
             values={[24, 32, 36, 40, 42]}
@@ -48,7 +49,9 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
             title="Font-size"
             name="font-size"
             postfix="px"
-            settingSetter={(value) => setFontSize(value)}
+            settingSetter={(value) =>
+              setFontSize(typeof value === "number" ? value : 32)
+            }
           />
         </div>
       </Modal>

@@ -6,7 +6,7 @@ interface Props {
 
 interface SettingsContext {
   fontSize: number;
-  setFontSize: Function;
+  setFontSize: (fontSize: number) => void;
 }
 
 export const SettingsContext = createContext<SettingsContext>(
