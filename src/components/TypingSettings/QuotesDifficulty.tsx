@@ -1,4 +1,5 @@
-import { TypingContext, QuoteDifficulty } from "../../contexts/TypingContext";
+import { TypingContext } from "../../contexts/TypingContext";
+import { QuoteDifficulty } from "../../types";
 import React, { useContext } from "react";
 import s from "./styles.module.scss";
 

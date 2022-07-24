@@ -1,10 +1,8 @@
 import React, { forwardRef, memo, useContext } from "react";
+import { WordTypeWithLetterStatuses } from "../../types";
 import { LetterStatus } from "../../types";
 import { Letter } from "../Letter/Letter";
-import {
-  WordTypeWithLetterStatuses,
-  TypingContext,
-} from "../../contexts/TypingContext";
+import { TypingContext } from "../../contexts/TypingContext";
 import s from "./styles.module.scss";
 
 const renderWordByLetters = (
@@ -50,6 +48,8 @@ export const InactiveWord = memo(
   }
 );
 
+InactiveWord.displayName = "InactiveWord";
+
 export const ActiveWord = forwardRef<
   HTMLParagraphElement,
   WordTypeWithLetterStatuses
@@ -68,3 +68,5 @@ export const ActiveWord = forwardRef<
     </div>
   );
 });
+
+ActiveWord.displayName = "ActiveWord";

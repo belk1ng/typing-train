@@ -1,10 +1,10 @@
 import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
-import { WordTypeWithLetterStatuses } from "./contexts/TypingContext";
 import { AppSettings } from "./components/AppSettings/AppSettings";
 import React, { useEffect, useContext, useState } from "react";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
+import { WordTypeWithLetterStatuses } from "./types";
 import { Header } from "./components/Header/Header";
 import "./assets/styles/App.scss";
 

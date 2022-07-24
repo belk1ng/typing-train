@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
+import { WordsModeLanguages, QuotesModeLanguages } from "../../../types";
 import { Modal, handleOutsideClick } from "../../Modal/Modal";
 import s from "./styles.module.scss";
 import {
   TypingContext,
   wordsLanguages,
   quotesLanguages,
-  WordsModeLanguages,
-  QuotesModeLanguages,
 } from "../../../contexts/TypingContext";
 
 interface Props {

@@ -15,15 +15,18 @@ import { pythonCode } from "../languages/python_code";
 import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
 
-import { Language, LetterStatus, Quotes, Quote, TypingMode } from "../types";
-
-export interface WordTypeWithLetterStatuses {
-  displayName: string;
-  letterStatuses: LetterStatus[];
-  overflow?: string;
-}
-
-export type QuoteDifficulty = "easy" | "middle" | "hard" | "random";
+import {
+  Language,
+  Quotes,
+  Quote,
+  TypingMode,
+  WordTypeWithLetterStatuses,
+  QuoteDifficulty,
+  WordsLanguagesStore,
+  WordsModeLanguages,
+  QuotesModeLanguages,
+  QuotesLanguagesStore,
+} from "../types";
 
 interface TypingContextProviderValue {
   activeWord: number;
@@ -64,11 +67,6 @@ interface TypingContextProviderValue {
   getRandomQuote: () => void;
 }
 
-// Typing "Words" languages
-interface WordsLanguagesStore {
-  [langName: string]: Language;
-}
-
 export const wordsLanguages: WordsLanguagesStore = {
   english_25k: english25k,
   russian_10k: russian10k,
@@ -77,24 +75,10 @@ export const wordsLanguages: WordsLanguagesStore = {
   python_code: pythonCode,
 };
 
-export type WordsModeLanguages =
-  | "english_25k"
-  | "russian_10k"
-  | "javascript_code"
-  | "css_code"
-  | "python_code";
-
-// Typing "Quotes" languages
-interface QuotesLanguagesStore {
-  [langName: string]: Quotes;
-}
-
 export const quotesLanguages: QuotesLanguagesStore = {
   russian_quotes: russianQuotes,
   english_quotes: englishQuotes,
 };
-
-export type QuotesModeLanguages = "russian_quotes" | "english_quotes";
 
 interface Props {
   children: JSX.Element;
