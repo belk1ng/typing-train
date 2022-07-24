@@ -1,8 +1,9 @@
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { SettingsGear } from "../../assets/icons/SettingsGear";
 import { TypingContext } from "../../contexts/TypingContext";
-import React, { useContext, useRef } from "react";
 import { Modal, handleOutsideClick } from "../Modal/Modal";
+import { FontSize } from "../../assets/icons/FontSize";
+import React, { useContext, useRef } from "react";
 import { DropDown } from "../DropDown/DropDown";
 import s from "./styles.module.scss";
 
@@ -52,6 +53,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
             settingSetter={(value) =>
               setFontSize(typeof value === "number" ? value : 32)
             }
+            icon={<FontSize />}
           />
         </div>
       </Modal>

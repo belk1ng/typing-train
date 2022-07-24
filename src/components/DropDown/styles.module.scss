@@ -10,7 +10,7 @@
     justify-content: space-between;
 
     padding: 15px 25px;
-    font-size: 18px;
+    font-size: 15px;
 
     transition: background 0.3s ease, color 0.3s ease;
 
@@ -75,11 +75,13 @@
     border-bottom: 1px solid #596172;
 
     .dropdown__item {
-      padding: 15px 25px;
+      padding: 10px 25px;
 
       display: flex;
       align-items: center;
       gap: 15px;
+
+      font-size: 15px;
 
       &:last-child {
         padding-bottom: 30px;
@@ -89,8 +91,8 @@
 
   .dropdown__arrow,
   .dropdown__arrow--hide {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 
     transition: transform 0.35s;
   }
