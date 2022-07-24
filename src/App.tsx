@@ -1,6 +1,7 @@
 import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
 import { AppSettings } from "./components/AppSettings/AppSettings";
+import { SettingsContext } from "./contexts/SettingsContext";
 import React, { useEffect, useContext, useState } from "react";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
@@ -24,6 +25,8 @@ function App() {
     blockingTypingEvent,
     setBlockingTypingEvent,
   } = useContext(TypingContext);
+
+  const { wordsContainerWidth } = useContext(SettingsContext);
 
   const [isSettingsModalCollapsed, setSettingsModalCollapsed] =
     useState<boolean>(true);
@@ -256,7 +259,7 @@ function App() {
         />
         <TypingSettings />
       </Header>
-      <main>
+      <main style={{ width: `${wordsContainerWidth}%` }}>
         <LanguageSelector />
         <WordsList />
       </main>

@@ -24,6 +24,10 @@ body {
     main {
       flex: 1 1 auto;
 
+      margin: 0 auto;
+
+      transition: width 0.5s ease;
+
       display: flex;
       align-items: center;
       justify-content: center;

@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext, useRef, useEffect } from "react";
+import React, { useState, useMemo, useContext, useRef, useEffect } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { TypingContext } from "../../contexts/TypingContext";
 import { ActiveWord, InactiveWord } from "../Word/Word";

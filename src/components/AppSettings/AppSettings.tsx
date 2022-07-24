@@ -1,3 +1,4 @@
+import { WordsContainerWidth } from "../../assets/icons/WordsContainerWidth";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { SettingsGear } from "../../assets/icons/SettingsGear";
 import { TypingContext } from "../../contexts/TypingContext";
@@ -14,7 +15,8 @@ interface Props {
 
 export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
   const { setBlockingTypingEvent } = useContext(TypingContext);
-  const { fontSize, setFontSize } = useContext(SettingsContext);
+  const { fontSize, setFontSize, wordsContainerWidth, setWordsContainerWidth } =
+    useContext(SettingsContext);
 
   const modalContentRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +56,17 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
               setFontSize(typeof value === "number" ? value : 32)
             }
             icon={<FontSize />}
+          />
+          <DropDown
+            values={[60, 70, 80, 90]}
+            value={wordsContainerWidth}
+            title="Words container width"
+            name="words-container-width"
+            postfix="%"
+            settingSetter={(value) =>
+              setWordsContainerWidth(typeof value === "number" ? value : 70)
+            }
+            icon={<WordsContainerWidth />}
           />
         </div>
       </Modal>
