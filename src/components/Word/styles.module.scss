@@ -17,8 +17,9 @@
 
 .word {
   font-weight: 400;
-  // font-family: 'IBM Plex Mono', monospace;
+
   font-family: "PT Mono", monospace;
+  // font-family: 'IBM Plex Mono', monospace;
   // font-family: 'Roboto Mono', monospace;
 
   letter-spacing: 1px;
@@ -34,8 +35,6 @@
 
   .word__cursor,
   .word__cursor--animated {
-    // TODO: Cursor size based on word's font-size
-
     position: absolute;
     content: "";
     bottom: 15%;

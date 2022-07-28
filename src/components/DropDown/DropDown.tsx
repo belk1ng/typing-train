@@ -39,6 +39,7 @@ export const DropDown = ({
     }
   }, [blockingTypingEvent]);
 
+  // TODO: Fix dropdown list bug with z-index
   const dropdownListElements = useMemo(() => {
     if (values) {
       return values.map((item) => (
