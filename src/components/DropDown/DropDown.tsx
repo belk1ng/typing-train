@@ -1,8 +1,12 @@
 import React, { useState, useMemo, useContext, useEffect } from "react";
 import { DropDownArrow } from "../../assets/icons/DropDownArrow";
+import { TFontSize, TWordsContainerPercentageWidth } from "../../types";
 import { TypingContext } from "../../contexts/TypingContext";
 import { Radio } from "../Radio/Radio";
 import s from "./styles.module.scss";
+
+type TSetterArg = TFontSize | TWordsContainerPercentageWidth;
+type TSetter = (value: TFontSize | TWordsContainerPercentageWidth) => void;
 
 interface Props {
   title: string;
@@ -11,7 +15,7 @@ interface Props {
   postfix?: string;
   icon?: React.ReactElement;
   name: string;
-  settingSetter: <T>(value: T) => void;
+  settingSetter: TSetter;
 }
 
 export const DropDown = ({
@@ -41,7 +45,7 @@ export const DropDown = ({
             name={name}
             value={item}
             defaultChecked={item === value ? true : false}
-            onChange={() => settingSetter(item)}
+            onChange={() => settingSetter(item as TSetterArg)}
           />
           <span
             className={

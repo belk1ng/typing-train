@@ -7,6 +7,12 @@ import { FontSize } from "../../assets/icons/FontSize";
 import React, { useContext, useRef } from "react";
 import { DropDown } from "../DropDown/DropDown";
 import s from "./styles.module.scss";
+import {
+  TFontSize,
+  fontSizeValues,
+  TWordsContainerPercentageWidth,
+  wordsContainerPercentageWidthValues,
+} from "../../types";
 
 interface Props {
   isModalCollapsed: boolean;
@@ -15,8 +21,13 @@ interface Props {
 
 export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
   const { setBlockingTypingEvent } = useContext(TypingContext);
-  const { fontSize, setFontSize, wordsContainerWidth, setWordsContainerWidth } =
-    useContext(SettingsContext);
+  const {
+    fontSize,
+    setFontSize,
+    valueIsFontSize,
+    wordsContainerWidth,
+    setWordsContainerWidth,
+  } = useContext(SettingsContext);
 
   const modalContentRef = useRef<HTMLDivElement>(null);
 
@@ -44,27 +55,30 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
           )
         }
       >
-        {/* TODO: Refactoring settingsSetter and its type */}
         <div ref={modalContentRef} className={s["settings__wrapper"]}>
           <DropDown
-            values={[24, 32, 36, 40, 42]}
+            values={[...fontSizeValues]}
             value={fontSize}
             title="Font-size"
             name="font-size"
             postfix="px"
-            settingSetter={(value) =>
-              setFontSize(typeof value === "number" ? value : 32)
-            }
+            settingSetter={(value) => {
+              if (valueIsFontSize(value)) {
+                setFontSize(value as TFontSize);
+              } else {
+                throw new Error("Pizda");
+              }
+            }}
             icon={<FontSize />}
           />
           <DropDown
-            values={[60, 70, 80, 90]}
+            values={wordsContainerPercentageWidthValues}
             value={wordsContainerWidth}
             title="Words container width"
             name="words-container-width"
             postfix="%"
             settingSetter={(value) =>
-              setWordsContainerWidth(typeof value === "number" ? value : 70)
+              setWordsContainerWidth(value as TWordsContainerPercentageWidth)
             }
             icon={<WordsContainerWidth />}
           />

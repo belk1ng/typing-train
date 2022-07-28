@@ -53,4 +53,10 @@ export type QuotesModeLanguages = "russian_quotes" | "english_quotes";
 
 // App settings types
 export type TFontSize = 24 | 32 | 36 | 40 | 42;
+export const defaultFontSize: TFontSize = 32;
+export const fontSizeValues: TFontSize[] = [24, 32, 36, 40, 42];
+
 export type TWordsContainerPercentageWidth = 50 | 60 | 70 | 80 | 90;
+export const defaultWordsContainerPercentageWidth: TWordsContainerPercentageWidth = 70;
+export const wordsContainerPercentageWidthValues: TWordsContainerPercentageWidth[] =
+  [60, 70, 80, 90];
