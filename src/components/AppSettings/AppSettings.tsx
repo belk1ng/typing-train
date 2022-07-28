@@ -3,6 +3,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { SettingsGear } from "../../assets/icons/SettingsGear";
 import { TypingContext } from "../../contexts/TypingContext";
 import { Modal, handleOutsideClick } from "../Modal/Modal";
+import { Backspace } from "../../assets/icons/Backspace";
 import { FontSize } from "../../assets/icons/FontSize";
 import React, { useContext, useRef } from "react";
 import { DropDown } from "../DropDown/DropDown";
@@ -12,6 +13,8 @@ import {
   fontSizeValues,
   TWordsContainerPercentageWidth,
   wordsContainerPercentageWidthValues,
+  TConfidenceMode,
+  confidenceModeValues,
 } from "../../types";
 
 interface Props {
@@ -21,8 +24,14 @@ interface Props {
 
 export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
   const { setBlockingTypingEvent } = useContext(TypingContext);
-  const { fontSize, setFontSize, wordsContainerWidth, setWordsContainerWidth } =
-    useContext(SettingsContext);
+  const {
+    fontSize,
+    setFontSize,
+    wordsContainerWidth,
+    setWordsContainerWidth,
+    confidenceMode,
+    setConfidenceMode,
+  } = useContext(SettingsContext);
 
   const modalContentRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +79,16 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
               setWordsContainerWidth(value as TWordsContainerPercentageWidth)
             }
             icon={<WordsContainerWidth />}
+          />
+          <DropDown
+            values={confidenceModeValues}
+            value={confidenceMode}
+            title="Confidence mode"
+            name="confidence-mode"
+            settingSetter={(value) =>
+              setConfidenceMode(value as TConfidenceMode)
+            }
+            icon={<Backspace />}
           />
         </div>
       </Modal>

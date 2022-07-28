@@ -26,7 +26,7 @@ function App() {
     setBlockingTypingEvent,
   } = useContext(TypingContext);
 
-  const { wordsContainerWidth } = useContext(SettingsContext);
+  const { wordsContainerWidth, confidenceMode } = useContext(SettingsContext);
 
   const [isSettingsModalCollapsed, setSettingsModalCollapsed] =
     useState<boolean>(true);
@@ -130,52 +130,56 @@ function App() {
             setActiveLetter(0);
             setActiveWord((prev: number) => prev + 1);
           }
-        } else if (event.keyCode === 8) {
+        } else if (
+          event.keyCode === 8 &&
+          confidenceMode !== "max" &&
+          ((activeLetter === 0 && activeWord !== 0) || activeLetter > 0)
+        ) {
           // Backspace handling
 
           if (activeLetter === 0) {
-            if (activeWord === 0) return;
+            if (confidenceMode !== "on") {
+              const prevWord = words[activeWord - 1];
 
-            const prevWord = words[activeWord - 1];
+              const firstSkipedLetterIndex =
+                prevWord.letterStatuses.indexOf("skiped");
 
-            const firstSkipedLetterIndex =
-              prevWord.letterStatuses.indexOf("skiped");
-
-            if (prevWord.overflow) {
-              setActiveLetter(
-                prevWord.displayName.length + prevWord.overflow?.length
-              );
-            } else if (firstSkipedLetterIndex !== -1) {
-              setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
-
-              const prevWordLetterStatuses = prevWord.letterStatuses;
-
-              const alreadyHasStatus = [
-                ...prevWordLetterStatuses.slice(0, firstSkipedLetterIndex),
-              ];
-
-              const prevWordLetterStatusesUPD = [
-                ...alreadyHasStatus,
-                ...new Array(
-                  prevWord.displayName.length - alreadyHasStatus.length
-                ).fill("unset"),
-              ];
-
-              setWords((prev: WordTypeWithLetterStatuses[]) => {
-                return prev.map((word, index) =>
-                  activeWord - 1 === index
-                    ? {
-                        ...word,
-                        letterStatuses: prevWordLetterStatusesUPD,
-                      }
-                    : word
+              if (prevWord.overflow) {
+                setActiveLetter(
+                  prevWord.displayName.length + prevWord.overflow?.length
                 );
-              });
-            } else {
-              setActiveLetter(prevWord.displayName.length);
-            }
+              } else if (firstSkipedLetterIndex !== -1) {
+                setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
 
-            setActiveWord((prev: number) => prev - 1);
+                const prevWordLetterStatuses = prevWord.letterStatuses;
+
+                const alreadyHasStatus = [
+                  ...prevWordLetterStatuses.slice(0, firstSkipedLetterIndex),
+                ];
+
+                const prevWordLetterStatusesUPD = [
+                  ...alreadyHasStatus,
+                  ...new Array(
+                    prevWord.displayName.length - alreadyHasStatus.length
+                  ).fill("unset"),
+                ];
+
+                setWords((prev: WordTypeWithLetterStatuses[]) => {
+                  return prev.map((word, index) =>
+                    activeWord - 1 === index
+                      ? {
+                          ...word,
+                          letterStatuses: prevWordLetterStatusesUPD,
+                        }
+                      : word
+                  );
+                });
+              } else {
+                setActiveLetter(prevWord.displayName.length);
+              }
+
+              setActiveWord((prev: number) => prev - 1);
+            }
           } else {
             if (typingWord.overflow) {
               setWords((prev: WordTypeWithLetterStatuses[]) =>
@@ -190,6 +194,7 @@ function App() {
                     : word
                 )
               );
+              setActiveLetter((prev: number) => prev - 1);
             } else {
               const activeWordLetterStatusesSetted =
                 typingWord.letterStatuses.slice(0, activeLetter - 1);
@@ -212,9 +217,8 @@ function App() {
                     : word
                 )
               );
+              setActiveLetter((prev: number) => prev - 1);
             }
-
-            setActiveLetter((prev: number) => prev - 1);
           }
         } else if (event.keyCode === 13) {
           // Enter handling
@@ -248,6 +252,7 @@ function App() {
     setActiveLetter,
     blockingTypingEvent,
     typingMode,
+    confidenceMode,
   ]);
 
   return (

@@ -16,7 +16,6 @@ import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
 
 import {
-  Language,
   Quotes,
   Quote,
   TypingMode,

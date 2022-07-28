@@ -60,3 +60,7 @@ export type TWordsContainerPercentageWidth = 60 | 70 | 80 | 90;
 export const defaultWordsContainerPercentageWidth: TWordsContainerPercentageWidth = 70;
 export const wordsContainerPercentageWidthValues: TWordsContainerPercentageWidth[] =
   [60, 70, 80, 90];
+
+export type TConfidenceMode = "off" | "on" | "max";
+export const defaultConfidenceMode: TConfidenceMode = "off";
+export const confidenceModeValues: TConfidenceMode[] = ["off", "on", "max"];

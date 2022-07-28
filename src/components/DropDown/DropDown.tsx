@@ -1,9 +1,13 @@
 import React, { useState, useMemo, useContext, useEffect } from "react";
 import { DropDownArrow } from "../../assets/icons/DropDownArrow";
-import { TFontSize, TWordsContainerPercentageWidth } from "../../types";
 import { TypingContext } from "../../contexts/TypingContext";
 import { Radio } from "../Radio/Radio";
 import s from "./styles.module.scss";
+import {
+  TWordsContainerPercentageWidth,
+  TConfidenceMode,
+  TFontSize,
+} from "../../types";
 
 interface Props<T> {
   title: string;
@@ -24,7 +28,7 @@ export const DropDown = ({
   icon,
   name,
   settingSetter,
-}: Props<TFontSize | TWordsContainerPercentageWidth>) => {
+}: Props<TFontSize | TWordsContainerPercentageWidth | TConfidenceMode>) => {
   const { blockingTypingEvent } = useContext(TypingContext);
 
   const [isListCollapsed, setListCollapsed] = useState<boolean>(true);
@@ -52,12 +56,12 @@ export const DropDown = ({
                 : s["dropdown__item-text"]
             }
           >
-            {postfix ? item + postfix : value}
+            {postfix ? item + postfix : item}
           </span>
         </li>
       ));
     }
-  }, [values, name, value]);
+  }, [values, value, name]);
 
   return (
     <div className={s["dropdown"]}>
