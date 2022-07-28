@@ -5,17 +5,15 @@ import { TypingContext } from "../../contexts/TypingContext";
 import { Radio } from "../Radio/Radio";
 import s from "./styles.module.scss";
 
-type TSetterArg = TFontSize | TWordsContainerPercentageWidth;
-type TSetter = (value: TFontSize | TWordsContainerPercentageWidth) => void;
-
-interface Props {
+interface Props<T> {
   title: string;
-  value: string | number;
-  values?: string[] | number[];
-  postfix?: string;
-  icon?: React.ReactElement;
+  value: T;
+  values: T[];
   name: string;
-  settingSetter: TSetter;
+  settingSetter: (value: T) => void;
+
+  icon?: React.ReactElement;
+  postfix?: string;
 }
 
 export const DropDown = ({
@@ -26,7 +24,7 @@ export const DropDown = ({
   icon,
   name,
   settingSetter,
-}: Props) => {
+}: Props<TFontSize | TWordsContainerPercentageWidth>) => {
   const { blockingTypingEvent } = useContext(TypingContext);
 
   const [isListCollapsed, setListCollapsed] = useState<boolean>(true);
@@ -45,7 +43,7 @@ export const DropDown = ({
             name={name}
             value={item}
             defaultChecked={item === value ? true : false}
-            onChange={() => settingSetter(item as TSetterArg)}
+            onChange={() => settingSetter(item)}
           />
           <span
             className={

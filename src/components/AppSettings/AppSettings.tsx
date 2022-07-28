@@ -21,13 +21,8 @@ interface Props {
 
 export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
   const { setBlockingTypingEvent } = useContext(TypingContext);
-  const {
-    fontSize,
-    setFontSize,
-    valueIsFontSize,
-    wordsContainerWidth,
-    setWordsContainerWidth,
-  } = useContext(SettingsContext);
+  const { fontSize, setFontSize, wordsContainerWidth, setWordsContainerWidth } =
+    useContext(SettingsContext);
 
   const modalContentRef = useRef<HTMLDivElement>(null);
 
@@ -62,13 +57,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
             title="Font-size"
             name="font-size"
             postfix="px"
-            settingSetter={(value) => {
-              if (valueIsFontSize(value)) {
-                setFontSize(value as TFontSize);
-              } else {
-                throw new Error("Pizda");
-              }
-            }}
+            settingSetter={(value) => setFontSize(value as TFontSize)}
             icon={<FontSize />}
           />
           <DropDown
