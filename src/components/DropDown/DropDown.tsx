@@ -1,5 +1,6 @@
+import React, { useState, useMemo, useContext, useEffect } from "react";
 import { DropDownArrow } from "../../assets/icons/DropDownArrow";
-import React, { useState, useMemo } from "react";
+import { TypingContext } from "../../contexts/TypingContext";
 import { Radio } from "../Radio/Radio";
 import s from "./styles.module.scss";
 
@@ -22,7 +23,15 @@ export const DropDown = ({
   name,
   settingSetter,
 }: Props) => {
+  const { blockingTypingEvent } = useContext(TypingContext);
+
   const [isListCollapsed, setListCollapsed] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!blockingTypingEvent && !isListCollapsed) {
+      setListCollapsed(true);
+    }
+  }, [blockingTypingEvent]);
 
   const dropdownListElements = useMemo(() => {
     if (values) {
