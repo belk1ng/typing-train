@@ -64,6 +64,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
           )
         }
       >
+        {/* TODO: Fix modal height */}
         <div ref={modalContentRef} className={s["settings__wrapper"]}>
           <DropDown
             values={fontSizeValues}

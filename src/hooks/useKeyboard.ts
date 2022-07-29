@@ -311,5 +311,6 @@ export const useKeyboard = (
     blockingTypingEvent,
     typingMode,
     confidenceMode,
+    strictSpace,
   ]);
 };
