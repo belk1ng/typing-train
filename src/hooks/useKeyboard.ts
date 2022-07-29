@@ -30,11 +30,28 @@ export const useKeyboard = (
       const typingWord = words[activeWord];
 
       if (!blockingTypingEvent) {
+        const letterRegExp = /Key[A-Z]/,
+          numberRegExp = /Digit[0-9]/,
+          symbolCodesSet = [
+            "Backquote",
+            "Backslash",
+            "BracketLeft",
+            "BracketRight",
+            "Comma",
+            "Equal",
+            "IntlBackslash",
+            "IntlRo",
+            "IntlYen",
+            "Minus",
+            "Period",
+            "Quote",
+            "Semicolon",
+            "Slash",
+          ];
         if (
-          (event.keyCode >= 48 && event.keyCode <= 90) ||
-          (event.keyCode >= 106 && event.keyCode <= 111) ||
-          (event.keyCode >= 186 && event.keyCode <= 222) ||
-          event.keyCode === 173
+          letterRegExp.test(event.code) ||
+          numberRegExp.test(event.code) ||
+          symbolCodesSet.includes(event.code)
         ) {
           // Numbers, letters and symbols handling
 
@@ -88,7 +105,7 @@ export const useKeyboard = (
 
             setActiveLetter((prev: number) => prev + 1);
           }
-        } else if (event.keyCode === 32) {
+        } else if (event.code === "Space") {
           // Space handling
 
           if (activeLetter === 0) return;
@@ -123,7 +140,7 @@ export const useKeyboard = (
             setActiveWord((prev: number) => prev + 1);
           }
         } else if (
-          event.keyCode === 8 &&
+          event.code === "Backspace" &&
           confidenceMode !== "max" &&
           ((activeLetter === 0 && activeWord !== 0) || activeLetter > 0)
         ) {
@@ -212,7 +229,7 @@ export const useKeyboard = (
               setActiveLetter((prev: number) => prev - 1);
             }
           }
-        } else if (event.keyCode === 13) {
+        } else if (event.code === "Enter") {
           // Enter handling
 
           setActiveWord(0);
@@ -221,7 +238,7 @@ export const useKeyboard = (
             ? generateRandomWords(wordsCount)
             : getRandomQuote();
         } else if (
-          event.keyCode === 27 &&
+          event.code === "Escape" &&
           activeWord === 0 &&
           activeLetter === 0 &&
           isSettingsModalCollapsed
