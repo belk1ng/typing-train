@@ -1,10 +1,10 @@
 import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
+import React, { useContext, useState, useRef, useLayoutEffect } from "react";
 import { AppSettings } from "./components/AppSettings/AppSettings";
 import { SettingsContext } from "./contexts/SettingsContext";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
-import React, { useContext, useState, useRef, useLayoutEffect } from "react";
 import { Header } from "./components/Header/Header";
 import { useKeyboard } from "./hooks/useKeyboard";
 import "./assets/styles/App.scss";
@@ -47,8 +47,8 @@ function App() {
       </Header>
       <main style={{ width: `${wordsContainerWidth}%` }}>
         <LanguageSelector />
-        <textarea ref={textAreaRef} onBlur={handleBlur}></textarea>
         <WordsList />
+        <textarea ref={textAreaRef} onBlur={handleBlur}></textarea>
       </main>
     </div>
   );
