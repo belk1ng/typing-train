@@ -4,6 +4,7 @@ import { WordTypeWithLetterStatuses } from "../types";
 import { useContext, useEffect } from "react";
 
 export const useKeyboard = (
+  area: HTMLTextAreaElement | null,
   isSettingsModalCollapsed: boolean,
   setSettingsModalCollapsed: (value: boolean) => void
 ) => {
@@ -276,7 +277,9 @@ export const useKeyboard = (
               removeCharacter();
             }
           }
-        } else if (event.code === "Enter") {
+        } else if (event.code === "Tab") {
+          event.preventDefault();
+
           setActiveWord(0);
           setActiveLetter(0);
           typingMode === "words"
@@ -294,9 +297,15 @@ export const useKeyboard = (
       }
     };
 
-    document.addEventListener("keyup", keyUpHandler);
+    if (area) {
+      area.addEventListener("keydown", keyUpHandler);
+    }
 
-    return () => document.removeEventListener("keyup", keyUpHandler);
+    return () => {
+      if (area) {
+        area.removeEventListener("keydown", keyUpHandler);
+      }
+    };
   }, [
     words,
     activeWord,

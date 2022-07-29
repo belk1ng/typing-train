@@ -28,3 +28,11 @@
 .letter--overflow {
   color: lightcoral;
 }
+
+.letter--unset,
+.letter--correct,
+.letter--incorrect,
+.letter--skiped,
+.letter--overflow {
+  transition: color 0.07s ease-in-out;
+}

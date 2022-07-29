@@ -32,6 +32,11 @@ body {
       align-items: center;
       justify-content: center;
       flex-direction: column;
+
+      textarea {
+        opacity: 0;
+        height: 0;
+      }
     }
   }
 }

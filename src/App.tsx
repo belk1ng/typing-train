@@ -4,7 +4,7 @@ import { AppSettings } from "./components/AppSettings/AppSettings";
 import { SettingsContext } from "./contexts/SettingsContext";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useLayoutEffect } from "react";
 import { Header } from "./components/Header/Header";
 import { useKeyboard } from "./hooks/useKeyboard";
 import "./assets/styles/App.scss";
@@ -16,7 +16,25 @@ function App() {
   const [isSettingsModalCollapsed, setSettingsModalCollapsed] =
     useState<boolean>(true);
 
-  useKeyboard(isSettingsModalCollapsed, setSettingsModalCollapsed);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useKeyboard(
+    textAreaRef.current,
+    isSettingsModalCollapsed,
+    setSettingsModalCollapsed
+  );
+
+  useLayoutEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
+    }
+  }, [textAreaRef]);
+
+  const handleBlur = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
+    }
+  };
 
   return (
     <div className="wrapper">
@@ -29,6 +47,7 @@ function App() {
       </Header>
       <main style={{ width: `${wordsContainerWidth}%` }}>
         <LanguageSelector />
+        <textarea ref={textAreaRef} onBlur={handleBlur}></textarea>
         <WordsList />
       </main>
     </div>
