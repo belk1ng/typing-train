@@ -249,8 +249,6 @@ export const useKeyboard = (
           confidenceMode !== "max" &&
           ((activeLetter === 0 && activeWord !== 0) || activeLetter > 0)
         ) {
-          // Backspace handling
-
           if (activeLetter === 0) {
             if (confidenceMode !== "on") {
               const prevWord = words[activeWord - 1];
@@ -279,8 +277,6 @@ export const useKeyboard = (
             }
           }
         } else if (event.code === "Enter") {
-          // Enter handling
-
           setActiveWord(0);
           setActiveLetter(0);
           typingMode === "words"
