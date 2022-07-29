@@ -23,7 +23,7 @@ export const useKeyboard = (
     setBlockingTypingEvent,
   } = useContext(TypingContext);
 
-  const { confidenceMode } = useContext(SettingsContext);
+  const { confidenceMode, strictSpace } = useContext(SettingsContext);
 
   useEffect(() => {
     const keyUpHandler = (event: KeyboardEvent) => {
@@ -229,10 +229,20 @@ export const useKeyboard = (
           ) {
             getNextTrain();
           } else {
-            if (activeLetter !== typingWord.displayName.length) {
+            if (
+              activeLetter !== typingWord.displayName.length &&
+              strictSpace === "off"
+            ) {
               skipRemainingLetters();
+              jumpToTheNextWord();
+            } else if (
+              activeLetter !== typingWord.displayName.length &&
+              strictSpace === "on"
+            ) {
+              changePressedCharacterStatus();
+            } else {
+              jumpToTheNextWord();
             }
-            jumpToTheNextWord();
           }
         } else if (
           event.code === "Backspace" &&

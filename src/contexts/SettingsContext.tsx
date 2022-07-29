@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo } from "react";
+import React, { createContext, useState, useMemo, ReactNode } from "react";
 import {
   TFontSize,
   defaultFontSize,
@@ -6,10 +6,12 @@ import {
   defaultWordsContainerPercentageWidth,
   TConfidenceMode,
   defaultConfidenceMode,
+  TStrictSpace,
+  defaultStrictSpace,
 } from "../types";
 
 interface Props {
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 interface SettingsContext {
@@ -23,6 +25,9 @@ interface SettingsContext {
 
   confidenceMode: TConfidenceMode;
   setConfidenceMode: (mode: TConfidenceMode) => void;
+
+  strictSpace: TStrictSpace;
+  setStrictSpace: (value: TStrictSpace) => void;
 }
 
 export const SettingsContext = createContext<SettingsContext>(
@@ -40,6 +45,9 @@ export const SettingsContextProvider = ({ children }: Props) => {
     defaultConfidenceMode
   );
 
+  const [strictSpace, setStrictSpace] =
+    useState<TStrictSpace>(defaultStrictSpace);
+
   const value = useMemo(
     () => ({
       fontSize,
@@ -48,8 +56,10 @@ export const SettingsContextProvider = ({ children }: Props) => {
       setWordsContainerWidth,
       confidenceMode,
       setConfidenceMode,
+      strictSpace,
+      setStrictSpace,
     }),
-    [fontSize, wordsContainerWidth, confidenceMode]
+    [fontSize, wordsContainerWidth, confidenceMode, strictSpace]
   );
 
   return (

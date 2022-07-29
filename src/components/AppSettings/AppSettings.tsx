@@ -6,6 +6,7 @@ import { Modal, handleOutsideClick } from "../Modal/Modal";
 import { Backspace } from "../../assets/icons/Backspace";
 import { FontSize } from "../../assets/icons/FontSize";
 import React, { useContext, useRef } from "react";
+import { Space } from "../../assets/icons/Space";
 import { DropDown } from "../DropDown/DropDown";
 import s from "./styles.module.scss";
 import {
@@ -15,6 +16,8 @@ import {
   wordsContainerPercentageWidthValues,
   TConfidenceMode,
   confidenceModeValues,
+  TStrictSpace,
+  strictSpaceValues,
 } from "../../types";
 
 interface Props {
@@ -31,6 +34,8 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
     setWordsContainerWidth,
     confidenceMode,
     setConfidenceMode,
+    strictSpace,
+    setStrictSpace,
   } = useContext(SettingsContext);
 
   const modalContentRef = useRef<HTMLDivElement>(null);
@@ -89,6 +94,14 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
               setConfidenceMode(value as TConfidenceMode)
             }
             icon={<Backspace />}
+          />
+          <DropDown
+            values={strictSpaceValues}
+            value={strictSpace}
+            title="Strict space"
+            name="strict-space"
+            settingSetter={(value) => setStrictSpace(value as TStrictSpace)}
+            icon={<Space />}
           />
         </div>
       </Modal>

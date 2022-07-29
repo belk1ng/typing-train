@@ -1,31 +1,32 @@
 import React, {
-  useState,
   createContext,
   useCallback,
-  useMemo,
+  ReactNode,
   useEffect,
+  useState,
+  useMemo,
 } from "react";
 
+import {
+  WordTypeWithLetterStatuses,
+  QuotesLanguagesStore,
+  WordsLanguagesStore,
+  QuotesModeLanguages,
+  WordsModeLanguages,
+  QuoteDifficulty,
+  TypingMode,
+  Quotes,
+  Quote,
+} from "../types";
+
+import { javascriptCode } from "../languages/javascript_code";
+import { pythonCode } from "../languages/python_code";
 import { russian10k } from "../languages/russian10k";
 import { english25k } from "../languages/english25k";
 import { cssCode } from "../languages/css_code";
-import { javascriptCode } from "../languages/javascript_code";
-import { pythonCode } from "../languages/python_code";
 
 import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
-
-import {
-  Quotes,
-  Quote,
-  TypingMode,
-  WordTypeWithLetterStatuses,
-  QuoteDifficulty,
-  WordsLanguagesStore,
-  WordsModeLanguages,
-  QuotesModeLanguages,
-  QuotesLanguagesStore,
-} from "../types";
 
 interface TypingContextProviderValue {
   activeWord: number;
@@ -80,7 +81,7 @@ export const quotesLanguages: QuotesLanguagesStore = {
 };
 
 interface Props {
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 export const TypingContext = createContext({} as TypingContextProviderValue);

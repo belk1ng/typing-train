@@ -64,3 +64,7 @@ export const wordsContainerPercentageWidthValues: TWordsContainerPercentageWidth
 export type TConfidenceMode = "off" | "on" | "max";
 export const defaultConfidenceMode: TConfidenceMode = "off";
 export const confidenceModeValues: TConfidenceMode[] = ["off", "on", "max"];
+
+export type TStrictSpace = "on" | "off";
+export const defaultStrictSpace: TStrictSpace = "on";
+export const strictSpaceValues: TStrictSpace[] = ["on", "off"];
