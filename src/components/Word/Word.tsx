@@ -29,7 +29,7 @@ const renderWordByLetters = (
           <Letter
             letter={letter}
             status="overflow"
-            key={`${letter}_${index}`}
+            key={`overflow_${letter}_${index}`}
           />
         )),
     ];

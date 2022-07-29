@@ -230,13 +230,13 @@ export const useKeyboard = (
             getNextTrain();
           } else {
             if (
-              activeLetter !== typingWord.displayName.length &&
+              activeLetter < typingWord.displayName.length &&
               strictSpace === "off"
             ) {
               skipRemainingLetters();
               jumpToTheNextWord();
             } else if (
-              activeLetter !== typingWord.displayName.length &&
+              activeLetter < typingWord.displayName.length &&
               strictSpace === "on"
             ) {
               changePressedCharacterStatus();

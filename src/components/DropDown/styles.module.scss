@@ -28,6 +28,15 @@
     }
   }
 
+  .dropdown__header,
+  .dropdown__description,
+  .dropdown__item-text,
+  .dropdown__item-text--choosen {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+
   .dropdown__header--open {
     color: #f6f0e9;
 
