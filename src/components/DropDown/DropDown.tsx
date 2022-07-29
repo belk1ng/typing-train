@@ -18,16 +18,18 @@ interface Props<T> {
 
   icon?: React.ReactElement;
   postfix?: string;
+  description?: string;
 }
 
 export const DropDown = ({
   title,
   value,
   values,
-  postfix,
-  icon,
   name,
   settingSetter,
+  icon,
+  postfix,
+  description,
 }: Props<TFontSize | TWordsContainerPercentageWidth | TConfidenceMode>) => {
   const { blockingTypingEvent } = useContext(TypingContext);
 
@@ -85,6 +87,9 @@ export const DropDown = ({
           isListCollapsed ? s["dropdown__list--hidden"] : s["dropdown__list"]
         }
       >
+        {description && (
+          <p className={s["dropdown__description"]}>{description}</p>
+        )}
         {dropdownListElements}
       </ul>
     </div>

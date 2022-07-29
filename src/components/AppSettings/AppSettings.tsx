@@ -73,6 +73,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
             postfix="px"
             settingSetter={(value) => setFontSize(value as TFontSize)}
             icon={<FontSize />}
+            description="Change the font size of the test words."
           />
           <DropDown
             values={wordsContainerPercentageWidthValues}
@@ -84,6 +85,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
               setWordsContainerWidth(value as TWordsContainerPercentageWidth)
             }
             icon={<WordsContainerWidth />}
+            description="Typing container's percentage width relative to your screen"
           />
           <DropDown
             values={confidenceModeValues}
@@ -94,6 +96,9 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
               setConfidenceMode(value as TConfidenceMode)
             }
             icon={<Backspace />}
+            description={
+              "When enabled, you will not be able to go back to previous words to fix mistakes. When turned up to the max, you won't be able to backspace at all."
+            }
           />
           <DropDown
             values={strictSpaceValues}
@@ -102,6 +107,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
             name="strict-space"
             settingSetter={(value) => setStrictSpace(value as TStrictSpace)}
             icon={<Space />}
+            description="Pressing space will insert a space character when this mode is enabled."
           />
         </div>
       </Modal>
