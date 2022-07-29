@@ -18,13 +18,6 @@ export const WordsList = () => {
 
   type TSide = "top" | "bottom" | "left" | "right";
 
-  const scrollTo = (elem: HTMLElement, side: TSide, pixels: number): void => {
-    elem.scrollTo({
-      [side]: pixels,
-      behavior: "smooth",
-    });
-  };
-
   useEffect(() => {
     const verticalGap = 5;
 
@@ -71,6 +64,13 @@ export const WordsList = () => {
       scrollTo(wordsContainerRef.current, "top", 0);
     }
   }, [wordsArray]);
+
+  const scrollTo = (elem: HTMLElement, side: TSide, pixels: number): void => {
+    elem.scrollTo({
+      [side]: pixels,
+      behavior: "smooth",
+    });
+  };
 
   const wordsToType = useMemo(() => {
     return words.map((word, index) =>

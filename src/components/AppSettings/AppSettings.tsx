@@ -61,7 +61,7 @@ export const AppSettings = ({ isModalCollapsed, setModalCollapsed }: Props) => {
       >
         <div ref={modalContentRef} className={s["settings__wrapper"]}>
           <DropDown
-            values={[...fontSizeValues]}
+            values={fontSizeValues}
             value={fontSize}
             title="Font-size"
             name="font-size"

@@ -11,7 +11,6 @@ import "./assets/styles/App.scss";
 
 function App() {
   const { activeWord, activeLetter } = useContext(TypingContext);
-
   const { wordsContainerWidth } = useContext(SettingsContext);
 
   const [isSettingsModalCollapsed, setSettingsModalCollapsed] =

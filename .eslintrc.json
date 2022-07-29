@@ -17,6 +17,8 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
-  "rules": {},
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off"
+  },
   "root": true
 }
