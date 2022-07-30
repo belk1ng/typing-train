@@ -1,6 +1,6 @@
 import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
 import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
-import React, { useContext, useState, useRef, useLayoutEffect } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { AppSettings } from "./components/AppSettings/AppSettings";
 import { SettingsContext } from "./contexts/SettingsContext";
 import { WordsList } from "./components/WordsList/WordsList";
@@ -24,7 +24,7 @@ function App() {
     setSettingsModalCollapsed
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.focus();
     }
