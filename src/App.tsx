@@ -10,8 +10,16 @@ import { useKeyboard } from "./hooks/useKeyboard";
 import "./assets/styles/App.scss";
 
 function App() {
-  const { activeWord, activeLetter, blockingTypingEvent } =
-    useContext(TypingContext);
+  const {
+    activeWord,
+    activeLetter,
+    wordsCount,
+    typingMode,
+    wordsModeLanguage,
+    quotesDifficulty,
+    quotesModeLanguage,
+    blockingTypingEvent,
+  } = useContext(TypingContext);
   const { wordsContainerWidth } = useContext(SettingsContext);
 
   const [isSettingsModalCollapsed, setSettingsModalCollapsed] =
@@ -25,9 +33,18 @@ function App() {
     setSettingsModalCollapsed
   );
 
+  // TODO: Fix useEffect to useCallback with ref ??
   useEffect(() => {
     handleBlur();
-  }, [textAreaRef, blockingTypingEvent]);
+  }, [
+    textAreaRef,
+    blockingTypingEvent,
+    typingMode,
+    wordsModeLanguage,
+    wordsCount,
+    quotesModeLanguage,
+    quotesDifficulty,
+  ]);
 
   const handleBlur = () => {
     if (textAreaRef.current && !blockingTypingEvent) {
