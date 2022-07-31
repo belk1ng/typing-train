@@ -1,4 +1,11 @@
-import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+  useMemo,
+  ChangeEvent,
+} from "react";
 import { WordsModeLanguages, QuotesModeLanguages } from "../../../types";
 import { Modal, handleOutsideClick } from "../../Modal/Modal";
 import s from "./styles.module.scss";
@@ -45,8 +52,8 @@ export const LanguageSelectorModal = ({
     return Object.entries(
       typingMode === "words" ? wordsLanguages : quotesLanguages
     )
-      .filter(([langName, _]) => langName.includes(searchQuery))
-      .map(([langName, _]) => (
+      .filter(([langName]) => langName.includes(searchQuery))
+      .map(([langName]) => (
         <li
           key={`lang_${langName}`}
           className={s["selector__language"]}
@@ -65,6 +72,10 @@ export const LanguageSelectorModal = ({
       ));
   }, [searchQuery, typingMode]);
 
+  {
+    /* TODO: Fix input bug based on typing textarea focus */
+  }
+
   return (
     <Modal
       isCollapsed={modalCollapsed}
@@ -82,7 +93,7 @@ export const LanguageSelectorModal = ({
           <input
             ref={inputRef}
             value={searchQuery}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               blockingTypingEvent && setSearchQuery(e.target.value)
             }
             type="text"
