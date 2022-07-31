@@ -1,19 +1,19 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-  useMemo,
-  ChangeEvent,
-} from "react";
 import { WordsModeLanguages, QuotesModeLanguages } from "../../../types";
 import { Modal, handleOutsideClick } from "../../Modal/Modal";
 import s from "./styles.module.scss";
 import {
-  TypingContext,
-  wordsLanguages,
   quotesLanguages,
+  wordsLanguages,
+  TypingContext,
 } from "../../../contexts/TypingContext";
+import React, {
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+} from "react";
 
 interface Props {
   modalCollapsed: boolean;
@@ -41,7 +41,9 @@ export const LanguageSelectorModal = ({
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, [modalCollapsed]);
+  }, [modalCollapsed, blockingTypingEvent]);
+
+  useEffect(() => setSearchQuery(""), [typingMode, blockingTypingEvent]);
 
   const outsideClickCallback = (): void => {
     setModalCollapsed(true);
@@ -71,10 +73,6 @@ export const LanguageSelectorModal = ({
         </li>
       ));
   }, [searchQuery, typingMode]);
-
-  {
-    /* TODO: Fix input bug based on typing textarea focus */
-  }
 
   return (
     <Modal

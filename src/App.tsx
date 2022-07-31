@@ -10,7 +10,8 @@ import { useKeyboard } from "./hooks/useKeyboard";
 import "./assets/styles/App.scss";
 
 function App() {
-  const { activeWord, activeLetter } = useContext(TypingContext);
+  const { activeWord, activeLetter, blockingTypingEvent } =
+    useContext(TypingContext);
   const { wordsContainerWidth } = useContext(SettingsContext);
 
   const [isSettingsModalCollapsed, setSettingsModalCollapsed] =
@@ -25,13 +26,11 @@ function App() {
   );
 
   useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.focus();
-    }
-  }, [textAreaRef]);
+    handleBlur();
+  }, [textAreaRef, blockingTypingEvent]);
 
   const handleBlur = () => {
-    if (textAreaRef.current) {
+    if (textAreaRef.current && !blockingTypingEvent) {
       textAreaRef.current.focus();
     }
   };
