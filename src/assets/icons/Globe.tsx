@@ -1,3 +1,5 @@
+import React from "react";
+
 export const Globe = () => (
   <svg
     version="1.1"
