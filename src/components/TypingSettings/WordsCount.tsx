@@ -1,14 +1,13 @@
 import { TypingContext } from "../../contexts/TypingContext";
+import { wordsCountValues } from "../../types";
 import React, { useContext } from "react";
 import s from "./styles.module.scss";
 
 export const WordsCount = () => {
   const { wordsCount, setWordsCount } = useContext(TypingContext);
 
-  const renderWordsCountStates = () => {
-    const values = [15, 35, 50];
-
-    return values.map((count, index) => (
+  const wordsCountNodes = () => {
+    return wordsCountValues.map((count, index) => (
       <p
         key={index}
         className={
@@ -24,8 +23,6 @@ export const WordsCount = () => {
   };
 
   return (
-    <div className={s["typing-settings__params"]}>
-      {renderWordsCountStates()}
-    </div>
+    <div className={s["typing-settings__params"]}>{wordsCountNodes()}</div>
   );
 };

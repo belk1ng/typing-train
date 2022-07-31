@@ -1,5 +1,5 @@
 import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector";
-import { TypingSettings } from "./components/TypingSettings/TypeingSettings";
+import { TypingSettings } from "./components/TypingSettings/TypingSettings";
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { AppSettings } from "./components/AppSettings/AppSettings";
 import { SettingsContext } from "./contexts/SettingsContext";

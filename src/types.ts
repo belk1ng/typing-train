@@ -1,5 +1,6 @@
 // Typing settings types
-export type TypingMode = "words" | "quotes";
+export type TTypingMode = "words" | "quotes";
+export const typingModes: TTypingMode[] = ["words", "quotes"];
 
 export type LetterStatus =
   | "unset"
@@ -31,6 +32,9 @@ export interface WordTypeWithLetterStatuses {
 }
 
 // Typing "Words" languages
+export type TWordsCount = 10 | 25 | 50 | 100;
+export const wordsCountValues: TWordsCount[] = [10, 25, 50, 100];
+
 export interface WordsLanguagesStore {
   [langName: string]: Language;
 }

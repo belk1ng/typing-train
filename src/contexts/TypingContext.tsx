@@ -14,16 +14,17 @@ import {
   QuotesModeLanguages,
   WordsModeLanguages,
   QuoteDifficulty,
-  TypingMode,
+  TTypingMode,
+  TWordsCount,
   Quotes,
   Quote,
 } from "../types";
 
-import { javascriptCode } from "../languages/javascript_code";
-import { pythonCode } from "../languages/python_code";
+import { javascriptCode } from "../languages/javascript";
 import { russian10k } from "../languages/russian10k";
 import { english25k } from "../languages/english25k";
-import { cssCode } from "../languages/css_code";
+import { pythonCode } from "../languages/python";
+import { cssCode } from "../languages/css";
 
 import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
@@ -45,8 +46,8 @@ interface TypingContextProviderValue {
       | ((prev: WordTypeWithLetterStatuses[]) => WordTypeWithLetterStatuses[])
   ) => void;
 
-  wordsCount: number;
-  setWordsCount: (count: number) => void;
+  wordsCount: TWordsCount;
+  setWordsCount: (count: TWordsCount) => void;
 
   wordsModeLanguage: WordsModeLanguages;
   setWordsModeLanguage: (language: WordsModeLanguages) => void;
@@ -57,8 +58,8 @@ interface TypingContextProviderValue {
   quotesDifficulty: QuoteDifficulty;
   setQuotesDifficulty: (difficulty: QuoteDifficulty) => void;
 
-  typingMode: TypingMode;
-  setTypingMode: (mode: TypingMode) => void;
+  typingMode: TTypingMode;
+  setTypingMode: (mode: TTypingMode) => void;
 
   blockingTypingEvent: boolean;
   setBlockingTypingEvent: (shouldBlock: boolean) => void;
@@ -94,12 +95,12 @@ export const TypingContextProvider = ({ children }: Props) => {
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
 
-  const [typingMode, setTypingMode] = useState<TypingMode>("words");
+  const [typingMode, setTypingMode] = useState<TTypingMode>("words");
 
   // Words mode language
   const [wordsModeLanguage, setWordsModeLanguage] =
     useState<WordsModeLanguages>("russian_10k");
-  const [wordsCount, setWordsCount] = useState<number>(35);
+  const [wordsCount, setWordsCount] = useState<TWordsCount>(25);
 
   // Quotes mode language
   const [quotesModeLanguage, setQuotesModeLanguage] =
