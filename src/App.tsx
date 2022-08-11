@@ -11,14 +11,13 @@ import "./assets/styles/App.scss";
 
 function App() {
   const {
-    activeWord,
-    activeLetter,
-    wordsCount,
-    typingMode,
+    blockingTypingEvent,
+    quotesModeLanguage,
     wordsModeLanguage,
     quotesDifficulty,
-    quotesModeLanguage,
-    blockingTypingEvent,
+    typingMode,
+    wordsCount,
+    typing,
   } = useContext(TypingContext);
   const { wordsContainerWidth } = useContext(SettingsContext);
 
@@ -37,13 +36,13 @@ function App() {
   useEffect(() => {
     handleBlur();
   }, [
-    textAreaRef,
     blockingTypingEvent,
-    typingMode,
-    wordsModeLanguage,
-    wordsCount,
     quotesModeLanguage,
+    wordsModeLanguage,
     quotesDifficulty,
+    textAreaRef,
+    typingMode,
+    wordsCount,
   ]);
 
   const handleBlur = () => {
@@ -54,7 +53,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      <Header isVisible={activeWord === 0 && activeLetter === 0}>
+      <Header isVisible={!typing}>
         <AppSettings
           isModalCollapsed={isSettingsModalCollapsed}
           setModalCollapsed={setSettingsModalCollapsed}

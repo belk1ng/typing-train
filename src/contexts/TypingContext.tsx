@@ -12,8 +12,10 @@ import {
   QuotesLanguagesStore,
   WordsLanguagesStore,
   QuotesModeLanguages,
+  // TypingTimeoutValues,
   WordsModeLanguages,
   QuoteDifficulty,
+  // TTypingTimeout,
   TTypingMode,
   TWordsCount,
   Quotes,
@@ -30,6 +32,9 @@ import { russianQuotes } from "../languages/russian_quotes";
 import { englishQuotes } from "../languages/english_quotes";
 
 interface TypingContextProviderValue {
+  typing: boolean;
+  setTyping: (value: boolean | ((prev: boolean) => boolean)) => void;
+
   activeWord: number;
   setActiveWord: (activeWord: number | ((prev: number) => number)) => void;
 
@@ -88,6 +93,8 @@ interface Props {
 export const TypingContext = createContext({} as TypingContextProviderValue);
 
 export const TypingContextProvider = ({ children }: Props) => {
+  const [typing, setTyping] = useState<boolean>(false);
+
   const [activeWord, setActiveWord] = useState<number>(0);
   const [activeLetter, setActiveLetter] = useState<number>(0);
   const [wordsArray, setWordsArray] = useState<string[]>([]);
@@ -107,6 +114,9 @@ export const TypingContextProvider = ({ children }: Props) => {
     useState<QuotesModeLanguages>("russian_quotes");
   const [quotesDifficulty, setQuotesDifficulty] =
     useState<QuoteDifficulty>("easy");
+
+  // Time mode
+  // const [timeout, setTimeout] = useState<number>(0);
 
   useEffect(
     () => generateRandomWords(wordsCount),
@@ -186,6 +196,8 @@ export const TypingContextProvider = ({ children }: Props) => {
 
   const value = useMemo(
     () => ({
+      typing,
+      setTyping,
       activeWord,
       setActiveWord,
       activeLetter,
@@ -210,6 +222,7 @@ export const TypingContextProvider = ({ children }: Props) => {
       getRandomQuote,
     }),
     [
+      typing,
       activeWord,
       activeLetter,
       words,

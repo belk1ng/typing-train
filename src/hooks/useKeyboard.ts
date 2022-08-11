@@ -9,19 +9,21 @@ export const useKeyboard = (
   setSettingsModalCollapsed: (value: boolean) => void
 ) => {
   const {
-    wordsArray,
-    activeWord,
+    setBlockingTypingEvent,
+    blockingTypingEvent,
+    generateRandomWords,
+    setActiveLetter,
+    getRandomQuote,
     setActiveWord,
     activeLetter,
-    setActiveLetter,
-    words,
-    setWords,
-    wordsCount,
+    wordsArray,
+    activeWord,
     typingMode,
-    generateRandomWords,
-    getRandomQuote,
-    blockingTypingEvent,
-    setBlockingTypingEvent,
+    wordsCount,
+    setTyping,
+    setWords,
+    typing,
+    words,
   } = useContext(TypingContext);
 
   const { confidenceMode, strictSpace } = useContext(SettingsContext);
@@ -216,6 +218,8 @@ export const useKeyboard = (
           numberRegExp.test(event.code) ||
           symbolCodesSet.includes(event.code)
         ) {
+          !typing && setTyping(true);
+
           const activeWordLength = typingWord.displayName.length;
 
           if (activeLetter < activeWordLength) {
@@ -228,6 +232,7 @@ export const useKeyboard = (
             (activeWord === wordsCount - 1 && typingMode === "words") ||
             (typingMode === "quotes" && activeWord === wordsArray.length - 1)
           ) {
+            setTyping(false);
             getNextTrain();
           } else {
             if (
@@ -279,6 +284,8 @@ export const useKeyboard = (
           }
         } else if (event.code === "Tab") {
           event.preventDefault();
+
+          setTyping(false);
 
           setActiveWord(0);
           setActiveLetter(0);

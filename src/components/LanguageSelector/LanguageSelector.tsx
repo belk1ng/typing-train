@@ -8,12 +8,11 @@ export const LanguageSelector = () => {
   const [modalCollapsed, setModalCollapsed] = useState<boolean>(true);
 
   const {
-    activeLetter,
-    activeWord,
     setBlockingTypingEvent,
-    wordsModeLanguage,
     quotesModeLanguage,
+    wordsModeLanguage,
     typingMode,
+    typing,
   } = useContext(TypingContext);
 
   return (
@@ -24,9 +23,7 @@ export const LanguageSelector = () => {
           setBlockingTypingEvent(true);
         }}
         className={
-          activeWord === 0 && activeLetter === 0
-            ? s["language-selector"]
-            : s["language-selector--hide"]
+          !typing ? s["language-selector"] : s["language-selector--hide"]
         }
       >
         <Globe />

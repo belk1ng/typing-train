@@ -1,6 +1,5 @@
-// Typing settings types
-export type TTypingMode = "words" | "quotes";
-export const typingModes: TTypingMode[] = ["words", "quotes"];
+export type TTypingMode = "words" | "quotes" | "time";
+export const typingModes: TTypingMode[] = ["words", "quotes", "time"];
 
 export type LetterStatus =
   | "unset"
@@ -54,6 +53,11 @@ export interface QuotesLanguagesStore {
 }
 
 export type QuotesModeLanguages = "russian_quotes" | "english_quotes";
+
+// Time mode
+export type TTypingTimeout = 15 | 30 | 60 | 120;
+export const TypingTimeoutValues: TTypingTimeout[] = [15, 30, 60, 120];
+export const defaultTypingTimeoutValue = 30;
 
 // App settings types
 export type TFontSize = 24 | 32 | 36 | 40 | 42;
