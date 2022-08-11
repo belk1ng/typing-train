@@ -8,14 +8,20 @@ import React, {
 } from "react";
 
 import {
+  defaultQuoteDifficultyValue,
+  defaultQuotesModeLanguageValue,
+  defaultWordsModeLanguageValue,
   WordTypeWithLetterStatuses,
+  defaultWordsCountValue,
+  defaultTypingMode,
+  defaultTypingTimeoutValue,
   QuotesLanguagesStore,
   WordsLanguagesStore,
   QuotesModeLanguages,
-  // TypingTimeoutValues,
+  TypingTimeoutValues,
   WordsModeLanguages,
   QuoteDifficulty,
-  // TTypingTimeout,
+  TTypingTimeout,
   TTypingMode,
   TWordsCount,
   Quotes,
@@ -102,18 +108,21 @@ export const TypingContextProvider = ({ children }: Props) => {
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
 
-  const [typingMode, setTypingMode] = useState<TTypingMode>("words");
+  const [typingMode, setTypingMode] = useState<TTypingMode>(defaultTypingMode);
 
   // Words mode language
   const [wordsModeLanguage, setWordsModeLanguage] =
-    useState<WordsModeLanguages>("russian_10k");
-  const [wordsCount, setWordsCount] = useState<TWordsCount>(25);
+    useState<WordsModeLanguages>(defaultWordsModeLanguageValue);
+  const [wordsCount, setWordsCount] = useState<TWordsCount>(
+    defaultWordsCountValue
+  );
 
   // Quotes mode language
   const [quotesModeLanguage, setQuotesModeLanguage] =
-    useState<QuotesModeLanguages>("russian_quotes");
-  const [quotesDifficulty, setQuotesDifficulty] =
-    useState<QuoteDifficulty>("easy");
+    useState<QuotesModeLanguages>(defaultQuotesModeLanguageValue);
+  const [quotesDifficulty, setQuotesDifficulty] = useState<QuoteDifficulty>(
+    defaultQuoteDifficultyValue
+  );
 
   // Time mode
   // const [timeout, setTimeout] = useState<number>(0);

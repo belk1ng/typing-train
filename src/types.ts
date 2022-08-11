@@ -1,5 +1,6 @@
 export type TTypingMode = "words" | "quotes" | "time";
 export const typingModes: TTypingMode[] = ["words", "quotes", "time"];
+export const defaultTypingMode: TTypingMode = "words";
 
 export type LetterStatus =
   | "unset"
@@ -33,6 +34,7 @@ export interface WordTypeWithLetterStatuses {
 // Typing "Words" languages
 export type TWordsCount = 10 | 25 | 50 | 100;
 export const wordsCountValues: TWordsCount[] = [10, 25, 50, 100];
+export const defaultWordsCountValue: TWordsCount = 25;
 
 export interface WordsLanguagesStore {
   [langName: string]: Language;
@@ -45,7 +47,10 @@ export type WordsModeLanguages =
   | "css_code"
   | "python_code";
 
+export const defaultWordsModeLanguageValue: WordsModeLanguages = "english_25k";
+
 export type QuoteDifficulty = "easy" | "middle" | "hard" | "random";
+export const defaultQuoteDifficultyValue: QuoteDifficulty = "middle";
 
 // Typing "Quotes" languages
 export interface QuotesLanguagesStore {
@@ -53,6 +58,8 @@ export interface QuotesLanguagesStore {
 }
 
 export type QuotesModeLanguages = "russian_quotes" | "english_quotes";
+export const defaultQuotesModeLanguageValue: QuotesModeLanguages =
+  "english_quotes";
 
 // Time mode
 export type TTypingTimeout = 15 | 30 | 60 | 120;
