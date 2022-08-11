@@ -8,18 +8,18 @@ import React, {
 } from "react";
 
 import {
-  defaultQuoteDifficultyValue,
   defaultQuotesModeLanguageValue,
   defaultWordsModeLanguageValue,
+  defaultQuoteDifficultyValue,
   WordTypeWithLetterStatuses,
-  defaultWordsCountValue,
-  defaultTypingMode,
   defaultTypingTimeoutValue,
+  defaultWordsCountValue,
   QuotesLanguagesStore,
   WordsLanguagesStore,
   QuotesModeLanguages,
   TypingTimeoutValues,
   WordsModeLanguages,
+  defaultTypingMode,
   QuoteDifficulty,
   TTypingTimeout,
   TTypingMode,
