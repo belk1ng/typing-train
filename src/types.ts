@@ -49,8 +49,14 @@ export type WordsModeLanguages =
 
 export const defaultWordsModeLanguageValue: WordsModeLanguages = "english_25k";
 
-export type QuoteDifficulty = "easy" | "middle" | "hard" | "random";
-export const defaultQuoteDifficultyValue: QuoteDifficulty = "middle";
+export type TQuoteDifficulty = "easy" | "middle" | "hard" | "random";
+export const quotesDifficultyValues: TQuoteDifficulty[] = [
+  "easy",
+  "middle",
+  "hard",
+  "random",
+];
+export const defaultQuoteDifficultyValue: TQuoteDifficulty = "middle";
 
 // Typing "Quotes" languages
 export interface QuotesLanguagesStore {

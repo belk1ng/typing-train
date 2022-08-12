@@ -21,7 +21,7 @@ import {
   QuotesModeLanguages,
   WordsModeLanguages,
   defaultTypingMode,
-  QuoteDifficulty,
+  TQuoteDifficulty,
   TTypingTimeout,
   TTypingMode,
   TWordsCount,
@@ -67,8 +67,8 @@ interface TypingContextProviderValue {
   quotesModeLanguage: string;
   setQuotesModeLanguage: (language: QuotesModeLanguages) => void;
 
-  quotesDifficulty: QuoteDifficulty;
-  setQuotesDifficulty: (difficulty: QuoteDifficulty) => void;
+  quotesDifficulty: TQuoteDifficulty;
+  setQuotesDifficulty: (difficulty: TQuoteDifficulty) => void;
 
   typingTimeout: TTypingTimeout;
   setTypingTimeout: (timeout: TTypingTimeout) => void;
@@ -126,7 +126,7 @@ export const TypingContextProvider = ({ children }: Props) => {
   // Quotes mode language
   const [quotesModeLanguage, setQuotesModeLanguage] =
     useState<QuotesModeLanguages>(defaultQuotesModeLanguageValue);
-  const [quotesDifficulty, setQuotesDifficulty] = useState<QuoteDifficulty>(
+  const [quotesDifficulty, setQuotesDifficulty] = useState<TQuoteDifficulty>(
     defaultQuoteDifficultyValue
   );
 
@@ -138,6 +138,8 @@ export const TypingContextProvider = ({ children }: Props) => {
   const typingTime = useRef<number>(0);
 
   useEffect(() => {
+    // TODO: Autoload new words while user are typing
+
     let typingInterval: ReturnType<typeof setInterval> | null = null;
 
     if (
