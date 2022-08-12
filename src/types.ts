@@ -63,8 +63,8 @@ export const defaultQuotesModeLanguageValue: QuotesModeLanguages =
 
 // Time mode
 export type TTypingTimeout = 15 | 30 | 60 | 120;
-export const TypingTimeoutValues: TTypingTimeout[] = [15, 30, 60, 120];
-export const defaultTypingTimeoutValue = 30;
+export const typingTimeoutValues: TTypingTimeout[] = [15, 30, 60, 120];
+export const defaultTypingTimeoutValue = 15;
 
 // App settings types
 export type TFontSize = 24 | 32 | 36 | 40 | 42;

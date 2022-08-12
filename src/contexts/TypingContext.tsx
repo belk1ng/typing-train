@@ -1,10 +1,12 @@
 import React, {
+  MutableRefObject,
   createContext,
   useCallback,
   ReactNode,
   useEffect,
   useState,
   useMemo,
+  useRef,
 } from "react";
 
 import {
@@ -17,7 +19,6 @@ import {
   QuotesLanguagesStore,
   WordsLanguagesStore,
   QuotesModeLanguages,
-  TypingTimeoutValues,
   WordsModeLanguages,
   defaultTypingMode,
   QuoteDifficulty,
@@ -69,6 +70,9 @@ interface TypingContextProviderValue {
   quotesDifficulty: QuoteDifficulty;
   setQuotesDifficulty: (difficulty: QuoteDifficulty) => void;
 
+  typingTimeout: TTypingTimeout;
+  setTypingTimeout: (timeout: TTypingTimeout) => void;
+
   typingMode: TTypingMode;
   setTypingMode: (mode: TTypingMode) => void;
 
@@ -77,6 +81,8 @@ interface TypingContextProviderValue {
 
   generateRandomWords: (wordsCount?: number) => void;
   getRandomQuote: () => void;
+
+  typingTime: MutableRefObject<number>;
 }
 
 export const wordsLanguages: WordsLanguagesStore = {
@@ -125,7 +131,38 @@ export const TypingContextProvider = ({ children }: Props) => {
   );
 
   // Time mode
-  // const [timeout, setTimeout] = useState<number>(0);
+  const [typingTimeout, setTypingTimeout] = useState<TTypingTimeout>(
+    defaultTypingTimeoutValue
+  );
+
+  const typingTime = useRef<number>(0);
+
+  useEffect(() => {
+    let typingInterval: ReturnType<typeof setInterval> | null = null;
+
+    if (
+      typing &&
+      typingTime.current === +typingTime.current &&
+      typingMode === "time"
+    ) {
+      typingInterval = setInterval(() => {
+        if (typingTime.current >= typingTimeout) {
+          setTyping(false);
+          setActiveWord(0);
+          setActiveLetter(0);
+          generateRandomWords(wordsCount);
+        }
+        typingTime.current += 0.01;
+      }, 10);
+    }
+
+    return () => {
+      if (typingInterval && typingTime.current) {
+        clearInterval(typingInterval);
+        typingTime.current = 0;
+      }
+    };
+  }, [typing, typingMode]);
 
   useEffect(
     () => generateRandomWords(wordsCount),
@@ -135,7 +172,7 @@ export const TypingContextProvider = ({ children }: Props) => {
   useEffect(() => getRandomQuote(), [quotesModeLanguage, quotesDifficulty]);
 
   useEffect(() => {
-    if (typingMode === "words") {
+    if (typingMode === "words" || typingMode == "time") {
       generateRandomWords(wordsCount);
     } else {
       getRandomQuote();
@@ -225,10 +262,13 @@ export const TypingContextProvider = ({ children }: Props) => {
       setQuotesDifficulty,
       typingMode,
       setTypingMode,
+      typingTimeout,
+      setTypingTimeout,
       blockingTypingEvent,
       setBlockingTypingEvent,
       generateRandomWords,
       getRandomQuote,
+      typingTime,
     }),
     [
       typing,
@@ -242,6 +282,7 @@ export const TypingContextProvider = ({ children }: Props) => {
       quotesModeLanguage,
       quotesDifficulty,
       typingMode,
+      typingTimeout,
       blockingTypingEvent,
     ]
   );

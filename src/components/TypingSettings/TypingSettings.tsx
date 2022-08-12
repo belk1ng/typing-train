@@ -1,5 +1,6 @@
 import { TypingContext } from "../../contexts/TypingContext";
 import { QuotesDifficulty } from "./QuotesDifficulty";
+import { TypingInterval } from "./TypingTimeout";
 import React, { useContext } from "react";
 import { WordsCount } from "./WordsCount";
 import { TypingMode } from "./TypingMode";
@@ -13,6 +14,7 @@ export const TypingSettings = () => {
       <TypingMode />
       {typingMode === "words" && <WordsCount />}
       {typingMode === "quotes" && <QuotesDifficulty />}
+      {typingMode === "time" && <TypingInterval />}
     </div>
   );
 };
