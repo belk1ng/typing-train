@@ -60,9 +60,9 @@ export const LanguageSelectorModal = ({
           key={`lang_${langName}`}
           className={s["selector__language"]}
           onClick={() => {
-            typingMode === "words"
-              ? setWordsModeLanguage(langName as WordsModeLanguages)
-              : setQuotesModeLanguage(langName as QuotesModeLanguages);
+            typingMode === "quotes"
+              ? setQuotesModeLanguage(langName as QuotesModeLanguages)
+              : setWordsModeLanguage(langName as WordsModeLanguages);
 
             setModalCollapsed(true);
             setBlockingTypingEvent(false);

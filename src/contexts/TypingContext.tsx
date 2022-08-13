@@ -165,6 +165,11 @@ export const TypingContextProvider = ({ children }: Props) => {
           setActiveWord(0);
           setActiveLetter(0);
           generateRandomWords(wordsCount);
+
+          const WPM =
+            (correctWords.current + misspelledWords.current) /
+            (typingTimeout / 60);
+          alert(`WPM:  ${WPM}`);
         }
         typingTime.current += 0.01;
       }, 10);
@@ -186,10 +191,10 @@ export const TypingContextProvider = ({ children }: Props) => {
   useEffect(() => getRandomQuote(), [quotesModeLanguage, quotesDifficulty]);
 
   useEffect(() => {
-    if (typingMode === "words" || typingMode == "time") {
-      generateRandomWords(wordsCount);
-    } else {
+    if (typingMode === "quotes") {
       getRandomQuote();
+    } else {
+      generateRandomWords(wordsCount);
     }
   }, [typingMode]);
 
