@@ -52,7 +52,7 @@ export const LanguageSelectorModal = ({
 
   const languagesListItems = useMemo(() => {
     return Object.entries(
-      typingMode === "words" ? wordsLanguages : quotesLanguages
+      typingMode === "quotes" ? quotesLanguages : wordsLanguages
     )
       .filter(([langName]) => langName.includes(searchQuery))
       .map(([langName]) => (
