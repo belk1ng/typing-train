@@ -1,12 +1,12 @@
+import { ValuesRow } from "./ValuesRow";
+import s from "./styles.module.scss";
+import React from "react";
 import {
   TQuoteDifficulty,
   TTypingTimeout,
   TTypingMode,
   TWordsCount,
 } from "../../types";
-import { ValuesRow } from "./ValuesRow";
-import s from "./styles.module.scss";
-import React from "react";
 
 interface Props<T> {
   values: T[];

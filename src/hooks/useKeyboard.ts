@@ -24,6 +24,10 @@ export const useKeyboard = (
     setWords,
     typing,
     words,
+    correctWords,
+    correctCharacters,
+    misspelledWords,
+    misspelledCharacters,
   } = useContext(TypingContext);
 
   const { confidenceMode, strictSpace } = useContext(SettingsContext);
@@ -64,6 +68,10 @@ export const useKeyboard = (
         );
 
         setActiveLetter((prev: number) => prev + 1);
+
+        letterStatusCompute === "correct"
+          ? (correctCharacters.current += 1)
+          : (misspelledCharacters.current += 1);
       };
 
       const addOverflowCharacter = () => {
@@ -81,6 +89,7 @@ export const useKeyboard = (
         );
 
         setActiveLetter((prev: number) => prev + 1);
+        misspelledCharacters.current += 1;
       };
 
       const getNextTrain = () => {
@@ -92,22 +101,32 @@ export const useKeyboard = (
       };
 
       const skipRemainingLetters = () => {
+        const currentWord = words[activeWord];
+
+        misspelledCharacters.current += currentWord.letterStatuses.filter(
+          (status) => status === "unset"
+        ).length;
+
+        const currentWordUPD = Object.assign({}, currentWord, {
+          letterStatuses: currentWord.letterStatuses.map((status) =>
+            status === "unset" ? "skiped" : status
+          ),
+        });
+
         setWords((prev: WordTypeWithLetterStatuses[]) =>
-          prev.map(({ displayName, letterStatuses, overflow }, index) =>
-            index === activeWord
-              ? {
-                  displayName,
-                  overflow,
-                  letterStatuses: letterStatuses.map((status) =>
-                    status === "unset" ? "skiped" : status
-                  ),
-                }
-              : { displayName, letterStatuses }
+          prev.map((word, index) =>
+            index === activeWord ? currentWordUPD : word
           )
         );
       };
 
       const jumpToTheNextWord = () => {
+        words[activeWord].letterStatuses.filter(
+          (status) => status === "correct"
+        ).length === words[activeWord].displayName.length
+          ? (correctWords.current += 1)
+          : (misspelledWords.current += 1);
+
         setActiveLetter(0);
         setActiveWord((prev: number) => prev + 1);
       };
@@ -115,6 +134,8 @@ export const useKeyboard = (
       const setCursorOnLastOverflowCharacterOfPrevWord = (
         prevWord: WordTypeWithLetterStatuses
       ) => {
+        misspelledWords.current -= 1;
+
         setActiveLetter(
           prevWord.displayName.length + prevWord.overflow!.length
         );
@@ -124,27 +145,21 @@ export const useKeyboard = (
         prevWord: WordTypeWithLetterStatuses,
         firstSkipedLetterIndex: number
       ) => {
-        setActiveLetter(prevWord.letterStatuses.indexOf("skiped"));
+        misspelledWords.current -= 1;
+        misspelledCharacters.current -= prevWord.letterStatuses.filter(
+          (status) => status === "skiped"
+        ).length;
 
-        const prevWordLetterStatuses = prevWord.letterStatuses;
-
-        const alreadyHasStatus = [
-          ...prevWordLetterStatuses.slice(0, firstSkipedLetterIndex),
-        ];
-
-        const prevWordLetterStatusesUPD = [
-          ...alreadyHasStatus,
-          ...new Array(
-            prevWord.displayName.length - alreadyHasStatus.length
-          ).fill("unset"),
-        ];
+        setActiveLetter(firstSkipedLetterIndex);
 
         setWords((prev: WordTypeWithLetterStatuses[]) => {
           return prev.map((word, index) =>
             activeWord - 1 === index
               ? {
                   ...word,
-                  letterStatuses: prevWordLetterStatusesUPD,
+                  letterStatuses: word.letterStatuses.map((status) =>
+                    status === "skiped" ? "unset" : status
+                  ),
                 }
               : word
           );
@@ -152,6 +167,8 @@ export const useKeyboard = (
       };
 
       const removeOverflowCharacter = () => {
+        misspelledCharacters.current -= 1;
+
         setWords((prev: WordTypeWithLetterStatuses[]) =>
           prev.map((word, index) =>
             index === activeWord
@@ -168,29 +185,23 @@ export const useKeyboard = (
       };
 
       const removeCharacter = () => {
-        const activeWordLetterStatusesSetted = typingWord.letterStatuses.slice(
-          0,
-          activeLetter - 1
-        );
-
-        const activeWordLetterStatusesUPD = [
-          ...activeWordLetterStatusesSetted,
-          ...new Array(
-            typingWord.displayName.length -
-              activeWordLetterStatusesSetted.length
-          ).fill("unset"),
-        ];
+        words[activeWord].letterStatuses[activeLetter - 1] === "correct"
+          ? (correctCharacters.current -= 1)
+          : (misspelledCharacters.current -= 1);
 
         setWords((prev: WordTypeWithLetterStatuses[]) =>
           prev.map((word, index) =>
             index === activeWord
               ? {
                   ...word,
-                  letterStatuses: activeWordLetterStatusesUPD,
+                  letterStatuses: word.letterStatuses.map((status, index) =>
+                    index === activeLetter - 1 ? "unset" : status
+                  ),
                 }
               : word
           )
         );
+
         setActiveLetter((prev: number) => prev - 1);
       };
 
@@ -271,6 +282,11 @@ export const useKeyboard = (
                 );
               } else {
                 setActiveLetter(prevWord.displayName.length);
+
+                prevWord.letterStatuses.filter((status) => status === "correct")
+                  .length === prevWord.displayName.length
+                  ? (correctWords.current -= 1)
+                  : (misspelledWords.current -= 1);
               }
 
               setActiveWord((prev: number) => prev - 1);

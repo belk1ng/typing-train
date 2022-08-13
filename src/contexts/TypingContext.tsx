@@ -83,6 +83,11 @@ interface TypingContextProviderValue {
   getRandomQuote: () => void;
 
   typingTime: MutableRefObject<number>;
+
+  correctWords: MutableRefObject<number>;
+  correctCharacters: MutableRefObject<number>;
+  misspelledWords: MutableRefObject<number>;
+  misspelledCharacters: MutableRefObject<number>;
 }
 
 export const wordsLanguages: WordsLanguagesStore = {
@@ -136,6 +141,13 @@ export const TypingContextProvider = ({ children }: Props) => {
   );
 
   const typingTime = useRef<number>(0);
+
+  // Variables for statistics
+  const correctWords = useRef<number>(0);
+  const correctCharacters = useRef<number>(0);
+
+  const misspelledWords = useRef<number>(0);
+  const misspelledCharacters = useRef<number>(0);
 
   useEffect(() => {
     // TODO: Autoload new words while user are typing
@@ -191,6 +203,11 @@ export const TypingContextProvider = ({ children }: Props) => {
 
     setActiveWord(0);
     setActiveLetter(0);
+
+    correctWords.current = 0;
+    correctCharacters.current = 0;
+    misspelledWords.current = 0;
+    misspelledCharacters.current = 0;
   }, [wordsArray]);
 
   const generateRandomWords = useCallback(
@@ -271,6 +288,10 @@ export const TypingContextProvider = ({ children }: Props) => {
       generateRandomWords,
       getRandomQuote,
       typingTime,
+      correctWords,
+      correctCharacters,
+      misspelledWords,
+      misspelledCharacters,
     }),
     [
       typing,
