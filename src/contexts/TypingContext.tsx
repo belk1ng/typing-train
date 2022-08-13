@@ -150,7 +150,7 @@ export const TypingContextProvider = ({ children }: Props) => {
   const misspelledCharacters = useRef<number>(0);
 
   useEffect(() => {
-    // TODO: Autoload new words while user are typing
+    // TODO: Autoload new words while user is typing
 
     let typingInterval: ReturnType<typeof setInterval> | null = null;
 
