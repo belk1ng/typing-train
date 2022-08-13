@@ -305,9 +305,9 @@ export const useKeyboard = (
 
           setActiveWord(0);
           setActiveLetter(0);
-          typingMode === "words"
-            ? generateRandomWords(wordsCount)
-            : getRandomQuote();
+          typingMode === "quotes"
+            ? getRandomQuote()
+            : generateRandomWords(wordsCount);
         } else if (
           event.code === "Escape" &&
           activeWord === 0 &&

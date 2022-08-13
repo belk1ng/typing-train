@@ -27,7 +27,7 @@ export const LanguageSelector = () => {
         }
       >
         <Globe />
-        {typingMode === "words" ? wordsModeLanguage : quotesModeLanguage}
+        {typingMode === "quotes" ? quotesModeLanguage : wordsModeLanguage}
       </div>
       <LanguageSelectorModal
         modalCollapsed={modalCollapsed}
