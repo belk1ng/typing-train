@@ -79,7 +79,7 @@ interface TypingContextProviderValue {
   blockingTypingEvent: boolean;
   setBlockingTypingEvent: (shouldBlock: boolean) => void;
 
-  generateRandomWords: (wordsCount?: number) => void;
+  generateRandomWords: (wordsCount?: TWordsCount) => void;
   getRandomQuote: () => void;
 
   typingTime: MutableRefObject<number>;
