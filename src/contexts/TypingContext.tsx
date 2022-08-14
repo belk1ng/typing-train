@@ -226,7 +226,7 @@ export const TypingContextProvider = ({ children }: Props) => {
   }, [wordsArray, typingMode]);
 
   const generateRandomWords = useCallback(
-    (wordsCount = 35) => {
+    (wordsCount = defaultWordsCountValue) => {
       const wordsToType: string[] = [];
 
       for (let word = 0; word < wordsCount; word++) {
@@ -249,7 +249,7 @@ export const TypingContextProvider = ({ children }: Props) => {
 
     const allLanguageQuotes: Quote[] = choosenQuotesLanguage.quotes;
 
-    const filteredQuotesByDifficulty =
+    const filteredQuotesByDifficulty: Quote[] =
       filterQuotesByDifficultyLevel(allLanguageQuotes);
 
     setWordsArray(
