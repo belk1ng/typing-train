@@ -169,7 +169,19 @@ export const TypingContextProvider = ({ children }: Props) => {
           const WPM =
             (correctWords.current + misspelledWords.current) /
             (typingTimeout / 60);
-          alert(`WPM:  ${WPM}`);
+          const clearWPM = WPM - misspelledWords.current / (typingTimeout / 60);
+
+          const CPM =
+            (correctCharacters.current + misspelledCharacters.current) /
+            (typingTimeout / 60);
+          const clearCPM =
+            CPM - misspelledCharacters.current / (typingTimeout / 60);
+
+          const wordAccuracy = 100 - misspelledWords.current * 100;
+
+          alert(
+            `WPM:  ${WPM}\nclear WPM: ${clearWPM}\nCPM: ${CPM}\nclear CPM: ${clearCPM}\nwordAccuracy: ${wordAccuracy}%`
+          );
         }
         typingTime.current += 0.01;
       }, 10);
