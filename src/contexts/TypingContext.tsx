@@ -116,6 +116,9 @@ export const TypingContextProvider = ({ children }: Props) => {
   const [activeLetter, setActiveLetter] = useState<number>(0);
   const [wordsArray, setWordsArray] = useState<string[]>([]);
   const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
+  const [wordsCount, setWordsCount] = useState<TWordsCount>(
+    defaultWordsCountValue
+  );
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
 
@@ -124,9 +127,6 @@ export const TypingContextProvider = ({ children }: Props) => {
   // Words mode language
   const [wordsModeLanguage, setWordsModeLanguage] =
     useState<WordsModeLanguages>(defaultWordsModeLanguageValue);
-  const [wordsCount, setWordsCount] = useState<TWordsCount>(
-    defaultWordsCountValue
-  );
 
   // Quotes mode language
   const [quotesModeLanguage, setQuotesModeLanguage] =
@@ -149,40 +149,40 @@ export const TypingContextProvider = ({ children }: Props) => {
   const misspelledWords = useRef<number>(0);
   const misspelledCharacters = useRef<number>(0);
 
+  const calculateStatistics = (): void => {
+    const WPM =
+      (correctWords.current + misspelledWords.current) / (typingTimeout / 60);
+    const clearWPM = WPM - misspelledWords.current / (typingTimeout / 60);
+
+    const CPM =
+      (correctCharacters.current + misspelledCharacters.current) /
+      (typingTimeout / 60);
+    const clearCPM = CPM - misspelledCharacters.current / (typingTimeout / 60);
+
+    const wordAccuracy = 100 - misspelledWords.current * 100;
+
+    alert(
+      `WPM:  ${WPM}\nclear WPM: ${clearWPM}\nCPM: ${CPM}\nclear CPM: ${clearCPM}\nwordAccuracy: ${wordAccuracy}%`
+    );
+  };
+
   useEffect(() => {
     // TODO: Autoload new words while user is typing
 
     let typingInterval: ReturnType<typeof setInterval> | null = null;
 
-    if (
-      typing &&
-      typingTime.current === +typingTime.current &&
-      typingMode === "time"
-    ) {
+    if (typing) {
       typingInterval = setInterval(() => {
-        if (typingTime.current >= typingTimeout) {
+        if (typingTime.current >= typingTimeout && typingMode === "time") {
           setTyping(false);
+
           setActiveWord(0);
           setActiveLetter(0);
           generateRandomWords(wordsCount);
 
-          const WPM =
-            (correctWords.current + misspelledWords.current) /
-            (typingTimeout / 60);
-          const clearWPM = WPM - misspelledWords.current / (typingTimeout / 60);
-
-          const CPM =
-            (correctCharacters.current + misspelledCharacters.current) /
-            (typingTimeout / 60);
-          const clearCPM =
-            CPM - misspelledCharacters.current / (typingTimeout / 60);
-
-          const wordAccuracy = 100 - misspelledWords.current * 100;
-
-          alert(
-            `WPM:  ${WPM}\nclear WPM: ${clearWPM}\nCPM: ${CPM}\nclear CPM: ${clearCPM}\nwordAccuracy: ${wordAccuracy}%`
-          );
+          calculateStatistics();
         }
+
         typingTime.current += 0.01;
       }, 10);
     }
@@ -190,10 +190,9 @@ export const TypingContextProvider = ({ children }: Props) => {
     return () => {
       if (typingInterval && typingTime.current) {
         clearInterval(typingInterval);
-        typingTime.current = 0;
       }
     };
-  }, [typing, typingMode]);
+  }, [typing, typingMode, wordsCount]);
 
   useEffect(
     () => generateRandomWords(wordsCount),
@@ -211,6 +210,14 @@ export const TypingContextProvider = ({ children }: Props) => {
   }, [typingMode]);
 
   useEffect(() => {
+    typingMode !== "time" && typingTime.current > 0 && calculateStatistics();
+
+    correctWords.current = 0;
+    correctCharacters.current = 0;
+    misspelledWords.current = 0;
+    misspelledCharacters.current = 0;
+    typingTime.current = 0;
+
     setWords(
       wordsArray.map((word) => ({
         displayName: word,
@@ -220,12 +227,7 @@ export const TypingContextProvider = ({ children }: Props) => {
 
     setActiveWord(0);
     setActiveLetter(0);
-
-    correctWords.current = 0;
-    correctCharacters.current = 0;
-    misspelledWords.current = 0;
-    misspelledCharacters.current = 0;
-  }, [wordsArray]);
+  }, [wordsArray, typingMode]);
 
   const generateRandomWords = useCallback(
     (wordsCount = 35) => {

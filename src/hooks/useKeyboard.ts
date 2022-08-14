@@ -243,6 +243,11 @@ export const useKeyboard = (
             (activeWord === wordsCount - 1 && typingMode === "words") ||
             (typingMode === "quotes" && activeWord === wordsArray.length - 1)
           ) {
+            words[activeWord].letterStatuses.filter(
+              (status) => status === "correct"
+            ).length === words[activeWord].displayName.length
+              ? (correctWords.current += 1)
+              : (misspelledWords.current += 1);
             setTyping(false);
             getNextTrain();
           } else {
