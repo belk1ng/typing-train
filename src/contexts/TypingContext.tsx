@@ -149,28 +149,30 @@ export const TypingContextProvider = ({ children }: Props) => {
   const misspelledWords = useRef<number>(0);
   const misspelledCharacters = useRef<number>(0);
 
-  const calculateStatistics = (): void => {
-    const WPM =
-      (correctWords.current + misspelledWords.current) /
-      (typingTime.current / 60);
-    const clearWPM = WPM - misspelledWords.current / (typingTime.current / 60);
-
-    const CPM =
-      (correctCharacters.current + misspelledCharacters.current) /
-      (typingTime.current / 60);
-    const clearCPM =
-      CPM - misspelledCharacters.current / (typingTime.current / 60);
-
-    alert(
-      `WPM:  ${Math.round(WPM)}\nclear WPM: ${Math.round(
-        clearWPM
-      )}\nCPM: ${Math.round(CPM)}\nclear CPM: ${Math.round(clearCPM)}`
-    );
-  };
+  // Get words based on current mode
+  // TODO: Autoload new words while user is typing
 
   useEffect(() => {
-    // TODO: Autoload new words while user is typing
+    getWordsByMode();
+  }, [typingMode]);
 
+  useEffect(() => {
+    // Get next words after train is over
+    if (activeWord === wordsCount) {
+      getWordsByMode();
+      setTyping(false);
+    }
+  }, [activeWord]);
+
+  useEffect(() => getRandomQuote(), [quotesModeLanguage, quotesDifficulty]);
+
+  useEffect(
+    () => generateRandomWords(wordsCount),
+    [wordsCount, wordsModeLanguage]
+  );
+
+  // Timer
+  useEffect(() => {
     let typingInterval: ReturnType<typeof setInterval> | null = null;
 
     if (typing) {
@@ -196,24 +198,16 @@ export const TypingContextProvider = ({ children }: Props) => {
     };
   }, [typing, typingMode, wordsCount]);
 
-  useEffect(
-    () => generateRandomWords(wordsCount),
-    [wordsCount, wordsModeLanguage]
-  );
-
-  useEffect(() => getRandomQuote(), [quotesModeLanguage, quotesDifficulty]);
-
   useEffect(() => {
-    if (typingMode === "quotes") {
-      getRandomQuote();
-    } else {
-      generateRandomWords(wordsCount);
-    }
-  }, [typingMode]);
+    // Show statistics only when typing mode is in [words, quotes]
+    // and train not skiped
 
-  useEffect(() => {
-    typingMode !== "time" && typingTime.current > 0 && calculateStatistics();
+    typingMode !== "time" &&
+      typingTime.current > 0 &&
+      correctWords.current + misspelledWords.current === wordsArray.length &&
+      calculateStatistics();
 
+    // Reset statistics variables
     correctWords.current = 0;
     correctCharacters.current = 0;
     misspelledWords.current = 0;
@@ -265,7 +259,7 @@ export const TypingContextProvider = ({ children }: Props) => {
     );
   }, [quotesModeLanguage, quotesDifficulty]);
 
-  const filterQuotesByDifficultyLevel = (quotesArray: Quote[]) => {
+  const filterQuotesByDifficultyLevel = (quotesArray: Quote[]): Quote[] => {
     switch (quotesDifficulty) {
       case "easy":
         return quotesArray.filter((quote: Quote) => quote.length < 150);
@@ -277,6 +271,33 @@ export const TypingContextProvider = ({ children }: Props) => {
         return quotesArray.filter((quote: Quote) => quote.length > 650);
       default:
         return quotesArray;
+    }
+  };
+
+  const calculateStatistics = (): void => {
+    const WPM =
+      (correctWords.current + misspelledWords.current) /
+      (typingTime.current / 60);
+    const clearWPM = WPM - misspelledWords.current / (typingTime.current / 60);
+
+    const CPM =
+      (correctCharacters.current + misspelledCharacters.current) /
+      (typingTime.current / 60);
+    const clearCPM =
+      CPM - misspelledCharacters.current / (typingTime.current / 60);
+
+    alert(
+      `WPM:  ${Math.round(WPM)}\nclear WPM: ${Math.round(
+        clearWPM
+      )}\nCPM: ${Math.round(CPM)}\nclear CPM: ${Math.round(clearCPM)}`
+    );
+  };
+
+  const getWordsByMode = (): void => {
+    if (typingMode === "quotes") {
+      getRandomQuote();
+    } else {
+      generateRandomWords(wordsCount);
     }
   };
 

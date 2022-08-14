@@ -92,14 +92,6 @@ export const useKeyboard = (
         misspelledCharacters.current += 1;
       };
 
-      const getNextTrain = () => {
-        setActiveWord(0);
-        setActiveLetter(0);
-        typingMode === "words"
-          ? generateRandomWords(wordsCount)
-          : getRandomQuote();
-      };
-
       const skipRemainingLetters = () => {
         const currentWord = words[activeWord];
 
@@ -121,11 +113,7 @@ export const useKeyboard = (
       };
 
       const jumpToTheNextWord = () => {
-        words[activeWord].letterStatuses.filter(
-          (status) => status === "correct"
-        ).length === words[activeWord].displayName.length
-          ? (correctWords.current += 1)
-          : (misspelledWords.current += 1);
+        incrementWordsCounter();
 
         setActiveLetter(0);
         setActiveWord((prev: number) => prev + 1);
@@ -205,6 +193,14 @@ export const useKeyboard = (
         setActiveLetter((prev: number) => prev - 1);
       };
 
+      const incrementWordsCounter = () => {
+        words[activeWord].letterStatuses.filter(
+          (status) => status === "correct"
+        ).length === words[activeWord].displayName.length
+          ? (correctWords.current += 1)
+          : (misspelledWords.current += 1);
+      };
+
       if (!blockingTypingEvent) {
         const letterRegExp = /Key[A-Z]/,
           numberRegExp = /Digit[0-9]/,
@@ -243,13 +239,8 @@ export const useKeyboard = (
             (activeWord === wordsCount - 1 && typingMode === "words") ||
             (typingMode === "quotes" && activeWord === wordsArray.length - 1)
           ) {
-            words[activeWord].letterStatuses.filter(
-              (status) => status === "correct"
-            ).length === words[activeWord].displayName.length
-              ? (correctWords.current += 1)
-              : (misspelledWords.current += 1);
-            setTyping(false);
-            getNextTrain();
+            incrementWordsCounter();
+            setActiveWord((prev) => prev + 1);
           } else {
             if (
               activeLetter < typingWord.displayName.length &&
