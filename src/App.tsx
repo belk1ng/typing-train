@@ -55,7 +55,6 @@ function App() {
   return (
     <div className="wrapper">
       <Header isVisible={!typing}>
-        <Statistics />
         <AppSettings
           isModalCollapsed={isSettingsModalCollapsed}
           setModalCollapsed={setSettingsModalCollapsed}
@@ -63,6 +62,7 @@ function App() {
         <TypingSettings />
       </Header>
       <main style={{ width: `${wordsContainerWidth}%` }}>
+        <Statistics />
         <LanguageSelector />
         <WordsList />
         <textarea ref={textAreaRef} onBlur={handleBlur}></textarea>
