@@ -21,9 +21,11 @@ import {
   QuotesModeLanguages,
   WordsModeLanguages,
   defaultTypingMode,
+  statisticsInitial,
   TQuoteDifficulty,
   TTypingTimeout,
   TTypingMode,
+  IStatistics,
   TWordsCount,
   Quotes,
   Quote,
@@ -82,12 +84,19 @@ interface TypingContextProviderValue {
   generateRandomWords: (wordsCount?: TWordsCount) => void;
   getRandomQuote: () => void;
 
+  getWordsByMode: () => void;
+
   typingTime: MutableRefObject<number>;
+
+  displayStatistics: boolean;
+  setDisplayStatistics: (value: boolean) => void;
 
   correctWords: MutableRefObject<number>;
   correctCharacters: MutableRefObject<number>;
   misspelledWords: MutableRefObject<number>;
   misspelledCharacters: MutableRefObject<number>;
+
+  statistics: MutableRefObject<IStatistics>;
 }
 
 export const wordsLanguages: WordsLanguagesStore = {
@@ -110,19 +119,21 @@ interface Props {
 export const TypingContext = createContext({} as TypingContextProviderValue);
 
 export const TypingContextProvider = ({ children }: Props) => {
+  const [typingMode, setTypingMode] = useState<TTypingMode>(defaultTypingMode);
   const [typing, setTyping] = useState<boolean>(false);
 
   const [activeWord, setActiveWord] = useState<number>(0);
   const [activeLetter, setActiveLetter] = useState<number>(0);
+
   const [wordsArray, setWordsArray] = useState<string[]>([]);
   const [words, setWords] = useState<WordTypeWithLetterStatuses[]>([]);
+
   const [wordsCount, setWordsCount] = useState<TWordsCount>(
     defaultWordsCountValue
   );
+
   const [blockingTypingEvent, setBlockingTypingEvent] =
     useState<boolean>(false);
-
-  const [typingMode, setTypingMode] = useState<TTypingMode>(defaultTypingMode);
 
   // Words mode language
   const [wordsModeLanguage, setWordsModeLanguage] =
@@ -143,26 +154,30 @@ export const TypingContextProvider = ({ children }: Props) => {
   const typingTime = useRef<number>(0);
 
   // Variables for statistics
+  const [displayStatistics, setDisplayStatistics] = useState<boolean>(false);
+
+  // TODO: place inside 1 ref
   const correctWords = useRef<number>(0);
   const correctCharacters = useRef<number>(0);
 
   const misspelledWords = useRef<number>(0);
   const misspelledCharacters = useRef<number>(0);
 
-  // Get words based on current mode
-  // TODO: Autoload new words while user is typing
+  const statistics = useRef<IStatistics>({ ...statisticsInitial });
+
+  useEffect(() => {
+    // Get next words && show statistics after train is over
+
+    if (activeWord === wordsArray.length && wordsArray.length !== 0) {
+      setTyping(false);
+      calculateStatistics();
+      setDisplayStatistics(true);
+    }
+  }, [activeWord]);
 
   useEffect(() => {
     getWordsByMode();
   }, [typingMode]);
-
-  useEffect(() => {
-    // Get next words after train is over
-    if (activeWord === wordsCount) {
-      getWordsByMode();
-      setTyping(false);
-    }
-  }, [activeWord]);
 
   useEffect(() => getRandomQuote(), [quotesModeLanguage, quotesDifficulty]);
 
@@ -172,6 +187,7 @@ export const TypingContextProvider = ({ children }: Props) => {
   );
 
   // Timer
+  // TODO: Autoload new words while user is typing
   useEffect(() => {
     let typingInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -185,6 +201,7 @@ export const TypingContextProvider = ({ children }: Props) => {
           generateRandomWords(wordsCount);
 
           calculateStatistics();
+          setDisplayStatistics(true);
         }
 
         typingTime.current += 0.01;
@@ -199,15 +216,8 @@ export const TypingContextProvider = ({ children }: Props) => {
   }, [typing, typingMode, wordsCount]);
 
   useEffect(() => {
-    // Show statistics only when typing mode is in [words, quotes]
-    // and train not skiped
-
-    typingMode !== "time" &&
-      typingTime.current > 0 &&
-      correctWords.current + misspelledWords.current === wordsArray.length &&
-      calculateStatistics();
-
     // Reset statistics variables
+
     correctWords.current = 0;
     correctCharacters.current = 0;
     misspelledWords.current = 0;
@@ -259,6 +269,21 @@ export const TypingContextProvider = ({ children }: Props) => {
     );
   }, [quotesModeLanguage, quotesDifficulty]);
 
+  const getWordsByMode = useCallback((): void => {
+    if (typingMode === "quotes") {
+      getRandomQuote();
+    } else {
+      generateRandomWords(wordsCount);
+    }
+  }, [
+    typingMode,
+    wordsModeLanguage,
+    quotesModeLanguage,
+    wordsCount,
+    quotesDifficulty,
+    typingTimeout,
+  ]);
+
   const filterQuotesByDifficultyLevel = (quotesArray: Quote[]): Quote[] => {
     switch (quotesDifficulty) {
       case "easy":
@@ -275,30 +300,19 @@ export const TypingContextProvider = ({ children }: Props) => {
   };
 
   const calculateStatistics = (): void => {
-    const WPM =
+    statistics.current.WPM =
       (correctWords.current + misspelledWords.current) /
       (typingTime.current / 60);
-    const clearWPM = WPM - misspelledWords.current / (typingTime.current / 60);
+    statistics.current.netWPM =
+      statistics.current.WPM -
+      misspelledWords.current / (typingTime.current / 60);
 
-    const CPM =
+    statistics.current.CPM =
       (correctCharacters.current + misspelledCharacters.current) /
       (typingTime.current / 60);
-    const clearCPM =
-      CPM - misspelledCharacters.current / (typingTime.current / 60);
-
-    alert(
-      `WPM:  ${Math.round(WPM)}\nclear WPM: ${Math.round(
-        clearWPM
-      )}\nCPM: ${Math.round(CPM)}\nclear CPM: ${Math.round(clearCPM)}`
-    );
-  };
-
-  const getWordsByMode = (): void => {
-    if (typingMode === "quotes") {
-      getRandomQuote();
-    } else {
-      generateRandomWords(wordsCount);
-    }
+    statistics.current.netCPM =
+      statistics.current.CPM -
+      misspelledCharacters.current / (typingTime.current / 60);
   };
 
   const value = useMemo(
@@ -329,11 +343,15 @@ export const TypingContextProvider = ({ children }: Props) => {
       setBlockingTypingEvent,
       generateRandomWords,
       getRandomQuote,
+      getWordsByMode,
       typingTime,
+      displayStatistics,
+      setDisplayStatistics,
       correctWords,
       correctCharacters,
       misspelledWords,
       misspelledCharacters,
+      statistics,
     }),
     [
       typing,
@@ -349,6 +367,17 @@ export const TypingContextProvider = ({ children }: Props) => {
       typingMode,
       typingTimeout,
       blockingTypingEvent,
+      generateRandomWords,
+      getRandomQuote,
+      getWordsByMode,
+      typingTime,
+      displayStatistics,
+      setDisplayStatistics,
+      correctWords,
+      correctCharacters,
+      misspelledWords,
+      misspelledCharacters,
+      statistics,
     ]
   );
 

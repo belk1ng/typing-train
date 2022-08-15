@@ -1,0 +1,14 @@
+.statistics {
+  width: 700px;
+  border-radius: 0.5em;
+
+  background-color: #242933;
+
+  padding: 10px 25px;
+  z-index: 10;
+
+  .statistics__point {
+    color: #596172;
+    font-size: 18px;
+  }
+}

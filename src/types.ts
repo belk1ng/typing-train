@@ -89,3 +89,17 @@ export const confidenceModeValues: TConfidenceMode[] = ["off", "on", "max"];
 export type TStrictSpace = "on" | "off";
 export const defaultStrictSpace: TStrictSpace = "on";
 export const strictSpaceValues: TStrictSpace[] = ["on", "off"];
+
+export interface IStatistics {
+  WPM: number;
+  netWPM: number;
+  CPM: number;
+  netCPM: number;
+}
+
+export const statisticsInitial: IStatistics = {
+  WPM: 0,
+  netWPM: 0,
+  CPM: 0,
+  netCPM: 0,
+};

@@ -10,6 +10,7 @@ export const useKeyboard = (
 ) => {
   const {
     setBlockingTypingEvent,
+    setDisplayStatistics,
     blockingTypingEvent,
     generateRandomWords,
     setActiveLetter,
@@ -304,6 +305,8 @@ export const useKeyboard = (
           typingMode === "quotes"
             ? getRandomQuote()
             : generateRandomWords(wordsCount);
+
+          setDisplayStatistics(false);
         } else if (
           event.code === "Escape" &&
           activeWord === 0 &&

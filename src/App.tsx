@@ -2,6 +2,7 @@ import { LanguageSelector } from "./components/LanguageSelector/LanguageSelector
 import { TypingSettings } from "./components/TypingSettings/TypingSettings";
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { AppSettings } from "./components/AppSettings/AppSettings";
+import { Statistics } from "./components/Statistics/Statistics";
 import { SettingsContext } from "./contexts/SettingsContext";
 import { WordsList } from "./components/WordsList/WordsList";
 import { TypingContext } from "./contexts/TypingContext";
@@ -54,6 +55,7 @@ function App() {
   return (
     <div className="wrapper">
       <Header isVisible={!typing}>
+        <Statistics />
         <AppSettings
           isModalCollapsed={isSettingsModalCollapsed}
           setModalCollapsed={setSettingsModalCollapsed}
